@@ -10,7 +10,7 @@
 
 #define LARGEUR_FENETRE 1024
 #define HAUTEUR_FENETRE 768
-#define NB_COLONES 45
+#define NB_COLONNES 45
 #define NB_LIGNES 35
 
     //**********En nombre d'habitant**********//
@@ -24,17 +24,18 @@
 
     //**********Constructions**********//
 typedef struct {
-    int timer, niveau, nbHabitants,
+    int coordXHG, coordYHG,
+        timer, niveau, nbHabitants,
         alimEau, alimElec;
 }Habitation;
 
 typedef struct {
-    int coordonneesHG, coordonneesBD,
+    int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
 }Chateau;
 
 typedef struct {
-    int coordonneesHG, coordonneesBD,
+    int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
 }Centrale;
 
