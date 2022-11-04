@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
+#include "Initialisation/Initialisation.h"
 
 
 int main() {
@@ -20,6 +21,7 @@ int main() {
 
     fenetre = al_create_display(LARGEUR_FENETRE, HAUTEUR_FENETRE);
     al_set_window_title(fenetre, "ECE City");
+
 
 
 
