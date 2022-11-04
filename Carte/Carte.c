@@ -83,8 +83,8 @@ void lireFichierCarte(Case** pMatriceCase){
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
 
-                for (int i = ligne; i < ligne+4; i++) {
-                    for (int j = colonne; j < colonne+6; j++) {
+                for (int i = ligne; i < ligne+6; i++) {
+                    for (int j = colonne; j < colonne+4; j++) {
                         pMatriceCase[i][j].pChateau->coordXHG = xPremiereCase;
                         pMatriceCase[i][j].pChateau->coordYHG = yPremiereCase;
                     }
@@ -98,8 +98,8 @@ void lireFichierCarte(Case** pMatriceCase){
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
 
-                for (int i = ligne; i < ligne+4; i++) {
-                    for (int j = colonne; j < colonne+6; j++) {
+                for (int i = ligne; i < ligne+6; i++) {
+                    for (int j = colonne; j < colonne+4; j++) {
                         pMatriceCase[i][j].pCentrale->coordXHG = xPremiereCase;
                         pMatriceCase[i][j].pCentrale->coordYHG = yPremiereCase;
                     }
@@ -114,6 +114,7 @@ void lireFichierCarte(Case** pMatriceCase){
     ifs = NULL;
 }
 
+//Erreur pour les 3*3 et 3*4
 void dessinerCarte(Case** pMatriceCase){
 
     ALLEGRO_BITMAP* herbe;
