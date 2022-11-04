@@ -20,13 +20,13 @@ void lireFichierCarte(Case** pMatriceCase){
 
             switch (chiffreEnCours)
             {
-                case 0: //Route = canalisation = ligne electrique
+                case 0: //Herbe(rien)
                     pMatriceCase[ligne][colonne].type = 0;
                     pMatriceCase[ligne][colonne].pHabitation = NULL;
                     pMatriceCase[ligne][colonne].pChateau = NULL;
                     pMatriceCase[ligne][colonne].pCentrale = NULL;
                     break;
-                case 1: //Herbe(rien)
+                case 1: //Route = canalisation = ligne electrique
                     pMatriceCase[ligne][colonne].type = 1;
                     pMatriceCase[ligne][colonne].pHabitation = NULL;
                     pMatriceCase[ligne][colonne].pChateau = NULL;
@@ -114,10 +114,10 @@ void lireFichierCarte(Case** pMatriceCase){
     ifs = NULL;
 }
 
-void afficherCarte(Case** pMatriceCase){
+void dessinerCarte(Case** pMatriceCase){
 
-    ALLEGRO_BITMAP* route;
     ALLEGRO_BITMAP* herbe;
+    ALLEGRO_BITMAP* route;
     ALLEGRO_BITMAP* terrainVague;
     ALLEGRO_BITMAP* cabane;
     ALLEGRO_BITMAP* maison;
@@ -126,13 +126,13 @@ void afficherCarte(Case** pMatriceCase){
     ALLEGRO_BITMAP* chateau;
     ALLEGRO_BITMAP* centrale;
 
+    herbe = al_load_bitmap("../images/herbe.jpg");
+    if(!herbe) {
+        printf("Erreur ouverture image herbe");
+    }
     route = al_load_bitmap("../images/route.jpg");
     if(!route) {
         printf("Erreur ouverture image route");
-    }
-    herbe = al_load_bitmap("../images/Herbe.jpg");
-    if(!herbe) {
-        printf("Erreur ouverture image Herbe");
     }
     terrainVague = al_load_bitmap("../images/terrainVague.jpg");
     if(!terrainVague) {
@@ -169,10 +169,10 @@ void afficherCarte(Case** pMatriceCase){
 
             switch (pMatriceCase[i][j].type) {
                 case 0:
-                    al_draw_bitmap(route, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    al_draw_bitmap(herbe, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     break;
                 case 1:
-                    al_draw_bitmap(herbe, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    al_draw_bitmap(route, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     break;
                 case 2:
                     al_draw_bitmap(terrainVague, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
@@ -199,8 +199,8 @@ void afficherCarte(Case** pMatriceCase){
         }
     }
 
-    al_destroy_bitmap(route);
     al_destroy_bitmap(herbe);
+    al_destroy_bitmap(route);
     al_destroy_bitmap(terrainVague);
     al_destroy_bitmap(cabane);
     al_destroy_bitmap(maison);
@@ -209,8 +209,8 @@ void afficherCarte(Case** pMatriceCase){
     al_destroy_bitmap(chateau);
     al_destroy_bitmap(centrale);
 
-    route = NULL;
     herbe = NULL;
+    route = NULL;
     terrainVague = NULL;
     cabane = NULL;
     maison = NULL;
