@@ -4,4 +4,6 @@
 #include "../Fonctions/Fonctions.h"
 
 void initCases(Case** matriceCases);
+void sauvegarde(Case** matriceCases);
+
 #endif
