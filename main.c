@@ -3,6 +3,8 @@
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Initialisation/Initialisation.h"
 
+#include "Initialisation/Initialisation.h"
+#include "Carte/Carte.h"
 
 int main() {
 
@@ -23,13 +25,7 @@ int main() {
     al_set_window_title(fenetre, "ECE City");
 
 
-
-
-
-
-
     ecranAccueil();
-
 
 
 
