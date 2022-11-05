@@ -59,17 +59,18 @@ void lireFichierCarte(Case** pMatriceCase){
             }
 
 
-
             //Cas d'une habitation
             if (chiffreEnCours>=2 && chiffreEnCours<=6 && pMatriceCase[ligne][colonne].pHabitation == NULL){
                 pMatriceCase[ligne][colonne].pChateau = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
+                pMatriceCase[ligne][colonne].pHabitation->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
 
                 for (int i = ligne; i < ligne+3; i++) {
                     for (int j = colonne; j < colonne+3; j++) {
+                        pMatriceCase[i][j].pHabitation = pMatriceCase[ligne][colonne].pHabitation;
                         pMatriceCase[i][j].pHabitation->coordXHG = xPremiereCase;
                         pMatriceCase[i][j].pHabitation->coordYHG = yPremiereCase;
                     }
@@ -79,12 +80,14 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==7 && pMatriceCase[ligne][colonne].pChateau == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
+                pMatriceCase[ligne][colonne].pChateau->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
 
                 for (int i = ligne; i < ligne+6; i++) {
                     for (int j = colonne; j < colonne+4; j++) {
+                        pMatriceCase[i][j].pChateau = pMatriceCase[ligne][colonne].pChateau;
                         pMatriceCase[i][j].pChateau->coordXHG = xPremiereCase;
                         pMatriceCase[i][j].pChateau->coordYHG = yPremiereCase;
                     }
@@ -94,12 +97,14 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==8 && pMatriceCase[ligne][colonne].pCentrale == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pChateau = NULL;
+                pMatriceCase[ligne][colonne].pCentrale->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
 
                 for (int i = ligne; i < ligne+6; i++) {
                     for (int j = colonne; j < colonne+4; j++) {
+                        pMatriceCase[i][j].pCentrale = pMatriceCase[ligne][colonne].pCentrale;
                         pMatriceCase[i][j].pCentrale->coordXHG = xPremiereCase;
                         pMatriceCase[i][j].pCentrale->coordYHG = yPremiereCase;
                     }
@@ -165,6 +170,7 @@ void dessinerCarte(Case** pMatriceCase){
     }
 
 
+
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
 
@@ -176,25 +182,71 @@ void dessinerCarte(Case** pMatriceCase){
                     al_draw_bitmap(route, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     break;
                 case 2:
-                    al_draw_bitmap(terrainVague, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        al_draw_bitmap(terrainVague, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 3:
-                    al_draw_bitmap(cabane, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        al_draw_bitmap(cabane, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 4:
-                    al_draw_bitmap(maison, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        al_draw_bitmap(maison, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 5:
-                    al_draw_bitmap(immeuble, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        al_draw_bitmap(immeuble, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 6:
-                    al_draw_bitmap(gratteCiel, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        al_draw_bitmap(gratteCiel, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 7:
-                    al_draw_bitmap(chateau, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pChateau->estDessine == 0) {
+                        pMatriceCase[i][j].pChateau->estDessine == 1;
+                        al_draw_bitmap(chateau, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
                     break;
                 case 8:
-                    al_draw_bitmap(centrale, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    if(pMatriceCase[i][j].pCentrale->estDessine == 0) {
+                        pMatriceCase[i][j].pCentrale->estDessine == 1;
+                        al_draw_bitmap(centrale, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
+                    }
+                    break;
+                default:
+                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
+                    break;
+            }
+        }
+    }
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            switch (pMatriceCase[i][j].type) {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    pMatriceCase[i][j].pHabitation->estDessine == 0;
+                    break;
+                case 7:
+                    pMatriceCase[i][j].pChateau->estDessine == 0;
+                    break;
+                case 8:
+                    pMatriceCase[i][j].pCentrale->estDessine == 0;
+                    break;
+                default:
                     break;
             }
         }

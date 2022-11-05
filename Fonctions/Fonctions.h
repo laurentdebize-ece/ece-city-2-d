@@ -28,16 +28,19 @@ typedef struct {
     int coordXHG, coordYHG,
         timer, niveau, nbHabitants,
         alimEau, alimElec;
+    bool estDessine;
 }Habitation;
 
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
+    bool estDessine;
 }Chateau;
 
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
+    bool estDessine;
 }Centrale;
 
 
