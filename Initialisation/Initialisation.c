@@ -6,6 +6,7 @@ void initCases(Case** matriceCases){
         for (int j = 0; j  < NB_COLONNES; j++) {
             matriceCases[i][j].x = 62 + 20*j;
             matriceCases[i][j].y = 34 + 20*i;
+            matriceCases[i][j].distribEau=0;
         }
     }
 }
