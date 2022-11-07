@@ -20,7 +20,7 @@ int afficherInterface () {
     // Déclarations
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *fond = NULL;
-    ALLEGRO_BITMAP *end = NULL;
+    ALLEGRO_BITMAP *sauvegarde = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_FONT *police = NULL;
 
@@ -38,7 +38,13 @@ int afficherInterface () {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
     fond = al_load_bitmap("../Images/eceCity.jpg");
-    end = al_load_bitmap("../Images/finDuJeu.jpg");
+    if (!fond){
+        printf ("Erreur ouverture image fond\n")
+    }
+    sauvegarde = al_load_bitmap("../Images/sauvegardePartie.jpg");
+    if (!sauvegarde){
+        printf("Erreur ouverture image sauvegarde\n");
+    }
 
     //Création
     display = al_create_display(LARGEUR, HAUTEUR);
@@ -121,20 +127,17 @@ int afficherInterface () {
                 }
                 if (event.mouse.x > 6 && event.mouse.x < 60 &&
                     event.mouse.y > 215 && event.mouse.y < 270){
-                    end = al_load_bitmap("../Images/finDuJeu.jpg");
-                    al_draw_bitmap(end, 0, 0, 0);
-                    fin = true;
-                    // peut etre faire une autre fonction pour ça???
-                    // ça redessine par dessus mauvaise idée
-                    // affichage de l'écran sauvegarder ou pas puis fermeture fenêtre
-                    /*if (event.mouse.x>223 && event.mouse.x<385 &&
-                    event.mouse.y > 406 && event.mouse.y < 482){
+                    al_draw_bitmap(sauvegarde, 0, 0, 0);
+                    if (event.mouse.x>223 && event.mouse.x<385 &&
+                        event.mouse.y > 406 && event.mouse.y < 482){
                         // fonction sauvegarder partie
                     }
-                    if (event.mouse.x>631 && event.mouse.x<802 &&
+                    else (event.mouse.x>631 && event.mouse.x<802 &&
                         event.mouse.y > 406 && event.mouse.y < 482){
-                        // fin = true;
-                    }*/
+                        fin = true;
+                    }
+                    // faire une autre fonction pour ça???
+                    // affichage de l'écran sauvegarder puis fermeture fenêtre
                 }
                 break;
             }
@@ -144,6 +147,23 @@ int afficherInterface () {
     al_destroy_display(display);
     al_destroy_event_queue(queue);
     al_destroy_bitmap(fond);
+    al_destroy_bitmap (sauvegarde);
     al_destroy_timer(timer);
+    al_destroy_font (police);
+
+    queue = NULL;
+    fond = NULL;
+    sauvegarde = NULL;
+    timer = NULL;
+    police = NULL;
+
     return 0;
 }
+
+
+
+/*
+void ecranQuitter(ALLEGRO_EVENT_QUEUE *queue){
+    al_draw_bitmap(sauvegarde, 0, 0, 0);
+    fin = true;
+}*/
