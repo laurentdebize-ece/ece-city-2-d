@@ -3,6 +3,8 @@
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Initialisation/Initialisation.h"
 
+#include "Initialisation/Initialisation.h"
+#include "Carte/Carte.h"
 
 int main() {
 
@@ -24,15 +26,19 @@ int main() {
 
 
 
-
-
-
-
     ecranAccueil();
 
 
+    //*************************************//
+    Case** matrice = (Case**) calloc(NB_COLONNES, sizeof(Case*));
+    for(int i = 0; i < NB_LIGNES; i++) {
+        matrice[i] = (Case*) calloc(NB_LIGNES, sizeof(Case));
+    }
 
+    initCases(matrice);
 
+    lireFichierCarte(matrice);
+    //****************************************//
 
 
     al_destroy_display(fenetre);
