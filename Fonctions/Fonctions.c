@@ -220,7 +220,7 @@ void distributionEau(Case** matriceCases,Global global) {
 
     numHabitation=0;
 
-    // parcours du tableau
+    // parcours du tableau et mise à jour de l'alimentation
 
     while ( matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee < matriceCases[caseY1][caseX1].pChateau->capacite
     || numHabitation != nbHabitation ){
@@ -229,15 +229,19 @@ void distributionEau(Case** matriceCases,Global global) {
         matriceCases[caseY1][caseX1].pChateau->capacite - matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee) {
 
             habEauOrdre[numHabitation]->alimEau = habEauOrdre[numHabitation]->nbHabitants;
+
             matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee += habEauOrdre[numHabitation]->alimEau;
 
         }
         else if ( matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee != matriceCases[caseY1][caseX1].pChateau->capacite){
+
             habEauOrdre[numHabitation]->alimEau =
                     matriceCases[caseY1][caseX1].pChateau->capacite - matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee;
+
             matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee += habEauOrdre[numHabitation]->alimEau;
         }
 
+        numHabitation++;
     }
 
 
