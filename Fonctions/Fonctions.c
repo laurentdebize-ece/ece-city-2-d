@@ -200,6 +200,12 @@ void distributionEau(Case** matriceCases,Global global) {
     }
 
 
+    for (int i=0;i<nbHabitation;i++){
+
+    }
+
+
+
 }
 
 
