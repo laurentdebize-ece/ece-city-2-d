@@ -26,13 +26,13 @@
 typedef struct {
     int coordXHG, coordYHG,
         timer, niveau, nbHabitants,
-        alimEau, alimElec,nbCaseEau;
+        alimEau, alimElec,nbCaseEau,marquage;
 }Habitation;
 
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
-    int distribution;
+    int distribution;//0 ou 1 (en train de distribuer ou non)
 }Chateau;
 
 typedef struct {
