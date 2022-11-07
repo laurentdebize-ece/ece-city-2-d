@@ -25,9 +25,8 @@ int main() {
     al_set_window_title(fenetre, "ECE City");
 
 
+
     ecranAccueil();
-
-
 
 
 
