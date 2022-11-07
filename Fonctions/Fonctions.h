@@ -27,10 +27,10 @@
 typedef struct {
     int coordXHG, coordYHG,
         timer, niveau, nbHabitants,
+        alimEau, alimElec,nbCaseEau,
+        marquage,
+        alimentation;// 0 non, 1 partielement, 2 completement
 
-        alimEau, alimElec,nbCaseEau,marquage;
-
-        
     bool estDessine;
 
 }Habitation;
