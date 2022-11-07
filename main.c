@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
+#include "Initialisation/Initialisation.h"
 
+#include "Initialisation/Initialisation.h"
+#include "Carte/Carte.h"
 
 int main() {
 
@@ -11,9 +14,11 @@ int main() {
     assert(al_install_mouse());
     assert(al_install_keyboard());
     assert(al_init_image_addon());
+    al_init_image_addon();
     assert(al_init_primitives_addon());
     al_init_font_addon();
     assert(al_init_ttf_addon());
+    al_init_ttf_addon();
 
     ALLEGRO_DISPLAY *fenetre = NULL;
 
@@ -23,13 +28,7 @@ int main() {
 
 
 
-
-
-
-    ecranAccueil();
-
-
-
+    ecranAccueil(fenetre);
 
 
 
