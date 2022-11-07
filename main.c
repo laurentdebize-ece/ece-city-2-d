@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include "Fonctions/Fonctions.h"
-#include "Ecrans accueil/Ecrans accueil.h"
-#include "Initialisation/Initialisation.h"
 
-#include "Initialisation/Initialisation.h"
-#include "Carte/Carte.h"
+
+
 
 int main() {
 
