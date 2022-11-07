@@ -16,6 +16,6 @@ bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int 
 #define LARGEUR 930
 #define HAUTEUR 524
 
-void ecranAccueil();
+void ecranAccueil(ALLEGRO_DISPLAY *fenetre);
 
 #endif
