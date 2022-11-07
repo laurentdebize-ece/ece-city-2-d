@@ -1,6 +1,14 @@
 #include "Ecrans accueil.h"
 
 
+bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2){
+    if (clic_mouse == true && x_mouse < x2 && x_mouse > x1 && y_mouse < y2 && y_mouse > y1) {
+        al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgba(0, 0, 0, 120));
+        return true;
+    }
+    else{return false;}
+}
+
 void ecranAccueil(){
     //Affichage de l'ecran d'accueil
     srand(time(NULL));
