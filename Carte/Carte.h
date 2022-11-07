@@ -5,5 +5,5 @@
 
 
 void lireFichierCarte(Case** matriceCases);
-void afficherCarte(Case** matriceCases);
+void dessinerCarte(Case** matriceCases);
 #endif
