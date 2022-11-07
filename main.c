@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
+#include "Le Jeu.h"
 
 
 int main() {
