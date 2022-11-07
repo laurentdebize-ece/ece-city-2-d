@@ -9,9 +9,9 @@ bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int 
     else{return false;}
 }
 
-void ecranAccueil(){
+void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
+
     //Affichage de l'ecran d'accueil
-    srand(time(NULL));
     bool end = false;
     bool end_menu = false;
     bool end_ecran_choix = true;
@@ -23,7 +23,6 @@ void ecranAccueil(){
     bool clic_mouse = false;
 
     // Déclarations
-    ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
@@ -33,27 +32,14 @@ void ecranAccueil(){
     ALLEGRO_BITMAP* map;
     ALLEGRO_BITMAP* choix;
 
-    // Initialisations (al_init/al_install...)
-    assert(al_init());
-    assert(al_install_mouse());
-    assert(al_install_keyboard());
-    assert(al_init_primitives_addon());
-    al_init_image_addon();
-    al_init_font_addon();
-    al_init_ttf_addon();
-
 
     // Créations (al_create...)
-    display = al_create_display(LARGEUR, HAUTEUR);
-    al_set_window_position(display, 0, 0);
-    al_set_window_title(display, "Projet ECE-City");
-    assert(display != NULL);
     timer = al_create_timer(1.0/60.0);
     al_start_timer(timer);
     queue = al_create_event_queue();
     assert(queue!=NULL);
 
-    al_register_event_source(queue, al_get_display_event_source(display));
+    al_register_event_source(queue, al_get_display_event_source(fenetre));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
     al_register_event_source(queue, al_get_keyboard_event_source());
@@ -193,7 +179,7 @@ void ecranAccueil(){
 
 
     // Libérations (al_destroy...)
-    al_destroy_display(display);
+    al_destroy_display(fenetre);
     al_destroy_event_queue(queue);
     al_destroy_timer(timer);
 
