@@ -27,14 +27,22 @@
 typedef struct {
     int coordXHG, coordYHG,
         timer, niveau, nbHabitants,
-        alimEau, alimElec;
+
+        alimEau, alimElec,nbCaseEau,marquage;
+
+        
     bool estDessine;
+
 }Habitation;
 
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
+
+    int distribution;//0 ou 1 (en train de distribuer ou non)
+
     bool estDessine;
+
 }Chateau;
 
 typedef struct {
@@ -47,17 +55,31 @@ typedef struct {
 
 typedef struct {
     int argentBanque, nbHabitants, timer,
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague;
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague,nbHabitation;
 }Global;
 
 typedef struct {
+
+    
+    int distribEau;
+
     int x, y, colonne, ligne, type;
+
     Habitation* pHabitation;
     Chateau* pChateau;
     Centrale* pCentrale;
 }Case;
 
+typedef struct maillon{
+    int num;
+    int x,y;
+    struct maillon*suiv;
+}t_maillon;
 
+typedef struct file{
+    t_maillon*tete; //pointeur sur le premier maillon
+    t_maillon*fin; //pointeur sur le dernier maillon
+}t_file;
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
