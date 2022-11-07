@@ -13,6 +13,7 @@
 
 #include "../Fonctions/Fonctions.h"
 
-int afficherInterface ();
+int leJeu (ALLEGRO_DISPLAY* fenetre);
+void afficherInterface(ALLEGRO_DISPLAY* fenetre);
 
 #endif
