@@ -186,9 +186,6 @@ void distributionEau(Case** matriceCases,Global global) {
 
 
 
-
-
-
                 //vérification des routes autour pour début BFS
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
@@ -220,7 +217,7 @@ void distributionEau(Case** matriceCases,Global global) {
 
                 numHabitation = 0;
 
-                // parcours du tableau et mise à jour de l'alimentation
+                // parcours du tableau et mise à jour de l'alimEauOuiNon
 
                 while (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee <
                        matriceCases[caseY1][caseX1].pChateau->capacite
@@ -228,20 +225,49 @@ void distributionEau(Case** matriceCases,Global global) {
 
                     if (habEauOrdre[numHabitation]->nbHabitants <
                         matriceCases[caseY1][caseX1].pChateau->capacite -
-                        matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee) {
+                        matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee &&
+                        habEauOrdre[numHabitation]->alimEauOuiNon == 0) { // habitation pas alimentée et quantité d'eau dispo
 
                         habEauOrdre[numHabitation]->alimEau = habEauOrdre[numHabitation]->nbHabitants;
-                        habEauOrdre[numHabitation]->alimentation = 2;
+                        habEauOrdre[numHabitation]->alimEauOuiNon = 2;
                         matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee += habEauOrdre[numHabitation]->alimEau;
 
-                    } else if (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee !=
-                               matriceCases[caseY1][caseX1].pChateau->capacite) {
+                    }
+                    else if (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee !=
+                               matriceCases[caseY1][caseX1].pChateau->capacite &&
+                               habEauOrdre[numHabitation]->alimEauOuiNon == 0) { //habitation pas alimentée et quantité d'eau partielement dispo
 
                         habEauOrdre[numHabitation]->alimEau =
                                 matriceCases[caseY1][caseX1].pChateau->capacite -
                                 matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee;
-                        habEauOrdre[numHabitation]->alimentation = 1;
+                        habEauOrdre[numHabitation]->alimEauOuiNon = 1;
                         matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee += habEauOrdre[numHabitation]->alimEau;
+
+                    }
+                    else if( habEauOrdre[numHabitation]->alimEau <
+                             matriceCases[caseY1][caseX1].pChateau->capacite -
+                             matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee &&
+                             habEauOrdre[numHabitation]->alimEauOuiNon == 1){ //habitation partielement alimentée et quantité d'eau dispo
+
+                        matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee +=
+                                habEauOrdre[numHabitation]->nbHabitants-habEauOrdre[numHabitation]->alimEau;
+
+                        habEauOrdre[numHabitation]->alimEau = habEauOrdre[numHabitation]->nbHabitants;
+                        habEauOrdre[numHabitation]->alimEauOuiNon = 2;
+
+                    }
+                    else if (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee !=
+                             matriceCases[caseY1][caseX1].pChateau->capacite &&
+                             habEauOrdre[numHabitation]->alimEauOuiNon == 1){ // habitation partielement alimentée et quantité d'eau partielement dispo
+
+                        matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee +=
+                                habEauOrdre[numHabitation]->nbHabitants-habEauOrdre[numHabitation]->alimEau;
+
+                        habEauOrdre[numHabitation]->alimEau +=
+                                matriceCases[caseY1][caseX1].pChateau->capacite -
+                                matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee;
+                        habEauOrdre[numHabitation]->alimEauOuiNon = 1;
+
                     }
 
                     numHabitation++;

@@ -29,7 +29,7 @@ typedef struct {
         timer, niveau, nbHabitants,
         alimEau, alimElec,nbCaseEau,
         marquage,
-        alimentation;// 0 non, 1 partielement, 2 completement
+        alimEauOuiNon;// 0 non, 1 partielement, 2 completement
 
     bool estDessine;
 
