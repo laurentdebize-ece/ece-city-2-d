@@ -7,21 +7,10 @@ void ecranAccueil(){
     bool end = false;
     bool end_menu = false;
     bool end_ecran_choix = true;
-    bool end_credits = true;
-
-    int leX = 0;
-    int leY = 0;
-    int leX2 = 0;
-    int leY2 = 0;
-    int leX3 = 0;
-    int leY3 = 0;
-    int leX4 = 0;
-    int leY4 = 0;
+    bool end_map = true;
 
     int x_mouse = 0;
     int y_mouse = 0;
-    int h = 0;
-    int temps = 0;
 
     bool clic_mouse = false;
 
@@ -33,9 +22,8 @@ void ecranAccueil(){
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     //BITMAP
     ALLEGRO_BITMAP* menu;
-    //ALLEGRO_BITMAP* map;
+    ALLEGRO_BITMAP* map;
     ALLEGRO_BITMAP* choix;
-    ALLEGRO_BITMAP *credits;
 
     // Initialisations (al_init/al_install...)
     assert(al_init());
@@ -63,18 +51,11 @@ void ecranAccueil(){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_get_keyboard_state(&keyboard_state);
 
-    printf("a");
     //BITMAP
     //FONDS
-    menu = al_load_bitmap("bitmap/Menu boutons test.png");
-    printf("b");
-
-    choix = al_load_bitmap("bitmap/Menu.png");
-    printf("c");
-
-    credits = al_load_bitmap("bitmap/Fond menu.jpg");
-    printf("d");
-
+    menu = al_load_bitmap("Images/Menu_jouer.png");
+    choix = al_load_bitmap("Images/Menu_choix.png");
+    map = al_load_bitmap("Images/Fond menu.png");
 
     // Boucle d'événements
     while (!end) {
@@ -82,7 +63,6 @@ void ecranAccueil(){
         //*******************************************************************//
         // ECRAN DE MENU
         //*******************************************************************//
-
 
         while (end_menu == false) {
             al_draw_bitmap(menu, 0, 0, 0);
@@ -116,19 +96,22 @@ void ecranAccueil(){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 481, 670, 488, 540)) { //commencer
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 94, 358, 282, 456)) { //nouvelle partie co ok
                         al_draw_bitmap(choix, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_ecran_choix = false;
-                    } else if (func_bouton(clic_mouse, x_mouse, y_mouse, 426, 725, 317, 360)) { //crédits
-                        al_draw_bitmap(credits, 0, 0, 0);
-                        al_flip_display();
-                        end_menu = true;
-                        end_credits = false;
-                    } else if (func_bouton(clic_mouse, x_mouse, y_mouse, 426, 725, 368, 414)) { //quitter
+                    }
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter co ok
                         end_menu = true;
                         end = true;
+                    }
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 525, 812, 278, 468)) { //charger partie co ok
+                        al_draw_bitmap(map, 0, 0, 0);
+                        al_flip_display();
+                        end_menu = true;
+                        end_map = false;
+
                     }
                     break;
                 }
@@ -172,7 +155,21 @@ void ecranAccueil(){
                     if (event.mouse.button & 1) {
                         clic_mouse = true;
                     } else { clic_mouse = false; }
-                    al_draw_bitmap(choix, 0, 0, 0);
+
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 86, 670, 304, 540)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
+                        al_draw_bitmap(map, 0, 0, 0);
+                        al_flip_display();
+                        end_ecran_choix = false;
+                        end_map = true; }
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 601, 824, 307, 458)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
+                        al_draw_bitmap(map, 0, 0, 0);
+                        al_flip_display();
+                        end_ecran_choix = false;
+                        end_map = true; }
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter
+                        end_menu = true;
+                        end = true;
+                    }
 
                     break;
                 }
@@ -184,16 +181,16 @@ void ecranAccueil(){
                 }
             }
         }
-
-
-        // Libérations (al_destroy...)
-        al_destroy_display(display);
-        al_destroy_event_queue(queue);
-        al_destroy_timer(timer);
-
-        al_destroy_bitmap(menu);
-        //al_destroy_bitmap(map);
-        al_destroy_bitmap(choix);
-
     }
+
+
+    // Libérations (al_destroy...)
+    al_destroy_display(display);
+    al_destroy_event_queue(queue);
+    al_destroy_timer(timer);
+
+    al_destroy_bitmap(menu);
+    al_destroy_bitmap(map);
+    al_destroy_bitmap(choix);
 }
+
