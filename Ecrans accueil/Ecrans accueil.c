@@ -61,9 +61,9 @@ void ecranAccueil(){
 
     //BITMAP
     //FONDS
-    menu = al_load_bitmap("Images/Menu_jouer.png");
-    choix = al_load_bitmap("Images/Menu_choix.png");
-    map = al_load_bitmap("Images/Fond menu.png");
+    menu = al_load_bitmap("../Images/Menu_jouer.png");
+    choix = al_load_bitmap("../Images/Menu_choix.png");
+    map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
 
     // Boucle d'événements
     while (!end) {
