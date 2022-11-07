@@ -30,8 +30,6 @@ int main() {
 
 
 
-
-
     al_destroy_display(fenetre);
     fenetre = NULL;
 
