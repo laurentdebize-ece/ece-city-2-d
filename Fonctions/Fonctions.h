@@ -29,8 +29,8 @@ typedef struct {
         timer, niveau, nbHabitants,
         alimEau, alimElec,nbCaseEau,
         marquage,
-        alimEauOuiNon;// 0 non, 1 partielement, 2 completement
-
+        alimEauOuiNon,// 0 non, 1 partielement, 2 completement
+        alimElecOuiNon; // 0 non, 1 oui
     bool estDessine;
 
 }Habitation;
@@ -48,6 +48,7 @@ typedef struct {
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
+    int distribution;
     bool estDessine;
 }Centrale;
 

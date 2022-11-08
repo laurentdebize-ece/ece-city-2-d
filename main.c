@@ -2,6 +2,8 @@
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Le Jeu/Le Jeu.h"
+#include "Carte/Carte.h"
+#include "Initialisation/Initialisation.h"
 
 
 
@@ -29,8 +31,21 @@ int main() {
 
 
 
+
     //ecranAccueil(fenetre);
-    leJeu(fenetre);
+    //leJeu(fenetre);
+
+
+    //**//
+    Case** matrice = (Case**) calloc(NB_COLONNES, sizeof(Case));
+    for(int i = 0; i < NB_LIGNES; i++) {
+        matrice[i] = (Case*) calloc(NB_LIGNES, sizeof(Case));
+    }
+
+    initCases(matrice);
+
+    lireFichierCarte(matrice);
+//**//
 
 
     al_destroy_display(fenetre);

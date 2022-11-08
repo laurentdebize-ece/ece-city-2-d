@@ -63,6 +63,7 @@ int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y){
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             matriceCases[i][j].distribEau=0;
+            matriceCases[i][j].pHabitation->nbCaseEau=0;
         }
     }
 
@@ -276,6 +277,7 @@ void distributionEau(Case** matriceCases,Global global) {
             }
         }
     }
+    // à la fin mettre distribution à 0 pour tous
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
@@ -289,11 +291,90 @@ void distributionEau(Case** matriceCases,Global global) {
 
 
 
+void distributionElec(Case** matriceCases,Global global){
+    int caseX1=0;
+    int caseY1=0;
+    int caseX2=0;
+    int caseY2=0;
+
+    int numHabitation =0; // habitation que l'on est en train de parcourir
+
+    int nbHabitation = global.nbHabitation; //nombre d'habitation total
+    Habitation* habElec[nbHabitation];
+
+
+    //récupération de la coordoonée X et Y du chateau
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pCentrale != NULL && matriceCases[i][j].type == 8
+                && matriceCases[i][j].pCentrale->distribution == 0) {
+
+                caseX1 = j;
+                caseY1 = i;
+                caseX2 = caseX1 + 3;
+                caseY2 = caseX1 + 5;
+                matriceCases[i][j].pCentrale->distribution = 1;
+
+
+
+                //vérification des routes autour pour début BFS
+                for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
+                    for (int b = caseY1; b < caseY2 + 1; b++) {
+                        if (matriceCases[a][b].type == 0) {
+                            bfsEau(matriceCases, habElec, b, a);
+                        }
+                    }
+                }
+                for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_CHATEAU + 1) {
+                    for (int a = caseX1; a < caseX2 + 1; a++) {
+                        if (matriceCases[b][a].type == 0) {
+                            bfsEau(matriceCases, habElec, b, a);
+                        }
+                    }
+                }
+
+                numHabitation = 0;
+
+                // parcours du tableau et mise à jour de l'alimElecOuiNon
+
+                while (matriceCases[caseY1][caseX1].pCentrale->quantiteDistribuee <
+                       matriceCases[caseY1][caseX1].pCentrale->capacite
+                       || numHabitation != nbHabitation) {
+
+                    if (habElec[numHabitation]->nbHabitants <
+                        matriceCases[caseY1][caseX1].pCentrale->capacite -
+                        matriceCases[caseY1][caseX1].pCentrale->quantiteDistribuee &&
+                        habElec[numHabitation]->alimElecOuiNon == 0) { // habitation pas alimentée et quantité d'eau dispo
+
+                        habElec[numHabitation]->alimElec = habElec[numHabitation]->nbHabitants;
+                        habElec[numHabitation]->alimElecOuiNon = 1;
+                        matriceCases[caseY1][caseX1].pCentrale->quantiteDistribuee += habElec[numHabitation]->alimElec;
+
+                    }
+                    numHabitation++;
+                }
+            }
+        }
+    }
+    // à la fin mettre distribution à 0 pour tous
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pCentrale != NULL && matriceCases[i][j].type == 8
+                && matriceCases[i][j].pCentrale->distribution == 1) {
+
+                matriceCases[i][j].pCentrale->distribution = 0;
+            }
+        }
+    }
+}
 
 
 
 
-// à la fin mettre distribution à 0 pour tous
+
+
+
+
 
 
 
