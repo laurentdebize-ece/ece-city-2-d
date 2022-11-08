@@ -2,7 +2,6 @@
 #include "../Carte/Carte.h"
 
 
-
 #define TAILLE_X_CHATEAU 4
 #define TAILLE_Y_CHATEAU 6
 
@@ -258,10 +257,10 @@ void distributionEau(Case** matriceCases,Global global) {
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne) {
 
-    int colonneTemporaire = (int)(x/TAILLE_CASE);
-    int ligneTemporaire = (int)(y/TAILLE_CASE);
+    int colonneTemporaire = (int)((x-DECALAGE_GRILLE_X)/TAILLE_CASE);
+    int ligneTemporaire = (int)((y-DECALAGE_GRILLE_Y)/TAILLE_CASE);
 
-    if(ligneTemporaire >= NB_LIGNES || colonneTemporaire >= NB_COLONNES) {//souris en dehors la zone de jeu
+    if(ligneTemporaire >= NB_LIGNES || colonneTemporaire >= NB_COLONNES || colonneTemporaire < 0 || ligneTemporaire < 0) {//souris en dehors la zone de jeu
         *colonne = -1;
         *ligne = -1;
         return 1;
@@ -330,7 +329,12 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
             }
         }
 
-        al_draw_filled_rectangle((float)caseAConstruire.x, (float)caseAConstruire.y, (float)caseAConstruire.x + TAILLE_CASE*3, (float)caseAConstruire.y + TAILLE_CASE*3, vert);
+        if(caseAConstruire.ligne < NB_LIGNES-2 && caseAConstruire.colonne < NB_COLONNES-2){
+            dessinerCarte(matriceCase);
+            al_draw_filled_rectangle((float)caseAConstruire.x, (float)caseAConstruire.y, (float)caseAConstruire.x + TAILLE_CASE*3, (float)caseAConstruire.y + TAILLE_CASE*3, vert);
+            al_flip_display();
+        }
+
         *constructionPossible = 1;
         return 0;
     }
@@ -358,45 +362,58 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
     if (constructionPossible == 1){
-
         //On place une habitation
-        if(typeDeConstruction == 2) {
-            for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 3; i++) {
-                for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 3; j++) {
+        if(caseAConstruire.ligne < NB_LIGNES-2 && caseAConstruire.colonne < NB_COLONNES-2) {
+            if (typeDeConstruction == 2) {
+                for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 3; i++) {
+                    for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 3; j++) {
 
-                    matriceCase[i][j].type = 2; //On met un terrain vague
+                        matriceCase[i][j].type = 2; //On met un terrain vague
+                        matriceCase[i][j].pHabitation = calloc(1, sizeof(Habitation));
+                        matriceCase[i][j].pHabitation->coordXHG = caseAConstruire.x;
+                        matriceCase[i][j].pHabitation->coordYHG = caseAConstruire.y;
+                    }
                 }
-            }
-            dessinerCarte(matriceCase);
-            return 0;
-        }
 
+                dessinerCarte(matriceCase);
+                al_flip_display();
+                return 0;
+            }
+        }
         //On place un chateau
-        else if(typeDeConstruction == 7){
-            for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
-                for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
+        if(caseAConstruire.ligne < NB_LIGNES-5 && caseAConstruire.colonne < NB_COLONNES-3) {
+            if (typeDeConstruction == 7) {
+                for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
+                    for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
 
-                    matriceCase[i][j].type = 7; //On met un chateau
+                        matriceCase[i][j].type = 7; //On met un chateau
+                        matriceCase[i][j].pChateau = calloc(1, sizeof(Chateau));
+                        matriceCase[i][j].pChateau->coordXHG = caseAConstruire.x;
+                        matriceCase[i][j].pChateau->coordYHG = caseAConstruire.y;
+                    }
                 }
+                dessinerCarte(matriceCase);
+                return 0;
             }
-            dessinerCarte(matriceCase);
-            return 0;
-        }
 
-        //On place une centrale
-        else if(typeDeConstruction == 8) {
-            for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
-                for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
+                //On place une centrale
+            else if (typeDeConstruction == 8) {
+                for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
+                    for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
 
-                    matriceCase[i][j].type = 8; //On met une centrale
+                        matriceCase[i][j].type = 8; //On met une centrale
+                        matriceCase[i][j].pCentrale = calloc(1, sizeof(Centrale));
+                        matriceCase[i][j].pCentrale->coordXHG = caseAConstruire.x;
+                        matriceCase[i][j].pCentrale->coordYHG = caseAConstruire.y;
+
+                    }
                 }
+                dessinerCarte(matriceCase);
+                return 0;
+            } else {
+                printf("Erreur placerUneConstruction : type inconnu");
+                return -1;
             }
-            dessinerCarte(matriceCase);
-            return 0;
-        }
-        else{
-            printf("Erreur placerUneConstruction : type inconnu");
-            return -1;
         }
     }else{
         return 1;
