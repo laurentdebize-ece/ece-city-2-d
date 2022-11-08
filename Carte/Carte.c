@@ -63,6 +63,7 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours>=2 && chiffreEnCours<=6 && pMatriceCase[ligne][colonne].pHabitation == NULL){
                 pMatriceCase[ligne][colonne].pChateau = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
+                pMatriceCase[ligne][colonne].pHabitation = calloc(1, sizeof (Habitation));
                 pMatriceCase[ligne][colonne].pHabitation->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
@@ -140,34 +141,34 @@ void dessinerCarte(Case** pMatriceCase){
     if(!route) {
         printf("Erreur ouverture image route");
     }
-    terrainVague = al_load_bitmap("../images/terrainVague.jpg");
+    terrainVague = al_load_bitmap("../images/terre.png");
     if(!terrainVague) {
         printf("Erreur ouverture image terrainVague");
     }
     cabane = al_load_bitmap("../images/cabane.jpg");
-    if(!cabane) {
+    /*if(!cabane) {
         printf("Erreur ouverture image cabane");
-    }
+    }*/
     maison = al_load_bitmap("../images/maison.jpg");
-    if(!maison) {
+    /*if(!maison) {
         printf("Erreur ouverture image maison");
-    }
+    }*/
     immeuble = al_load_bitmap("../images/immeuble.jpg");
-    if(!immeuble) {
+    /*if(!immeuble) {
         printf("Erreur ouverture image immeuble");
-    }
+    }*/
     gratteCiel = al_load_bitmap("../images/gratteCiel.jpg");
-    if(!gratteCiel) {
+    /*if(!gratteCiel) {
         printf("Erreur ouverture image gratteCiel");
-    }
+    }*/
     chateau = al_load_bitmap("../images/chateau.jpg");
-    if(!chateau) {
+    /*if(!chateau) {
         printf("Erreur ouverture image chateau");
-    }
+    }*/
     centrale = al_load_bitmap("../images/centrale.jpg");
-    if(!centrale) {
+    /*if(!centrale) {
         printf("Erreur ouverture image centrale");
-    }
+    }*/
 
 
 
