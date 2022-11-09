@@ -14,6 +14,8 @@
 #define NB_COLONNES 45
 #define NB_LIGNES 35
 #define TAILLE_CASE 20
+#define DECALAGE_GRILLE_X 62
+#define DECALAGE_GRILLE_Y 34
 
     //**********En nombre d'habitant**********//
 #define TERRAIN_VAGUE 0
@@ -55,17 +57,15 @@ typedef struct {
 
 
 typedef struct {
-    int argentBanque, nbHabitants, timer,
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague,nbHabitation;
+    int argentBanque, nbHabitants,
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation;
+    ALLEGRO_TIMER* timerPartie;
 }Global;
 
 typedef struct {
 
-    
-    int distribEau;
-
-    int x, y, colonne, ligne, type;
-
+    int distribEau,
+        x, y, colonne, ligne, type;
     Habitation* pHabitation;
     Chateau* pChateau;
     Centrale* pCentrale;
@@ -84,9 +84,9 @@ typedef struct file{
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
-int afficherPlacerUneRoute(Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
+int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
 int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPossible); // placerUneRoute (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible);
-int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneHabitation (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
+int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
 
