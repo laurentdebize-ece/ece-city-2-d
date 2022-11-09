@@ -129,7 +129,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                             }
                         }
                         //convertirEnCase(event.mouse.)
-
                     }
                     // choix centrale électricité
                     if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
