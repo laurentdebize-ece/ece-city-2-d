@@ -9,9 +9,9 @@ bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int 
     else{return false;}
 }
 
-void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
-
+void ecranAccueil(){
     //Affichage de l'ecran d'accueil
+    srand(time(NULL));
     bool end = false;
     bool end_menu = false;
     bool end_ecran_choix = true;
@@ -23,6 +23,7 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
     bool clic_mouse = false;
 
     // Déclarations
+    ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
@@ -33,13 +34,12 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
     ALLEGRO_BITMAP* choix;
 
 
-    // Créations (al_create...)
     timer = al_create_timer(1.0/60.0);
     al_start_timer(timer);
     queue = al_create_event_queue();
     assert(queue!=NULL);
 
-    al_register_event_source(queue, al_get_display_event_source(fenetre));
+    al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
     al_register_event_source(queue, al_get_keyboard_event_source());
@@ -49,7 +49,7 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
     //FONDS
     menu = al_load_bitmap("../Images/Menu_jouer.png");
     choix = al_load_bitmap("../Images/Menu_choix.png");
-    map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
+    //map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
 
     // Boucle d'événements
     while (!end) {
@@ -90,18 +90,18 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 94, 358, 282, 456)) { //nouvelle partie co ok
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 112, 452, 432, 682)) { //nouvelle partie co ok
                         al_draw_bitmap(choix, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_ecran_choix = false;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter co ok
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter co ok
                         end_menu = true;
                         end = true;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 525, 812, 278, 468)) { //charger partie co ok
-                        al_draw_bitmap(map, 0, 0, 0);
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 650, 1000, 437, 687)) { //charger partie co ok
+                        //al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_map = false;
@@ -150,17 +150,17 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 86, 670, 304, 540)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
                         al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_ecran_choix = false;
                         end_map = true; }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 601, 824, 307, 458)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
                         al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_ecran_choix = false;
                         end_map = true; }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter
                         end_menu = true;
                         end = true;
                     }
@@ -179,7 +179,7 @@ void ecranAccueil(ALLEGRO_DISPLAY *fenetre){
 
 
     // Libérations (al_destroy...)
-    al_destroy_display(fenetre);
+    al_destroy_display(display);
     al_destroy_event_queue(queue);
     al_destroy_timer(timer);
 
