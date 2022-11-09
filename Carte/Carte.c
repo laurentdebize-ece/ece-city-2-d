@@ -120,7 +120,7 @@ void lireFichierCarte(Case** pMatriceCase){
     ifs = NULL;
 }
 
-//Erreur pour les 3*3 et 3*4
+//Erreur pour l'affichage des dernieres colonnes et lignes
 void dessinerCarte(Case** pMatriceCase){
 
     ALLEGRO_BITMAP* herbe;
