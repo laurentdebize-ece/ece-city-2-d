@@ -8,14 +8,10 @@
 int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
     // Déclarations
-    ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
 
     bool fin = false;
 
-
-    al_init_font_addon();
-    al_init_ttf_addon();
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
 
@@ -27,8 +23,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     }
 
 
-    timer = al_create_timer(1.0 / 40.0);
-    al_start_timer(timer);
+
 
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_display_event_source(fenetre));
@@ -45,6 +40,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     initCases(matriceCase);
     lireFichierCarte(matriceCase);
 
+    Global structureGlobale;
+    initGlobal(&structureGlobale);
+
+
+    structureGlobale.timerPartie = al_create_timer(1);
+    al_start_timer(structureGlobale.timerPartie);
 
     //*************************Premier affichage*************************//
 
@@ -315,10 +316,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
     al_destroy_event_queue(queue);
     al_destroy_bitmap (sauvegarde);
-    al_destroy_timer(timer);
+    al_destroy_timer(structureGlobale.timerPartie);
 
     queue = NULL;
-    timer = NULL;
+    structureGlobale.timerPartie = NULL;
     sauvegarde = NULL;
     return 0;
 }

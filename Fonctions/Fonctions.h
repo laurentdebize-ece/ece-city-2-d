@@ -56,8 +56,9 @@ typedef struct {
 
 
 typedef struct {
-    int argentBanque, nbHabitants, timer,
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague,nbHabitation;
+    int argentBanque, nbHabitants,
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation;
+    ALLEGRO_TIMER* timerPartie;
 }Global;
 
 typedef struct {
