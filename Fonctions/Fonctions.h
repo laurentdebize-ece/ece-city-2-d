@@ -56,8 +56,9 @@ typedef struct {
 
 
 typedef struct {
-    int argentBanque, nbHabitants, timer,
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague,nbHabitation;
+    int argentBanque, nbHabitants,
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation;
+    ALLEGRO_TIMER* timerPartie;
 }Global;
 
 typedef struct {
@@ -82,7 +83,7 @@ typedef struct file{
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
-int afficherPlacerUneRoute(Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
+int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
 int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPossible); // placerUneRoute (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible);
 int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);

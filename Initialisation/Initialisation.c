@@ -7,7 +7,7 @@ void initCases(Case** matriceCases){
 			matriceCases[i][j].x = (62 + 20*j);
             matriceCases[i][j].y = 34 + 20*i;
 
-            matriceCases[i][j].distribEau=0;
+            matriceCases[i][j].distribEau = 0;
 
             matriceCases[i][j].pHabitation = NULL;
             matriceCases[i][j].pChateau = NULL;
@@ -19,6 +19,18 @@ void initCases(Case** matriceCases){
         }
     }
 }
+
+void initGlobal(Global* structureGlobale){
+
+    structureGlobale = calloc(1, sizeof (Global));
+    structureGlobale->argentBanque = 500000;
+    structureGlobale->coutRoute = 10;
+    structureGlobale->coutChateau = 100000;
+    structureGlobale->coutCentrale = 100000;
+    structureGlobale->coutTerrainVague = 1000;
+    structureGlobale->timerPartie = NULL;
+}
+
 
 void sauvegarde(Case** matriceCases){
     FILE* pf = fopen("../Carte.txt", "w");
@@ -35,9 +47,4 @@ void sauvegarde(Case** matriceCases){
     else {
         printf("Erreur.");
     }
-}
-
-void charger(Case** matriceCases){
-
-
 }
