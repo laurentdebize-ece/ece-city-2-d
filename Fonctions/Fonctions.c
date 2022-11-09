@@ -272,7 +272,7 @@ int convertirEnCase(int x, int y,  int* ligne, int* colonne) {
     }
 }
 
-int afficherPlacerUneRoute(Case caseAConstruire, int* constructionPossible){ // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
+int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* constructionPossible){ // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
 
     if (caseAConstruire.type != 0){
         *constructionPossible = 0;
@@ -282,7 +282,9 @@ int afficherPlacerUneRoute(Case caseAConstruire, int* constructionPossible){ // 
         ALLEGRO_COLOR vert;
         vert = al_map_rgb(57, 255, 20);
 
+        dessinerCarte(matriceCase);
         al_draw_filled_rectangle((float)caseAConstruire.x, (float)caseAConstruire.y, (float)caseAConstruire.x + TAILLE_CASE, (float)caseAConstruire.y + TAILLE_CASE, vert);
+        al_flip_display();
         *constructionPossible = 1;
         return 0;
     }
@@ -295,25 +297,15 @@ int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPos
         matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].type = 1;
 
         dessinerCarte(matriceCase);
+        al_flip_display();
 
-        /*
-        ALLEGRO_BITMAP* route = al_load_bitmap("../Images/route.jpg");
-        if (!route){
-            printf("Erreur chargement image : Route");
-        }
-
-        al_draw_bitmap(route, (float)caseAConstruire.x, (float)caseAConstruire.y, 0);
-
-        al_destroy_bitmap(route);
-        route = NULL;
-         */
         return 0;
     }else{
         return 1;
     }
 }
 
-int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction){ // afficherPlacerUneHabitation (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
+int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction){ // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
 
     ALLEGRO_COLOR vert;
     vert = al_map_rgb(57, 255, 20);
@@ -349,7 +341,12 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
             }
         }
 
-        al_draw_filled_rectangle((float)caseAConstruire.x, (float)caseAConstruire.y, (float)caseAConstruire.x + TAILLE_CASE*4, (float)caseAConstruire.y + TAILLE_CASE*6, vert);
+        if(caseAConstruire.ligne < NB_LIGNES-5 && caseAConstruire.colonne < NB_COLONNES-3){
+            dessinerCarte(matriceCase);
+            al_draw_filled_rectangle((float)caseAConstruire.x, (float)caseAConstruire.y, (float)caseAConstruire.x + TAILLE_CASE*4, (float)caseAConstruire.y + TAILLE_CASE*6, vert);
+            al_flip_display();
+        }
+
         *constructionPossible = 1;
         return 0;
     }
@@ -362,6 +359,7 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
     if (constructionPossible == 1){
+
         //On place une habitation
         if(caseAConstruire.ligne < NB_LIGNES-2 && caseAConstruire.colonne < NB_COLONNES-2) {
             if (typeDeConstruction == 2) {
@@ -380,6 +378,7 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                 return 0;
             }
         }
+
         //On place un chateau
         if(caseAConstruire.ligne < NB_LIGNES-5 && caseAConstruire.colonne < NB_COLONNES-3) {
             if (typeDeConstruction == 7) {
