@@ -13,6 +13,8 @@ void initCases(Case** matriceCases){
             matriceCases[i][j].pChateau = NULL;
             matriceCases[i][j].pCentrale = NULL;
             matriceCases[i][j].type = -1;
+            matriceCases[i][j].ligne = i;
+            matriceCases[i][j].colonne = j;
 
         }
     }
