@@ -9,13 +9,13 @@
 #include <allegro5/allegro_ttf.h>
 
 
-#define LARGEUR_FENETRE 1024
-#define HAUTEUR_FENETRE 768
+#define LARGEUR_FENETRE 1150
+#define HAUTEUR_FENETRE 780
 #define NB_COLONNES 45
 #define NB_LIGNES 35
 #define TAILLE_CASE 20
-#define DECALAGE_GRILLE_X 62
-#define DECALAGE_GRILLE_Y 34
+#define DECALAGE_GRILLE_X 125
+#define DECALAGE_GRILLE_Y 40
 
     //**********En nombre d'habitant**********//
 #define TERRAIN_VAGUE 0

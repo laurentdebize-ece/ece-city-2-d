@@ -8,11 +8,15 @@
 int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
     // Déclarations
+    ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
     bool fin = false;
 
+
+    al_init_font_addon();
+    al_init_ttf_addon();
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
 
@@ -43,8 +47,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     initCases(matriceCase);
     lireFichierCarte(matriceCase);
 
+
     Global* structureGlobale = calloc(1, sizeof (Global));;
     initGlobal(structureGlobale);
+
 
 
 
@@ -84,7 +90,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                     //éléments à droite -> choix construction
 
                     // choix terrain vague
-                    if (event.mouse.x > 930 && event.mouse.x < 1012 && event.mouse.y > 335 && event.mouse.y < 410) {
+
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 362 && event.mouse.y < 440) {
+                    
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutTerrainVague);
                         if (paiementPossible == 0) {
                             bool finTerrainVague = 0;
@@ -97,6 +105,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                                         sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
                                                                          &colonne);
 
+
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
                                             //détection du changement de case
                                             if (saveColonne != colonne || saveLigne != ligne) {
@@ -107,13 +116,17 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                                                 saveColonne = colonne;
                                             }
                                         }
+                                    } else {
+                                        printf("Souris en dehors du jeu\n");
                                     }
+
+                                }
+                              
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
 
                                             int sourisSurLeJeu;
-                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                             &colonne);
+                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
 
                                             if (sourisSurLeJeu == 0) {
 
@@ -136,9 +149,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                     }
-
                     // choix centrale électricité
-                    if (event.mouse.x > 930 && event.mouse.x < 1012 && event.mouse.y > 440 && event.mouse.y < 514) {
+
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutCentrale);
                         if (paiementPossible == 0) {
                             bool finCentrale = 0;
@@ -192,8 +205,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                     }
-
                     // choix chateau d'eau
+
                     if (event.mouse.x > 930 && event.mouse.x < 1012 && event.mouse.y > 545 && event.mouse.y < 617) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutChateau);
                         if (paiementPossible == 0) {
@@ -248,7 +261,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                     }
 
                     // choix ROUTE
-                    if (event.mouse.x > 930 && event.mouse.x < 1012 && event.mouse.y > 650 && event.mouse.y < 734) {
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutRoute);
                         if (paiementPossible == 0) {
                             bool finRoute = 0;
@@ -299,26 +312,27 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                                 }
                             }
                         }else{printf("Pas assez d'argent\n");}
+
                     }
-
-
 
                     //éléments à gauche
-                    if (event.mouse.x > 6 && event.mouse.x < 60 && event.mouse.y > 85 && event.mouse.y < 140) {
+                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                        event.mouse.y > 102 && event.mouse.y < 139) {
                         //changer niveau de visualisation
                     }
-                    if (event.mouse.x > 6 && event.mouse.x < 60 && event.mouse.y > 150 && event.mouse.y < 205) {
+                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                        event.mouse.y > 167 && event.mouse.y < 210) {
                         //PAUSE
                     }
-                    if (event.mouse.x > 6 && event.mouse.x < 60 && event.mouse.y > 215 && event.mouse.y < 270) {
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 238 && event.mouse.y < 272) {
                         printf("%d, %d", event.mouse.x, event.mouse.y);
                         al_draw_bitmap(sauvegarde, 0, 0, 0);
                         al_flip_display();
-                        if (event.mouse.x > 223 && event.mouse.x < 385 &&
-                            event.mouse.y > 406 && event.mouse.y < 482) {
+                        if (event.mouse.x > 301 && event.mouse.x < 450 &&
+                            event.mouse.y > 402 && event.mouse.y < 470) {
                             // fonction sauvegarder partie
-                        } else if (event.mouse.x > 631 && event.mouse.x < 802 && event.mouse.y > 406 &&
-                                   event.mouse.y < 482) {
+                        } else if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 &&
+                                   event.mouse.y < 470) {
                             fin = true;
                         }
                         // faire une autre fonction pour ça???
@@ -374,7 +388,7 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre){
     ALLEGRO_FONT *police = NULL;
 
 
-    fond = al_load_bitmap("../Images/eceCity.jpg");
+    fond = al_load_bitmap("../Images/eceCity2.jpg");
     if (!fond){
         printf ("Erreur ouverture image fond\n");
     }
@@ -383,13 +397,13 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre){
     police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
     al_draw_bitmap(fond, 0, 0, 0);
     //habitants
-    al_draw_text(police, al_map_rgb(255, 255, 255),266, 20,ALLEGRO_ALIGN_CENTER, "texte");
+    al_draw_text(police, al_map_rgb(255, 255, 255),276, 18,ALLEGRO_ALIGN_CENTER, "texte");
     //argent
-    al_draw_text(police, al_map_rgb(255, 255, 255),444, 20,ALLEGRO_ALIGN_CENTER, "texte");
+    al_draw_text(police, al_map_rgb(255, 255, 255),471, 18,ALLEGRO_ALIGN_CENTER, "texte");
     //eau
-    al_draw_text(police, al_map_rgb(255, 255, 255), 625, 20, ALLEGRO_ALIGN_CENTER, "texte");
+    al_draw_text(police, al_map_rgb(255, 255, 255), 661, 18, ALLEGRO_ALIGN_CENTER, "texte");
     //électricité
-    al_draw_text(police, al_map_rgb(255, 255, 255),807, 20,ALLEGRO_ALIGN_CENTER, "texte");
+    al_draw_text(police, al_map_rgb(255, 255, 255),861, 18,ALLEGRO_ALIGN_CENTER, "texte");
 
 
 
