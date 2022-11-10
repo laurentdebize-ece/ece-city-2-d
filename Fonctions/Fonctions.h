@@ -9,8 +9,8 @@
 #include <allegro5/allegro_ttf.h>
 
 
-#define LARGEUR_FENETRE 1024
-#define HAUTEUR_FENETRE 768
+#define LARGEUR_FENETRE 1150
+#define HAUTEUR_FENETRE 780
 #define NB_COLONNES 45
 #define NB_LIGNES 35
 #define TAILLE_CASE 20

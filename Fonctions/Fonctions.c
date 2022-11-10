@@ -4,6 +4,7 @@
 
 #define TAILLE_X_CHATEAU 4
 #define TAILLE_Y_CHATEAU 6
+#define POURCENTAGE_EVOLUTION 0,7
 
 //boucle for nbchateau faire distribution
 
@@ -542,3 +543,25 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
     }
 }
 
+
+
+/*
+ *
+ *
+ *                                    EVOLUTION
+ *
+ *
+ */
+
+
+void evolutionHabitation(Case** matriceCases,Global* global) {
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pHabitation != NULL && matriceCases[i][j].pCentrale->distribution == 0) {
+
+
+            }
+        }
+    }
+}
