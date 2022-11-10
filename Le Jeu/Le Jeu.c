@@ -10,7 +10,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     // Déclarations
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
-    ALLEGRO_TIMER* timer = NULL;
 
     bool fin = false;
 
@@ -90,7 +89,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                     //éléments à droite -> choix construction
 
                     // choix terrain vague
-
                     if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 362 && event.mouse.y < 440) {
                     
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutTerrainVague);
@@ -102,8 +100,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                                 switch (event.type) {
                                     case ALLEGRO_EVENT_MOUSE_AXES: {
                                         int sourisSurLeJeu;
-                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                         &colonne);
+                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
 
 
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
@@ -115,12 +112,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                                                 saveLigne = ligne;
                                                 saveColonne = colonne;
                                             }
-                                        }
-                                    } else {
-                                        printf("Souris en dehors du jeu\n");
+                                        }else {printf("Souris en dehors du jeu\n");}
                                     }
 
-                                }
                               
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
@@ -149,8 +143,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                     }
-                    // choix centrale électricité
 
+                    // choix centrale électricité
                     if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutCentrale);
                         if (paiementPossible == 0) {
@@ -205,9 +199,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                     }
-                    // choix chateau d'eau
 
-                    if (event.mouse.x > 930 && event.mouse.x < 1012 && event.mouse.y > 545 && event.mouse.y < 617) {
+                    // choix chateau d'eau
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 581 && event.mouse.y < 655) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutChateau);
                         if (paiementPossible == 0) {
                             bool finChateau = 0;
@@ -314,6 +308,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                         }else{printf("Pas assez d'argent\n");}
 
                     }
+
 
                     //éléments à gauche
                     if (event.mouse.x > 19 && event.mouse.x < 62 &&
