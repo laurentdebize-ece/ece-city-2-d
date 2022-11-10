@@ -141,7 +141,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!route) {
         printf("Erreur ouverture image route");
     }
-    terrainVague = al_load_bitmap("../images/terre.png");
+    terrainVague = al_load_bitmap("../images/Carre.jpg");
     if(!terrainVague) {
         printf("Erreur ouverture image terrainVague");
     }
@@ -162,13 +162,13 @@ void dessinerCarte(Case** pMatriceCase){
         printf("Erreur ouverture image gratteCiel");
     }*/
     chateau = al_load_bitmap("../images/chateau.jpg");
-    /*if(!chateau) {
+    if(!chateau) {
         printf("Erreur ouverture image chateau");
-    }*/
-    centrale = al_load_bitmap("../images/centrale.jpg");
-    /*if(!centrale) {
+    }
+    centrale = al_load_bitmap("../images/chateau.jpg");
+    if(!centrale) {
         printf("Erreur ouverture image centrale");
-    }*/
+    }
 
 
 
@@ -183,44 +183,44 @@ void dessinerCarte(Case** pMatriceCase){
                     al_draw_bitmap(route, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     break;
                 case 2:
-                    if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
                         al_draw_bitmap(terrainVague, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 3:
                     if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
                         al_draw_bitmap(cabane, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 4:
                     if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
                         al_draw_bitmap(maison, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 5:
                     if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
                         al_draw_bitmap(immeuble, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 6:
                     if(pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                        pMatriceCase[i][j].pHabitation->estDessine == 1;
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
                         al_draw_bitmap(gratteCiel, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 7:
                     if(pMatriceCase[i][j].pChateau->estDessine == 0) {
-                        pMatriceCase[i][j].pChateau->estDessine == 1;
+                        pMatriceCase[i][j].pChateau->estDessine = 1;
                         al_draw_bitmap(chateau, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
                 case 8:
                     if(pMatriceCase[i][j].pCentrale->estDessine == 0) {
-                        pMatriceCase[i][j].pCentrale->estDessine == 1;
+                        pMatriceCase[i][j].pCentrale->estDessine = 1;
                         al_draw_bitmap(centrale, (float)pMatriceCase[i][j].x, (float)pMatriceCase[i][j].y, 0);
                     }
                     break;
@@ -239,13 +239,13 @@ void dessinerCarte(Case** pMatriceCase){
                 case 4:
                 case 5:
                 case 6:
-                    pMatriceCase[i][j].pHabitation->estDessine == 0;
+                    pMatriceCase[i][j].pHabitation->estDessine = 0;
                     break;
                 case 7:
-                    pMatriceCase[i][j].pChateau->estDessine == 0;
+                    pMatriceCase[i][j].pChateau->estDessine = 0;
                     break;
                 case 8:
-                    pMatriceCase[i][j].pCentrale->estDessine == 0;
+                    pMatriceCase[i][j].pCentrale->estDessine = 0;
                     break;
                 default:
                     break;

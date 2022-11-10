@@ -28,11 +28,10 @@
     //**********Constructions**********//
 typedef struct {
     int coordXHG, coordYHG,
-        timer, niveau, nbHabitants,
+        niveau, nbHabitants, timerHabitation,
 
-        alimEau, alimElec,nbCaseEau,marquage;
+        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation;
 
-        
     bool estDessine;
 
 }Habitation;
@@ -56,9 +55,8 @@ typedef struct {
 
 
 typedef struct {
-    int argentBanque, nbHabitants,
+    int argentBanque, nbHabitants, timerPartie,
             coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation;
-    ALLEGRO_TIMER* timerPartie;
 }Global;
 
 typedef struct {
@@ -88,5 +86,6 @@ int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPos
 int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
+int payer(Global* structureglobale, int cout);
 
 #endif
