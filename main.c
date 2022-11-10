@@ -34,18 +34,6 @@ int main() {
     //ecranAccueil(fenetre);
     leJeu(fenetre);
 
-    //**********************************************//
-    /* Case** matrice = (Case**) calloc(NB_LIGNES, sizeof(Case));
-    for(int i = 0; i < NB_COLONNES; i++) {
-        matrice[i] = (Case*) calloc(NB_COLONNES, sizeof(Case));
-    }
-
-    initCases(matrice);
-
-    lireFichierCarte(matrice); */
-
-    //***********************************************//
-
     al_destroy_display(fenetre);
     fenetre = NULL;
 

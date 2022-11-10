@@ -161,11 +161,11 @@ void dessinerCarte(Case** pMatriceCase){
     /*if(!gratteCiel) {
         printf("Erreur ouverture image gratteCiel");
     }*/
-    chateau = al_load_bitmap("../images/chateau.jpg");
+    chateau = al_load_bitmap("../images/chateau.png");
     if(!chateau) {
         printf("Erreur ouverture image chateau");
     }
-    centrale = al_load_bitmap("../images/chateau.jpg");
+    centrale = al_load_bitmap("../images/Centrale.png");
     if(!centrale) {
         printf("Erreur ouverture image centrale");
     }
