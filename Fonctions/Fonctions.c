@@ -210,12 +210,12 @@ void distributionEau(Case** matriceCases,Global global) {
     while(numHabitation != nbHabitation-1 ) {
         comparateur=5000;
         for (int i = 0; i < nbHabitation; i++) {
-            if( habEau[i]->nbCaseEau <comparateur && habEau[i]->marquage!=1){
+            if( habEau[i]->nbCaseEau <comparateur && habEau[i]->parcoureMatriceHabitation != 1){
                 habEauOrdre[numHabitation]=habEau[i];
                 comparateur=habEau[i]->nbCaseEau;
             }
         }
-        habEauOrdre[numHabitation]->marquage=1;
+        habEauOrdre[numHabitation]->parcoureMatriceHabitation=1;
         numHabitation++;
     }
 
@@ -363,13 +363,17 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
         //On place une habitation
         if(caseAConstruire.ligne < NB_LIGNES-2 && caseAConstruire.colonne < NB_COLONNES-2) {
             if (typeDeConstruction == 2) {
+
+                //On met un terrain vague
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation = calloc(1, sizeof(Habitation));
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation->coordXHG = caseAConstruire.x;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation->coordYHG = caseAConstruire.y;
+
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 3; i++) {
                     for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 3; j++) {
 
-                        matriceCase[i][j].type = 2; //On met un terrain vague
-                        matriceCase[i][j].pHabitation = calloc(1, sizeof(Habitation));
-                        matriceCase[i][j].pHabitation->coordXHG = caseAConstruire.x;
-                        matriceCase[i][j].pHabitation->coordYHG = caseAConstruire.y;
+                        matriceCase[i][j].type = 2;
+                        matriceCase[i][j].pHabitation = matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation;
                     }
                 }
 
@@ -382,32 +386,41 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
         //On place un chateau
         if(caseAConstruire.ligne < NB_LIGNES-5 && caseAConstruire.colonne < NB_COLONNES-3) {
             if (typeDeConstruction == 7) {
+
+                //On met un chateau
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau = calloc(1, sizeof(Chateau));
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->coordXHG = caseAConstruire.x;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->coordYHG = caseAConstruire.y;
+
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
                     for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
 
-                        matriceCase[i][j].type = 7; //On met un chateau
-                        matriceCase[i][j].pChateau = calloc(1, sizeof(Chateau));
-                        matriceCase[i][j].pChateau->coordXHG = caseAConstruire.x;
-                        matriceCase[i][j].pChateau->coordYHG = caseAConstruire.y;
+                        matriceCase[i][j].type = 7;
+                        matriceCase[i][j].pChateau = matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau;
                     }
                 }
                 dessinerCarte(matriceCase);
+                al_flip_display();
                 return 0;
             }
 
                 //On place une centrale
             else if (typeDeConstruction == 8) {
+
+                //On met une centrale
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale = calloc(1, sizeof(Centrale));
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->coordXHG = caseAConstruire.x;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->coordYHG = caseAConstruire.y;
+
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
                     for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
 
-                        matriceCase[i][j].type = 8; //On met une centrale
-                        matriceCase[i][j].pCentrale = calloc(1, sizeof(Centrale));
-                        matriceCase[i][j].pCentrale->coordXHG = caseAConstruire.x;
-                        matriceCase[i][j].pCentrale->coordYHG = caseAConstruire.y;
-
+                        matriceCase[i][j].type = 8;
+                        matriceCase[i][j].pCentrale = matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale;
                     }
                 }
                 dessinerCarte(matriceCase);
+                al_flip_display();
                 return 0;
             } else {
                 printf("Erreur placerUneConstruction : type inconnu");
@@ -419,3 +432,14 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
     }
 }
 
+int payer(Global* structureglobale, int cout){
+
+    int argentTemporaire = structureglobale->argentBanque - cout;
+    if (argentTemporaire < 0){
+        return 1;
+
+    }else{
+        structureglobale->argentBanque = argentTemporaire;
+        return 0;
+    }
+}
