@@ -17,6 +17,9 @@
 #define DECALAGE_GRILLE_X 125
 #define DECALAGE_GRILLE_Y 40
 
+#define MARGE_EAU_POUR_EVOLUER 0.7 // Soit 70%
+#define MARGE_ELEC_POUR_EVOLUER 0.7 // Soit 70%
+
     //**********En nombre d'habitant**********//
 #define TERRAIN_VAGUE 0
 #define CABANE 10
@@ -55,7 +58,7 @@ typedef struct {
 
 
 typedef struct {
-    int argentBanque, nbHabitants, timerPartie,
+    int argentBanque, nbHabitants, timerPartie, modeDeJeu, //1=communiste, 2=capitaliste
             coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation;
 }Global;
 
@@ -87,5 +90,7 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
 int payer(Global* structureglobale, int cout);
+int calculerNbHabitants(Case** matriceCase);
+void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer);
 
 #endif

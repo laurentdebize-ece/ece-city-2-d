@@ -1,6 +1,5 @@
 #include "Carte.h"
 
-
 void lireFichierCarte(Case** pMatriceCase){
 
     FILE * ifs = fopen("../Carte.txt","r");
@@ -120,7 +119,6 @@ void lireFichierCarte(Case** pMatriceCase){
     ifs = NULL;
 }
 
-//Erreur pour l'affichage des dernieres colonnes et lignes
 void dessinerCarte(Case** pMatriceCase){
 
     ALLEGRO_BITMAP* herbe;
