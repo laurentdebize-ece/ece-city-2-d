@@ -2,6 +2,8 @@
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Le Jeu/Le Jeu.h"
+#include "Carte/Carte.h"
+#include "Initialisation/Initialisation.h"
 
 #include "Carte/Carte.h"
 #include "Initialisation/Initialisation.h"
@@ -28,6 +30,7 @@ int main() {
     fenetre = al_create_display(LARGEUR_FENETRE, HAUTEUR_FENETRE);
     al_set_window_position(fenetre, 20, 20);
     al_set_window_title(fenetre, "ECE City");
+
 
 
 
