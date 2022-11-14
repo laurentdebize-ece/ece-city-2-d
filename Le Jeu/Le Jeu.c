@@ -7,6 +7,7 @@
 
 int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
+
     // Déclarations
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
