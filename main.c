@@ -2,6 +2,8 @@
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Le Jeu/Le Jeu.h"
+#include "Carte/Carte.h"
+#include "Initialisation/Initialisation.h"
 
 #include "Carte/Carte.h"
 #include "Initialisation/Initialisation.h"
@@ -31,8 +33,11 @@ int main() {
 
 
 
+
     //ecranAccueil(fenetre);
-    leJeu(fenetre);
+    leJeu(fenetre, 1);
+
+
 
     al_destroy_display(fenetre);
     fenetre = NULL;

@@ -28,7 +28,6 @@ void initGlobal(Global* structureGlobale){
     structureGlobale->coutTerrainVague = 1000;
 }
 
-
 void sauvegarde(Case** matriceCases){
     FILE* pf = fopen("../Carte.txt", "w");
     if(pf != NULL) {
