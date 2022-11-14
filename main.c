@@ -35,7 +35,9 @@ int main() {
 
 
     //ecranAccueil(fenetre);
-    leJeu(fenetre);
+    leJeu(fenetre, 1);
+
+
 
     al_destroy_display(fenetre);
     fenetre = NULL;
