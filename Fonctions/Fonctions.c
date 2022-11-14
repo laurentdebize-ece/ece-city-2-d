@@ -53,17 +53,19 @@ void defiler(t_file *f,int tab[2]){
     free(tmp);
 }
 
-int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y){
+int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y,int numHabitation,int nbHabitation){
     t_file f;
     f.tete = f.fin = NULL;
     int XY[2];
     int nbCases=0;
-    int numHabitation=0;
+
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             matriceCases[i][j].distribEau=0;
-            matriceCases[i][j].pHabitation->nbCaseEau=0;
+            if(matriceCases[i][j].pHabitation !=NULL) {
+                matriceCases[i][j].pHabitation->nbCaseEau = 0;
+            }
         }
     }
 
@@ -71,83 +73,172 @@ int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y){
     matriceCases[y][x].distribEau=1;
     nbCases++;
 
+    int dejaDansTab=0;
+
     while (f.tete != NULL) {
         defiler(&f,XY);
 
         //vérifiaction des habitations autour
 
+        //Case dessus
         if(matriceCases[ XY[1]-1 ][ XY[0] ].type==2 ||
             matriceCases[ XY[1]-1 ][ XY[0] ].type==3 ||
             matriceCases[ XY[1]-1 ][ XY[0] ].type==4 ||
             matriceCases[ XY[1]-1 ][ XY[0] ].type==5 ||
             matriceCases[ XY[1]-1 ][ XY[0] ].type==6){
+                // checker si l'habitation est deja dans le tableau et si'l existe un chemin plus court
+            if(numHabitation !=0) {
+                for (int i = 0; i < numHabitation; i++) {
+                    if (habEau[i]->numero == matriceCases[XY[1] - 1][XY[0]].pHabitation->numero) {
+                        if (habEau[i]->nbCaseEau > nbCases) {
+                            dejaDansTab = 1;
+                            matriceCases[XY[1] - 1][XY[0]].pHabitation->nbCaseEau = nbCases;
+                        }
+                    }
+                }
 
-            habEau[numHabitation]= matriceCases[ XY[1]-1 ][ XY[0] ].pHabitation;
-            habEau[numHabitation]->nbCaseEau=nbCases;
-            numHabitation++;
+                if (dejaDansTab != 1) {
+                    habEau[numHabitation] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
+                    habEau[numHabitation]->nbCaseEau = nbCases;
+                    numHabitation++;
+                }
+
+                dejaDansTab = 0;
+            }
+            else{
+                habEau[numHabitation] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
+                habEau[numHabitation]->nbCaseEau = nbCases;
+                numHabitation++;
+            }
 
         }
-        //Case droite
+        //Case dessous
         if(matriceCases[ XY[1]+1 ][ XY[0] ].type==2 ||
         matriceCases[ XY[1]+1 ][ XY[0] ].type ==3 ||
         matriceCases[ XY[1]+1 ][ XY[0] ].type ==4 ||
         matriceCases[ XY[1]+1 ][ XY[0] ].type ==5||
         matriceCases[ XY[1]+1 ][ XY[0] ].type ==6){
 
-            habEau[numHabitation]= matriceCases[ XY[1]+1 ][ XY[0] ].pHabitation;
-            habEau[numHabitation]->nbCaseEau=nbCases;
-            numHabitation++;
+            if(numHabitation !=0) {
+                for (int i = 0; i < numHabitation; i++) {
+                    if (habEau[i]->numero == matriceCases[XY[1] + 1][ XY[0] ].pHabitation->numero) {
+                        if (habEau[i]->nbCaseEau > nbCases) {
+                            dejaDansTab = 1;
+                            matriceCases[XY[1] + 1][XY[0]].pHabitation->nbCaseEau = nbCases;
+                        }
+                        else{
+                            dejaDansTab = 1;
+                        }
+                    }
+                }
 
+                if (dejaDansTab != 1) {
+                    habEau[numHabitation] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
+                    habEau[numHabitation]->nbCaseEau = nbCases;
+                    numHabitation++;
+                }
+
+                dejaDansTab = 0;
+            }
+            else{
+                habEau[numHabitation] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
+                habEau[numHabitation]->nbCaseEau = nbCases;
+                numHabitation++;
+            }
         }
-        //Case dessus
+        //Case gauche
         if(matriceCases[ XY[1] ][ XY[0]-1 ].type==2
         || matriceCases[ XY[1] ][ XY[0]-1 ].type ==3
         || matriceCases[ XY[1] ][ XY[0]-1 ].type ==4
         || matriceCases[ XY[1] ][ XY[0]-1 ].type ==5
         || matriceCases[ XY[1] ][ XY[0]-1 ].type ==6){
 
-            habEau[numHabitation]= matriceCases[ XY[1] ][ XY[0]-1 ].pHabitation;
-            habEau[numHabitation]->nbCaseEau=nbCases;
-            numHabitation++;
+            if(numHabitation !=0) {
+                for (int i = 0; i < numHabitation; i++) {
+                    if (habEau[i]->numero == matriceCases[XY[1]][XY[0] - 1].pHabitation->numero) {
+                        if (habEau[i]->nbCaseEau > nbCases) {
+                            dejaDansTab = 1;
+                            matriceCases[XY[1]][XY[0] - 1].pHabitation->nbCaseEau = nbCases;
+                        }
+                        else{
+                            dejaDansTab = 1;
+                        }
+                    }
+                }
 
+                if (dejaDansTab != 1) {
+                    habEau[numHabitation] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
+                    habEau[numHabitation]->nbCaseEau = nbCases;
+                    numHabitation++;
+                }
+
+                dejaDansTab = 0;
+            }
+            else{
+                habEau[numHabitation] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
+                habEau[numHabitation]->nbCaseEau = nbCases;
+                numHabitation++;
+            }
         }
-        //Case dessous
+        //Case droite
         if(matriceCases[ XY[1] ][ XY[0]+1 ].type==2
         || matriceCases[ XY[1] ][ XY[0]+1 ].type==3
         || matriceCases[ XY[1] ][ XY[0]+1 ].type==4
         || matriceCases[ XY[1] ][ XY[0]+1 ].type==5
         || matriceCases[ XY[1] ][ XY[0]+1 ].type==6){
 
-            habEau[numHabitation]= matriceCases[ XY[1] ][ XY[0]+1 ].pHabitation;
-            habEau[numHabitation]->nbCaseEau=nbCases;
-            numHabitation++;
+            if(numHabitation !=0) {
+                for (int i = 0; i < numHabitation; i++) {
+                    if (habEau[i]->numero == matriceCases[XY[1]][XY[0] + 1].pHabitation->numero) {
+                        if (habEau[i]->nbCaseEau > nbCases) {
+                            dejaDansTab = 1;
+                            matriceCases[XY[1]][XY[0] + 1].pHabitation->nbCaseEau = nbCases;
+                        }
+                        else{
+                            dejaDansTab = 1;
+                        }
+                    }
+                }
 
+                if (dejaDansTab != 1) {
+                    habEau[numHabitation] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
+                    habEau[numHabitation]->nbCaseEau = nbCases;
+                    numHabitation++;
+                }
+
+                dejaDansTab = 0;
+            }
+            else{
+                habEau[numHabitation] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
+                habEau[numHabitation]->nbCaseEau = nbCases;
+                numHabitation++;
+            }
         }
 
         //vérification des routes autour pour la file
 
-        //Case gauche
+        //Case dessus
         if(matriceCases[ XY[1]-1 ][ XY[0] ].type==1 && matriceCases[ XY[1]-1 ][ XY[0] ].distribEau==0){
 
             enfiler(&f,XY[0],XY[1]-1);
             matriceCases[ XY[1]-1 ][ XY[0] ].distribEau=1;
 
         }
-        //Case droite
+        //Case dessous
         if(matriceCases[ XY[1]+1 ][ XY[0] ].type==1 && matriceCases[ XY[1]+1 ][ XY[0] ].distribEau==0){
 
             enfiler(&f,XY[0],XY[1]-1);
             matriceCases[ XY[1]+1 ][ XY[0]].distribEau=1;
 
         }
-        //Case dessus
+        //Case gauche
         if(matriceCases[ XY[1] ][ XY[0]-1 ].type==1 && matriceCases[ XY[1] ][ XY[0]-1 ].distribEau==0){
 
             enfiler(&f,XY[0]-1,XY[1]);
             matriceCases[ XY[1] ][ XY[0]-1 ].distribEau=1;
 
         }
-        //Case dessous
+        //Case droite
         if(matriceCases[ XY[1] ][ XY[0]+1 ].type==1 && matriceCases[ XY[1] ][ XY[0]+1 ].distribEau==0){
 
             enfiler(&f,XY[0]+1,XY[1]);
@@ -158,20 +249,43 @@ int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y){
         nbCases++;
 
     }
+    return numHabitation;
 }
 
-void distributionEau(Case** matriceCases,Global global) {
+void distributionEau(Case** matriceCases,Global* global) {
     int caseX1=0;
     int caseY1=0;
     int caseX2=0;
     int caseY2=0;
 
-    int numHabitation =0; // habitation que l'on est en train de parcourir
+    int numHabitation =0;// habitation que l'on est en train de parcourir
     int comparateur=50000;
 
-    int nbHabitation = global.nbHabitation; //nombre d'habitation total
+    int numHabitationBFS=0;
+
+    int nbHabitation=0;
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pHabitation != NULL && matriceCases[i][j].pHabitation->parcoureMatriceHabitation==0) {
+                matriceCases[i][j].pHabitation->numero=nbHabitation;
+                nbHabitation+=1;
+                matriceCases[i][j].pHabitation->parcoureMatriceHabitation=1;
+            }
+        }
+    }
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pHabitation != NULL && matriceCases[i][j].pHabitation->parcoureMatriceHabitation==1) {
+                matriceCases[i][j].pHabitation->parcoureMatriceHabitation=0;
+            }
+        }
+    }
+
+    global->nbHabitation=nbHabitation;
     Habitation* habEau[nbHabitation];
     Habitation* habEauOrdre[nbHabitation];
+
 
     //récupération de la coordoonée X et Y du chateau
     for (int i = 0; i < NB_LIGNES; i++) {
@@ -191,28 +305,29 @@ void distributionEau(Case** matriceCases,Global global) {
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
                         if (matriceCases[a][b].type == 1) {
-                            bfsEau(matriceCases, habEau, b, a);
+                            numHabitationBFS=bfsEau(matriceCases, habEau, a,b, numHabitationBFS,nbHabitation);
                         }
                     }
                 }
                 for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_CHATEAU + 1) {
                     for (int a = caseX1; a < caseX2 + 1; a++) {
                         if (matriceCases[b][a].type == 1) {
-                            bfsEau(matriceCases, habEau, b, a);
+                            numHabitationBFS=bfsEau(matriceCases, habEau, a, b,numHabitationBFS,nbHabitation);
                         }
                     }
                 }
-
-                // mettre dans l'ordre les habitations par rapport  au nb de cases
+                int habitationProche=0;
+                // mettre dans l'ordre les habitations par rapport au nb de cases
                 while (numHabitation != nbHabitation - 1) {
                     comparateur = 5000;
-                    for (int a = 0; a < nbHabitation; a++) {
+                    for (int a = 0; a < numHabitationBFS; a++) {
                         if (habEau[a]->nbCaseEau < comparateur && habEau[a]->parcoureMatriceHabitation != 1) {
                             habEauOrdre[numHabitation] = habEau[a];
                             comparateur = habEau[a]->nbCaseEau;
+                            habitationProche = a;
                         }
                     }
-                    habEauOrdre[numHabitation]->parcoureMatriceHabitation = 1;
+                    habEau[habitationProche]->parcoureMatriceHabitation = 1;
                     numHabitation++;
                 }
 
@@ -222,7 +337,7 @@ void distributionEau(Case** matriceCases,Global global) {
 
                 while (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee <
                        matriceCases[caseY1][caseX1].pChateau->capacite
-                       || numHabitation != nbHabitation) {
+                       || numHabitation != numHabitationBFS) {
 
                     if (habEauOrdre[numHabitation]->nbHabitants <
                         matriceCases[caseY1][caseX1].pChateau->capacite -
@@ -297,7 +412,7 @@ void distributionEau(Case** matriceCases,Global global) {
 }
 
 
-
+/*
 void distributionElec(Case** matriceCases,Global global){
     int caseX1=0;
     int caseY1=0;
@@ -328,7 +443,7 @@ void distributionElec(Case** matriceCases,Global global){
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
                         if (matriceCases[a][b].type == 1) {
-                            bfsEau(matriceCases, habElec, b, a);
+                            bfsEau(matriceCases, habElec, b, a,numHabitation);
                         }
                     }
                 }
@@ -376,7 +491,7 @@ void distributionElec(Case** matriceCases,Global global){
 }
 
 
-
+*/
 
 
 
@@ -488,7 +603,7 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
     }
 }
 
-int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
+int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction,Global* global ){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
     if (constructionPossible == 1){
 
@@ -500,6 +615,8 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation = calloc(1, sizeof(Habitation));
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation->coordXHG = caseAConstruire.x;
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation->coordYHG = caseAConstruire.y;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pHabitation->numero = global->nbHabitation+1;
+                global->nbHabitation+=1;
 
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 3; i++) {
                     for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 3; j++) {

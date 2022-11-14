@@ -146,10 +146,10 @@ void dessinerCarte(Case** pMatriceCase){
     if(!terrainVague) {
         printf("Erreur ouverture image terrainVague");
     }
-    cabane = al_load_bitmap("../images/cabane.jpg");
-    /*if(!cabane) {
+    cabane = al_load_bitmap("../images/Carre.jpg");
+    if(!cabane) {
         printf("Erreur ouverture image cabane");
-    }*/
+    }
     maison = al_load_bitmap("../images/maison.jpg");
     /*if(!maison) {
         printf("Erreur ouverture image maison");

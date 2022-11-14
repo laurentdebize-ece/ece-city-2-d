@@ -31,7 +31,7 @@
     //**********Constructions**********//
 typedef struct {
     int coordXHG, coordYHG,
-
+        numero,
         niveau, nbHabitants, timerHabitation,
 
         alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation,
@@ -42,6 +42,8 @@ typedef struct {
     bool estDessine;
 
 }Habitation;
+
+
 
 typedef struct {
     int coordXHG, coordYHG,
@@ -76,6 +78,8 @@ typedef struct {
     Centrale* pCentrale;
 }Case;
 
+// 0 herbe
+
 typedef struct maillon{
     int num;
     int x,y;
@@ -88,14 +92,14 @@ typedef struct file{
 }t_file;
 
 
-int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y);
-void distributionEau(Case** matriceCases,Global global);
+int bfsEau(Case** matriceCases,Habitation** habEau,int x,int y,int numHabitation,int nbHabitation);
+void distributionEau(Case** matriceCases,Global* global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
 int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPossible); // placerUneRoute (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible);
 int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
-int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
+int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction,Global* global); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
 
 int payer(Global* structureglobale, int cout);
 int calculerNbHabitants(Case** matriceCase);

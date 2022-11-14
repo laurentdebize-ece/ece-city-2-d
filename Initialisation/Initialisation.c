@@ -26,6 +26,7 @@ void initGlobal(Global* structureGlobale){
     structureGlobale->coutChateau = 100000;
     structureGlobale->coutCentrale = 100000;
     structureGlobale->coutTerrainVague = 1000;
+    structureGlobale->nbHabitation=0;
 }
 
 void sauvegarde(Case** matriceCases){

@@ -73,8 +73,17 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //************************ TEST EAU ******************************//
 
-    //distributionEau(matriceCase,structureGlobale);
+    distributionEau(matriceCase,structureGlobale);
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL ) {
+                printf("%d  ",matriceCase[i][j].pHabitation->nbHabitants);
+                printf("%d\n",matriceCase[i][j].pHabitation->alimEau);
 
+            }
+        }
+    }
+    printf("\nfin\n");
 
 
 
@@ -136,7 +145,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                                             if (sourisSurLeJeu == 0) {
 
-                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 2);
+                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 2,structureGlobale);
                                                 if (retour == 0) {
                                                     finTerrainVague = 1;
                                                     structureGlobale->nbHabitation += 1;
@@ -193,7 +202,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                                             if (sourisSurLeJeu == 0) {
 
-                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 8);
+                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 8,structureGlobale);
                                                 if (retour == 0) {
                                                     finCentrale = 1;
                                                 } else if (retour == -1) {
@@ -248,7 +257,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                                             if (sourisSurLeJeu == 0) {
 
-                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 7);
+                                                int retour = placerUneConstruction(matriceCase, matriceCase[ligne][colonne], constructionPossible, 7,structureGlobale);
                                                 if (retour == 0) {
                                                     finChateau = 1;
                                                 } else if (retour == -1) {
