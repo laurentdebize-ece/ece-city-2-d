@@ -31,9 +31,13 @@
     //**********Constructions**********//
 typedef struct {
     int coordXHG, coordYHG,
+
         niveau, nbHabitants, timerHabitation,
 
         alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation;
+
+        alimEauOuiNon,// 0 non, 1 partielement, 2 completement
+        alimElecOuiNon; // 0 non, 1 oui
 
     bool estDessine;
 
@@ -52,6 +56,7 @@ typedef struct {
 typedef struct {
     int coordXHG, coordYHG,
         niveau, capacite, quantiteDistribuee;
+    int distribution;
     bool estDessine;
 }Centrale;
 

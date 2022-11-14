@@ -9,8 +9,14 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     // Déclarations
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
+    ALLEGRO_FONT *police = NULL;
+
+
 
     bool fin = false;
+    bool pause = false;
+    int chrono = 0;
+
 
     al_init_font_addon();
     al_init_ttf_addon();
@@ -19,6 +25,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //Création
     sauvegarde = al_load_bitmap("../Images/sauvegardePartie.jpg");
+    police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
+
     if (!sauvegarde){
         printf("Erreur ouverture image sauvegarde\n");
     }
@@ -279,6 +287,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
 
+
+
                                             int sourisSurLeJeu;
                                             sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
                                             printf("Clique ligne %d, colonne %d\n", ligne, colonne);
@@ -309,8 +319,18 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                     //changer niveau de visualisation
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
                     }
-                    //PAUSE
-                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 167 && event.mouse.y < 210) {
+
+                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                        event.mouse.y > 167 && event.mouse.y < 210 && pause) {
+                        pause = false;
+                        printf("pause\n");
+
+                    }
+                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                        event.mouse.y > 167 && event.mouse.y < 210 && !pause) {
+                        pause = true;
+                        printf("marche\n");
+
                     }
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 238 && event.mouse.y < 272) {
                         printf("%d, %d", event.mouse.x, event.mouse.y);
@@ -332,6 +352,93 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             case ALLEGRO_EVENT_TIMER:{
                 if(event.timer.source == timer) {
 
+                    if (chrono == 14) {
+                        chrono = 0;
+                    }
+                    else if(!pause) {
+                        chrono +=1;
+                        printf("%d\n", chrono);
+                    }
+
+                    if(chrono == 0){
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "0");
+                            al_flip_display();
+                        }
+                    if (chrono == 1) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "1");
+                            al_flip_display();
+                        }
+                    if (chrono == 2) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "2");
+                            al_flip_display();
+                        }
+                    if (chrono == 3) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "3");
+                            al_flip_display();
+                        }
+                    if (chrono == 4) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "4");
+                            al_flip_display();
+                        }
+                    if (chrono == 5) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "5");
+                            al_flip_display();
+                        }
+                    if (chrono == 6) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "6");
+                            al_flip_display();
+                        }
+                    if (chrono == 7){
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "7");
+                            al_flip_display();
+                        }
+                    if (chrono == 8) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "8");
+                            al_flip_display();
+                        }
+                    if (chrono == 9) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_flip_display();
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "9");
+                            al_flip_display();
+                        }
+                    if (chrono == 10){
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "10");
+                            al_flip_display();
+                        }
+                    if (chrono == 11) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "11");
+                            al_flip_display();
+                        }
+                    if (chrono == 12) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "12");
+                            al_flip_display();
+                        }
+
+                    if (chrono == 13) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "13");
+                            al_flip_display();
+                        }
+                    if (chrono == 14) {
+                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "14");
+                            al_flip_display();
+                        }
+
+
                     for (int i = 0; i < NB_LIGNES; i++) {
                         for (int j = 0; j < NB_COLONNES; j++) {
                             if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation == 0) {
@@ -344,8 +451,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     matriceCase[i][j].pHabitation->timerHabitation = 0;
                                 } else {
                                     matriceCase[i][j].pHabitation->timerHabitation += 1;
-                                    printf("%d\n", matriceCase[i][j].pHabitation->timerHabitation);
+                                    //printf("%d\n a", matriceCase[i][j].pHabitation->timerHabitation);
                                 }
+
                             }
                         }
                     }
@@ -393,6 +501,11 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre){
     al_draw_text(police, al_map_rgb(255, 255, 255), 661, 18, ALLEGRO_ALIGN_CENTER, "texte");
     //électricité
     al_draw_text(police, al_map_rgb(255, 255, 255),861, 18,ALLEGRO_ALIGN_CENTER, "texte");
+
+    al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+
+
+
 
 
 
