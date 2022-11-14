@@ -34,7 +34,7 @@ typedef struct {
 
         niveau, nbHabitants, timerHabitation,
 
-        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation;
+        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation,
 
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
@@ -87,6 +87,9 @@ typedef struct file{
     t_maillon*fin; //pointeur sur le dernier maillon
 }t_file;
 
+
+int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y);
+void distributionEau(Case** matriceCases,Global global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);

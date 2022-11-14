@@ -127,28 +127,28 @@ int bfsEau(Case** matriceCases,Habitation* habEau[],int x,int y){
         //vérification des routes autour pour la file
 
         //Case gauche
-        if(matriceCases[ XY[1]-1 ][ XY[0] ].type==0 && matriceCases[ XY[1]-1 ][ XY[0] ].distribEau==0){
+        if(matriceCases[ XY[1]-1 ][ XY[0] ].type==1 && matriceCases[ XY[1]-1 ][ XY[0] ].distribEau==0){
 
             enfiler(&f,XY[0],XY[1]-1);
             matriceCases[ XY[1]-1 ][ XY[0] ].distribEau=1;
 
         }
         //Case droite
-        if(matriceCases[ XY[1]+1 ][ XY[0] ].type==0 && matriceCases[ XY[1]+1 ][ XY[0] ].distribEau==0){
+        if(matriceCases[ XY[1]+1 ][ XY[0] ].type==1 && matriceCases[ XY[1]+1 ][ XY[0] ].distribEau==0){
 
             enfiler(&f,XY[0],XY[1]-1);
             matriceCases[ XY[1]+1 ][ XY[0]].distribEau=1;
 
         }
         //Case dessus
-        if(matriceCases[ XY[1] ][ XY[0]-1 ].type==0 && matriceCases[ XY[1] ][ XY[0]-1 ].distribEau==0){
+        if(matriceCases[ XY[1] ][ XY[0]-1 ].type==1 && matriceCases[ XY[1] ][ XY[0]-1 ].distribEau==0){
 
             enfiler(&f,XY[0]-1,XY[1]);
             matriceCases[ XY[1] ][ XY[0]-1 ].distribEau=1;
 
         }
         //Case dessous
-        if(matriceCases[ XY[1] ][ XY[0]+1 ].type==0 && matriceCases[ XY[1] ][ XY[0]+1 ].distribEau==0){
+        if(matriceCases[ XY[1] ][ XY[0]+1 ].type==1 && matriceCases[ XY[1] ][ XY[0]+1 ].distribEau==0){
 
             enfiler(&f,XY[0]+1,XY[1]);
             matriceCases[ XY[1] ][ XY[0]+1 ].distribEau=1;
@@ -190,14 +190,14 @@ void distributionEau(Case** matriceCases,Global global) {
                 //vérification des routes autour pour début BFS
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
-                        if (matriceCases[a][b].type == 0) {
+                        if (matriceCases[a][b].type == 1) {
                             bfsEau(matriceCases, habEau, b, a);
                         }
                     }
                 }
                 for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_CHATEAU + 1) {
                     for (int a = caseX1; a < caseX2 + 1; a++) {
-                        if (matriceCases[b][a].type == 0) {
+                        if (matriceCases[b][a].type == 1) {
                             bfsEau(matriceCases, habEau, b, a);
                         }
                     }
@@ -207,12 +207,12 @@ void distributionEau(Case** matriceCases,Global global) {
                 while (numHabitation != nbHabitation - 1) {
                     comparateur = 5000;
                     for (int a = 0; a < nbHabitation; a++) {
-                        if (habEau[a]->nbCaseEau < comparateur && habEau[a]->marquage != 1) {
+                        if (habEau[a]->nbCaseEau < comparateur && habEau[a]->parcoureMatriceHabitation != 1) {
                             habEauOrdre[numHabitation] = habEau[a];
                             comparateur = habEau[a]->nbCaseEau;
                         }
                     }
-                    habEauOrdre[numHabitation]->marquage = 1;
+                    habEauOrdre[numHabitation]->parcoureMatriceHabitation = 1;
                     numHabitation++;
                 }
 
@@ -283,6 +283,12 @@ void distributionEau(Case** matriceCases,Global global) {
             if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
                 && matriceCases[i][j].pChateau->distribution == 1) {
                   matriceCases[i][j].pChateau->distribution = 0;
+
+            }
+            if (matriceCases[i][j].pHabitation != NULL
+                && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+
+                matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
             }
         }
 
@@ -321,14 +327,14 @@ void distributionElec(Case** matriceCases,Global global){
                 //vérification des routes autour pour début BFS
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
-                        if (matriceCases[a][b].type == 0) {
+                        if (matriceCases[a][b].type == 1) {
                             bfsEau(matriceCases, habElec, b, a);
                         }
                     }
                 }
                 for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_CHATEAU + 1) {
                     for (int a = caseX1; a < caseX2 + 1; a++) {
-                        if (matriceCases[b][a].type == 0) {
+                        if (matriceCases[b][a].type == 1) {
                             bfsEau(matriceCases, habElec, b, a);
                         }
                     }

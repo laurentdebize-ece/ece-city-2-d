@@ -71,6 +71,15 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     int ligne = -1, colonne = -1, constructionPossible = -1,
             saveColonne, saveLigne;
 
+    //************************ TEST EAU ******************************//
+
+    //distributionEau(matriceCase,structureGlobale);
+
+
+
+
+
+
     while (!fin) {
         al_wait_for_event(queue, &event);
         switch (event.type) {
