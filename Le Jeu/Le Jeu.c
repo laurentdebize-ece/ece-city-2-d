@@ -4,8 +4,7 @@
 #include "../Initialisation/Initialisation.h"
 
 
-
-int leJeu (ALLEGRO_DISPLAY* fenetre) {
+int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
 
     // Déclarations
@@ -14,17 +13,18 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     ALLEGRO_FONT *police = NULL;
 
 
+
     bool fin = false;
     bool pause = false;
     int chrono = 0;
     int mois = 1;
     int annee = 2022;
 
+
     al_init_font_addon();
     al_init_ttf_addon();
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
-
 
     //Création
     sauvegarde = al_load_bitmap("../Images/sauvegardePartie.jpg");
@@ -44,9 +44,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     al_register_event_source(queue, al_get_timer_event_source(timer));
 
 
-
-
-
     //***************Initialisation du lancement du jeu***************//
 
     Case** matriceCase = (Case**) calloc(NB_LIGNES, sizeof(Case));
@@ -59,8 +56,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
     Global* structureGlobale = calloc(1, sizeof (Global));;
     initGlobal(structureGlobale);
-
-
+    structureGlobale->modeDeJeu = modeDeJeu;
 
 
 
@@ -323,10 +319,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
 
                     //éléments à gauche
-                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
-                        event.mouse.y > 102 && event.mouse.y < 139) {
-                        //changer niveau de visualisation
+                    //changer niveau de visualisation
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
                     }
+
                     if (event.mouse.x > 19 && event.mouse.x < 62 &&
                         event.mouse.y > 167 && event.mouse.y < 210 && pause) {
                         al_stop_timer(timer);
@@ -341,6 +337,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
                         printf("marche\n");
                         al_draw_text(police, al_map_rgb(255,255,255), 130, 15,ALLEGRO_ALIGN_CENTER, "PAUSE");
                         al_flip_display();
+
                     }
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 238 && event.mouse.y < 272) {
                         printf("%d, %d", event.mouse.x, event.mouse.y);
@@ -382,7 +379,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
                                 if (matriceCase[i][j].pHabitation->timerHabitation == 14) {
 
-                                    //evolutionHabitation();
+                                    evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j);
+
                                     matriceCase[i][j].pHabitation->timerHabitation = 0;
                                 } else {
                                     matriceCase[i][j].pHabitation->timerHabitation += 1;
