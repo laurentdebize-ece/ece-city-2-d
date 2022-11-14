@@ -33,21 +33,7 @@ void ecranAccueil(){
     ALLEGRO_BITMAP* map;
     ALLEGRO_BITMAP* choix;
 
-    // Initialisations (al_init/al_install...)
-    assert(al_init());
-    assert(al_install_mouse());
-    assert(al_install_keyboard());
-    assert(al_init_primitives_addon());
-    al_init_image_addon();
-    al_init_font_addon();
-    al_init_ttf_addon();
 
-
-    // Créations (al_create...)
-    display = al_create_display(LARGEUR, HAUTEUR);
-    al_set_window_position(display, 0, 0);
-    al_set_window_title(display, "Projet ECE-City");
-    assert(display != NULL);
     timer = al_create_timer(1.0/60.0);
     al_start_timer(timer);
     queue = al_create_event_queue();
@@ -63,7 +49,7 @@ void ecranAccueil(){
     //FONDS
     menu = al_load_bitmap("../Images/Menu_jouer.png");
     choix = al_load_bitmap("../Images/Menu_choix.png");
-    map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
+    //map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
 
     // Boucle d'événements
     while (!end) {
@@ -104,18 +90,18 @@ void ecranAccueil(){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 94, 358, 282, 456)) { //nouvelle partie co ok
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 112, 452, 432, 682)) { //nouvelle partie co ok
                         al_draw_bitmap(choix, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_ecran_choix = false;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter co ok
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter co ok
                         end_menu = true;
                         end = true;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 525, 812, 278, 468)) { //charger partie co ok
-                        al_draw_bitmap(map, 0, 0, 0);
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 650, 1000, 437, 687)) { //charger partie co ok
+                        //al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_map = false;
@@ -164,17 +150,17 @@ void ecranAccueil(){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 86, 670, 304, 540)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
                         al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_ecran_choix = false;
                         end_map = true; }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 601, 824, 307, 458)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
                         al_draw_bitmap(map, 0, 0, 0);
                         al_flip_display();
                         end_ecran_choix = false;
                         end_map = true; }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 11, 40, 11, 40)) {   //bouton quitter
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter
                         end_menu = true;
                         end = true;
                     }
