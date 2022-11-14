@@ -16,6 +16,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
     bool fin = false;
     bool pause = false;
     int chrono = 0;
+    int mois = 1;
+    int annee = 0;
 
     al_init_font_addon();
     al_init_ttf_addon();
@@ -31,7 +33,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
         printf("Erreur ouverture image sauvegarde\n");
     }
 
-    timer = al_create_timer(0.5);
+    timer = al_create_timer(0.2);
 
 
     queue = al_create_event_queue();
@@ -355,91 +357,82 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
             case ALLEGRO_EVENT_TIMER:{
                 if(event.timer.source == timer) {
 
-                    if (chrono == 14) {
-                        chrono = 0;
+                    if (chrono == 14 && !pause) {
+                        chrono = 1;
+                        mois ++;
                     }
                     else if(!pause) {
                         chrono +=1;
                         printf("%d\n", chrono);
                     }
+                    if (mois == 12 && !pause) {
+                        mois = 1;
+                        annee++;
+                    }
 
-                    if(chrono == 0){
+
+                    if (mois == 1) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "0");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "01");
                             al_flip_display();
                         }
-                    if (chrono == 1) {
+                    if (mois == 2) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "1");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "02");
                             al_flip_display();
                         }
-                    if (chrono == 2) {
+                    if (mois == 3) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "2");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "03");
                             al_flip_display();
                         }
-                    if (chrono == 3) {
+                    if (mois == 4) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "3");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "04");
                             al_flip_display();
                         }
-                    if (chrono == 4) {
+                    if (mois == 5) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "4");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "05");
                             al_flip_display();
                         }
-                    if (chrono == 5) {
+                    if (mois == 6) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "5");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "06");
                             al_flip_display();
                         }
-                    if (chrono == 6) {
+                    if (mois == 7){
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "6");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "07");
                             al_flip_display();
                         }
-                    if (chrono == 7){
+                    if (mois == 8) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "7");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "08");
                             al_flip_display();
                         }
-                    if (chrono == 8) {
-                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "8");
-                            al_flip_display();
-                        }
-                    if (chrono == 9) {
+                    if (mois == 9) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
                             al_flip_display();
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "9");
+                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "09");
                             al_flip_display();
                         }
-                    if (chrono == 10){
+                    if (mois == 10){
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
                             al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "10");
                             al_flip_display();
                         }
-                    if (chrono == 11) {
+                    if (mois == 11) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
                             al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "11");
                             al_flip_display();
                         }
-                    if (chrono == 12) {
+                    if (mois == 12) {
                             al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
                             al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "12");
                             al_flip_display();
                         }
 
-                    if (chrono == 13) {
-                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "13");
-                            al_flip_display();
-                        }
-                    if (chrono == 14) {
-                            al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
-                            al_draw_text(police, al_map_rgb(255, 255, 255),48, 33,ALLEGRO_ALIGN_CENTER, "14");
-                            al_flip_display();
-                        }
 
 
                     for (int i = 0; i < NB_LIGNES; i++) {
@@ -485,6 +478,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre) {
 void afficherInterface(ALLEGRO_DISPLAY* fenetre){
     ALLEGRO_BITMAP *fond = NULL;
     ALLEGRO_FONT *police = NULL;
+    int chrono = 0;
 
 
     fond = al_load_bitmap("../Images/eceCity2.jpg");
@@ -505,6 +499,7 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre){
     al_draw_text(police, al_map_rgb(255, 255, 255),861, 18,ALLEGRO_ALIGN_CENTER, "texte");
 
     al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
+
 
 
 
