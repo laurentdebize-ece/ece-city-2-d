@@ -80,6 +80,7 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==7 && pMatriceCase[ligne][colonne].pChateau == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
+                pMatriceCase[ligne][colonne].pChateau = calloc(1, sizeof (Habitation));
                 pMatriceCase[ligne][colonne].pChateau->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
@@ -97,6 +98,7 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==8 && pMatriceCase[ligne][colonne].pCentrale == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pChateau = NULL;
+                pMatriceCase[ligne][colonne].pCentrale = calloc(1, sizeof (Habitation));
                 pMatriceCase[ligne][colonne].pCentrale->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
