@@ -73,17 +73,43 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //************************ TEST EAU ******************************//
 
+    int habitant=200;
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=1) {
+                matriceCase[i][j].pHabitation->nbHabitants=habitant;
+                habitant+=1000;
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation=1;
+            }
+        }
+    }
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=0) {
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation=0;
+            }
+        }
+    }
+
     distributionEau(matriceCase,structureGlobale);
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCase[i][j].pHabitation != NULL ) {
-                printf("%d  ",matriceCase[i][j].pHabitation->nbHabitants);
-                printf("%d\n",matriceCase[i][j].pHabitation->alimEau);
-
+            if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=1 ) {
+                printf("(%d numero maison)=>  ",matriceCase[i][j].pHabitation->numero);
+                printf("(%d nb habitant)=>   ",matriceCase[i][j].pHabitation->nbHabitants);
+                printf("(%d alim eau via %d cases)\n\n",matriceCase[i][j].pHabitation->alimEau,matriceCase[i][j].pHabitation->nbCaseEau);
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation=1;
             }
         }
     }
     printf("\nfin\n");
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=0) {
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation=0;
+            }
+        }
+    }
 
 
 

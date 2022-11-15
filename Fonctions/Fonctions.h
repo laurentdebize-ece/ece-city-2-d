@@ -83,6 +83,7 @@ typedef struct {
 typedef struct maillon{
     int num;
     int x,y;
+    int numRoute;
     struct maillon*suiv;
 }t_maillon;
 
