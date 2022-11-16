@@ -35,7 +35,7 @@ typedef struct {
         niveau, nbHabitants, timerHabitation,
 
         alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation,
-
+        numChateauAlim,
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
 
@@ -47,7 +47,8 @@ typedef struct {
 
 typedef struct {
     int coordXHG, coordYHG,
-        niveau, capacite, quantiteDistribuee;
+        niveau, capacite, quantiteDistribuee,numero,
+        parcoursMatriceChateau;
 
     int distribution;//0 ou 1 (en train de distribuer ou non)
 
@@ -93,8 +94,10 @@ typedef struct file{
 }t_file;
 
 
-int bfsEau(Case** matriceCases,Habitation** habEau,int x,int y,int numHabitation,int nbHabitation);
+
 void distributionEau(Case** matriceCases,Global* global);
+
+void distributionEau2(Case** matriceCases,Global* global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);

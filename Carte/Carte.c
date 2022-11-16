@@ -11,7 +11,7 @@ void lireFichierCarte(Case** pMatriceCase){
     }
 
     int chiffreEnCours,
-        xPremiereCase, yPremiereCase,numeroHabitation=0;
+        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0;
 
 
     for (int ligne = 0; ligne < NB_LIGNES; ligne++) {
@@ -87,6 +87,9 @@ void lireFichierCarte(Case** pMatriceCase){
                 pMatriceCase[ligne][colonne].pChateau = calloc(1, sizeof (Chateau));
                 pMatriceCase[ligne][colonne].pChateau->estDessine = 0;
                 pMatriceCase[ligne][colonne].pChateau->capacite = 5000;
+                pMatriceCase[ligne][colonne].pChateau->numero = numeroChateau;
+                pMatriceCase[ligne][colonne].pChateau->parcoursMatriceChateau = 0;
+                numeroChateau++;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;

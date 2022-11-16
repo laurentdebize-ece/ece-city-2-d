@@ -91,7 +91,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         }
     }
 
-    distributionEau(matriceCase,structureGlobale);
+    distributionEau2(matriceCase,structureGlobale);
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=1 ) {
