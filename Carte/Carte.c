@@ -68,6 +68,11 @@ void lireFichierCarte(Case** pMatriceCase){
                 pMatriceCase[ligne][colonne].pHabitation->numero =numeroHabitation;
                 numeroHabitation++;
                 pMatriceCase[ligne][colonne].pHabitation->nbCaseEau=0;
+                for (int i=0;i<10;i++){
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].nbCases=0;
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].dejaAlim=0;
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].numChateau=0;
+                }
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;

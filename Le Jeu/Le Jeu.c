@@ -73,7 +73,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //************************ TEST EAU ******************************//
 
-    int habitant=200;
+    int habitant=2000;
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=1) {
@@ -91,13 +91,14 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         }
     }
 
-    distributionEau2(matriceCase,structureGlobale);
+    distributionEau3(matriceCase,structureGlobale);
+
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation!=1 ) {
                 printf("(%d numero maison)=>  ",matriceCase[i][j].pHabitation->numero);
                 printf("(%d nb habitant)=>   ",matriceCase[i][j].pHabitation->nbHabitants);
-                printf("(%d alim eau via %d cases)\n\n",matriceCase[i][j].pHabitation->alimEau,matriceCase[i][j].pHabitation->nbCaseEau);
+                printf("(%d alim eau via %d cases du %d chateau)\n\n",matriceCase[i][j].pHabitation->alimEau,matriceCase[i][j].pHabitation->nbCaseEau,matriceCase[i][j].pHabitation->numChateauAlim);
                 matriceCase[i][j].pHabitation->parcoureMatriceHabitation=1;
             }
         }

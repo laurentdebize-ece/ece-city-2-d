@@ -29,7 +29,18 @@
 
 
     //**********Constructions**********//
-typedef struct {
+
+
+typedef struct{
+    int numChateau;
+    int dejaAlim;
+    int nbCases;
+
+}AlimEau;
+
+
+
+typedef struct Habitation {
     int coordXHG, coordYHG,
         numero,
         niveau, nbHabitants, timerHabitation,
@@ -38,8 +49,9 @@ typedef struct {
         numChateauAlim,
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
-
+        AlimEau nbCasesParChateau[10];
     bool estDessine;
+    struct Habitation*suiv;
 
 }Habitation;
 
@@ -88,9 +100,12 @@ typedef struct maillon{
     struct maillon*suiv;
 }t_maillon;
 
+
 typedef struct file{
     t_maillon*tete; //pointeur sur le premier maillon
-    t_maillon*fin; //pointeur sur le dernier maillon
+    t_maillon*fin;//pointeur sur le dernier maillon
+    Habitation*avant;
+    Habitation*apres;
 }t_file;
 
 
@@ -98,6 +113,8 @@ typedef struct file{
 void distributionEau(Case** matriceCases,Global* global);
 
 void distributionEau2(Case** matriceCases,Global* global);
+
+void distributionEau3(Case** matriceCases,Global* global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
