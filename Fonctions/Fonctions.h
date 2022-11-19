@@ -116,9 +116,6 @@ typedef struct file{
 
 void distributionEau(Case** matriceCases,Global* global);
 
-void distributionEau2(Case** matriceCases,Global* global);
-
-void distributionEau3(Case** matriceCases,Global* global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);

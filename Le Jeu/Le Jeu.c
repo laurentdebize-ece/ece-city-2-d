@@ -97,7 +97,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         }
     }
 
-    distributionEau3(matriceCase,structureGlobale);
+    distributionEau(matriceCase,structureGlobale);
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
