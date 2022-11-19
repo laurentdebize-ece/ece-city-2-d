@@ -1043,7 +1043,9 @@ int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int*
     }
 }
 
-int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction,Global* global ){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
+
+int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction, Global* structureGlobale){ // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
+
 
     if (constructionPossible == 1){
 
@@ -1072,6 +1074,9 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                 }
 
                 dessinerCarte(matriceCase);
+                al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
+
+
                 al_flip_display();
                 return 0;
             }
@@ -1096,7 +1101,12 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                     }
                 }
                 dessinerCarte(matriceCase);
+                al_draw_filled_rectangle(617, 10, 735, 35, al_map_rgb(37,92,149));
+                al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
+
                 al_flip_display();
+                structureGlobale->nbChateau ++;
+
                 return 0;
             }
 
@@ -1116,7 +1126,11 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                     }
                 }
                 dessinerCarte(matriceCase);
+                al_draw_filled_rectangle(817, 10, 935, 35, al_map_rgb(37,92,149));
+                al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
+
                 al_flip_display();
+                structureGlobale->nbCentrale ++;
                 return 0;
             } else {
                 printf("Erreur placerUneConstruction : type inconnu");
@@ -1141,6 +1155,14 @@ int payer(Global* structureglobale, int cout){
     }
 }
 
+bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2){
+    if (clic_mouse == true && x_mouse < x2 && x_mouse > x1 && y_mouse < y2 && y_mouse > y1) {
+        al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgba(0, 0, 0, 120));
+        return true;
+    }
+    else{return false;}
+}
+
 
 int calculerNbHabitants(Case** matriceCase){
 
@@ -1154,7 +1176,8 @@ int calculerNbHabitants(Case** matriceCase){
             }
         }
     }
-
+    al_draw_filled_rectangle(217, 10, 335, 35, al_map_rgb(37,92,149));
+    al_flip_display();
     return nbHabitants;
 }
 
@@ -1175,22 +1198,27 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
                 switch (habitationAEvoluer->niveau) {
                     case 0://TERRAIN_VAGUE
                         matriceCase[ligneAEvoluer][colonneAEvoluer].type = 2;
+
                         habitationAEvoluer->nbHabitants = TERRAIN_VAGUE;
                         break;
                     case 1://CABANE
                         matriceCase[ligneAEvoluer][colonneAEvoluer].type = 3;
+
                         habitationAEvoluer->nbHabitants = CABANE;
                         break;
                     case 2://MAISON
                         matriceCase[ligneAEvoluer][colonneAEvoluer].type = 4;
+
                         habitationAEvoluer->nbHabitants = MAISON;
                         break;
                     case 3://IMMEUBLE
                         matriceCase[ligneAEvoluer][colonneAEvoluer].type = 5;
+
                         habitationAEvoluer->nbHabitants = IMMEUBLE;
                         break;
                     case 4://GRATTE_CIEL
                         matriceCase[ligneAEvoluer][colonneAEvoluer].type = 6;
+
                         habitationAEvoluer->nbHabitants = GRATTE_CIEL;
                         break;
                 }
@@ -1244,14 +1272,17 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
             switch (habitationAEvoluer->niveau) {
                 case 0://TERRAIN_VAGUE
                     matriceCase[ligneAEvoluer][colonneAEvoluer].type = 2;
+
                     habitationAEvoluer->nbHabitants = TERRAIN_VAGUE;
                     break;
                 case 1://CABANE
                     matriceCase[ligneAEvoluer][colonneAEvoluer].type = 3;
+
                     habitationAEvoluer->nbHabitants = CABANE;
                     break;
                 case 2://MAISON
                     matriceCase[ligneAEvoluer][colonneAEvoluer].type = 4;
+
                     habitationAEvoluer->nbHabitants = MAISON;
                     break;
                 case 3://IMMEUBLE
@@ -1260,6 +1291,7 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
                     break;
                 case 4://GRATTE_CIEL
                     matriceCase[ligneAEvoluer][colonneAEvoluer].type = 6;
+
                     habitationAEvoluer->nbHabitants = GRATTE_CIEL;
                     break;
             }
@@ -1269,7 +1301,33 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
             printf("Erreur evolutionHabitation: niveau %d ne peut evoluer\n", habitationAEvoluer->niveau);
         }
     }
-
+    al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
     structureGlobale->argentBanque += 10;
+    al_flip_display();
 }
 
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer){
+    bool finPause = false;
+    ALLEGRO_FONT *police = NULL;
+    police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
+    al_stop_timer(timer);
+    al_draw_text(police, al_map_rgb(255,255,255),135, 15, ALLEGRO_ALIGN_CENTER, "PAUSE");
+    al_flip_display();
+    while (!finPause) {
+        al_wait_for_event(queue, &event);
+        switch (event.type) {
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                    event.mouse.y > 167 && event.mouse.y < 210) {
+                    finPause = true;
+                    al_start_timer(timer);
+                    al_draw_filled_rectangle(98,5,171,40, al_map_rgb(60,149,253));
+                    al_flip_display();
+
+                }
+                break;
+
+        }
+    }
+
+}

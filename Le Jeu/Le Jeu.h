@@ -3,7 +3,10 @@
 
 #include "../Fonctions/Fonctions.h"
 
+
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu);
-void afficherInterface(ALLEGRO_DISPLAY* fenetre);
+void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale);
+
+
 
 #endif
