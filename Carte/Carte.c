@@ -1,5 +1,6 @@
 #include "Carte.h"
 
+
 void lireFichierCarte(Case** pMatriceCase){
 
     FILE * ifs = fopen("../Carte.txt","r");
@@ -10,7 +11,7 @@ void lireFichierCarte(Case** pMatriceCase){
     }
 
     int chiffreEnCours,
-        xPremiereCase, yPremiereCase;
+        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0;
 
 
     for (int ligne = 0; ligne < NB_LIGNES; ligne++) {
@@ -64,6 +65,14 @@ void lireFichierCarte(Case** pMatriceCase){
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
                 pMatriceCase[ligne][colonne].pHabitation = calloc(1, sizeof (Habitation));
                 pMatriceCase[ligne][colonne].pHabitation->estDessine = 0;
+                pMatriceCase[ligne][colonne].pHabitation->numero =numeroHabitation;
+                numeroHabitation++;
+                pMatriceCase[ligne][colonne].pHabitation->nbCaseEau=0;
+                for (int i=0;i<10;i++){
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].nbCases=0;
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].dejaAlim=0;
+                    pMatriceCase[ligne][colonne].pHabitation->nbCasesParChateau[i].numChateau=0;
+                }
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
@@ -80,8 +89,12 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==7 && pMatriceCase[ligne][colonne].pChateau == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = NULL;
-                pMatriceCase[ligne][colonne].pChateau = calloc(1, sizeof (Habitation));
+                pMatriceCase[ligne][colonne].pChateau = calloc(1, sizeof (Chateau));
                 pMatriceCase[ligne][colonne].pChateau->estDessine = 0;
+                pMatriceCase[ligne][colonne].pChateau->capacite = 5000;
+                pMatriceCase[ligne][colonne].pChateau->numero = numeroChateau;
+                pMatriceCase[ligne][colonne].pChateau->parcoursMatriceChateau = 0;
+                numeroChateau++;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
@@ -98,7 +111,7 @@ void lireFichierCarte(Case** pMatriceCase){
             if (chiffreEnCours==8 && pMatriceCase[ligne][colonne].pCentrale == NULL){
                 pMatriceCase[ligne][colonne].pHabitation = NULL;
                 pMatriceCase[ligne][colonne].pChateau = NULL;
-                pMatriceCase[ligne][colonne].pCentrale = calloc(1, sizeof (Habitation));
+                pMatriceCase[ligne][colonne].pCentrale = calloc(1, sizeof (Centrale));
                 pMatriceCase[ligne][colonne].pCentrale->estDessine = 0;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
@@ -145,10 +158,10 @@ void dessinerCarte(Case** pMatriceCase){
     if(!terrainVague) {
         printf("Erreur ouverture image terrainVague");
     }
-    cabane = al_load_bitmap("../images/cabane.jpg");
-    /*if(!cabane) {
+    cabane = al_load_bitmap("../images/Carre.jpg");
+    if(!cabane) {
         printf("Erreur ouverture image cabane");
-    }*/
+    }
     maison = al_load_bitmap("../images/maison.jpg");
     /*if(!maison) {
         printf("Erreur ouverture image maison");

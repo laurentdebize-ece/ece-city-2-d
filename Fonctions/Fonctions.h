@@ -29,24 +29,42 @@
 
 
     //**********Constructions**********//
-typedef struct {
-    int coordXHG, coordYHG,
 
+
+typedef struct{
+    int numChateau;
+    int dejaAlim;
+    int nbCases;
+
+}AlimEau;
+
+
+
+
+typedef struct Habitation {
+    int coordXHG, coordYHG,
+        numero,
         niveau, nbHabitants, timerHabitation,
 
-        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation;
-
-        bool alimEauOuiNon,// 0 non, 1 partielement, 2 completement
+        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation,
+        numChateauAlim,
+        alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
-
+        AlimEau nbCasesParChateau[10];
     bool estDessine;
+
     bool marquage;
+
+    struct Habitation*suiv;
 
 }Habitation;
 
+
+
 typedef struct {
     int coordXHG, coordYHG,
-        niveau, capacite, quantiteDistribuee;
+        niveau, capacite, quantiteDistribuee,numero,
+        parcoursMatriceChateau;
 
     int distribution;//0 ou 1 (en train de distribuer ou non)
 
@@ -77,23 +95,38 @@ typedef struct {
     Centrale* pCentrale;
 }Case;
 
+// 0 herbe
+
 typedef struct maillon{
     int num;
     int x,y;
+    int numRoute;
     struct maillon*suiv;
 }t_maillon;
 
+
 typedef struct file{
     t_maillon*tete; //pointeur sur le premier maillon
-    t_maillon*fin; //pointeur sur le dernier maillon
+    t_maillon*fin;//pointeur sur le dernier maillon
+    Habitation*avant;
+    Habitation*apres;
 }t_file;
 
+
+
+void distributionEau(Case** matriceCases,Global* global);
+
+void distributionEau2(Case** matriceCases,Global* global);
+
+void distributionEau3(Case** matriceCases,Global* global);
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
 int afficherPlacerUneRoute(Case** matriceCase, Case caseAConstruire, int* contructionPossible); // afficherPlacerUneRoute (matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible);
 int placerUneRoute(Case** matriceCase, Case caseAConstruire, int constructionPossible); // placerUneRoute (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible);
 int afficherPlacerUneConstruction(Case** matriceCase, Case caseAConstruire, int* constructionPossible, int typeDeContruction); // afficherPlacerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], &constructionPossible, typeDeConstruction);
+
 int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int constructionPossible, int typeDeConstruction, Global* structureGlobale); // placerUneConstruction (matriceCase, matriceCase[ligneAConstruire][colonneAConstruire], constructionPossible, typeDeConstruction);
+
 
 int payer(Global* structureglobale, int cout);
 int calculerNbHabitants(Case** matriceCase);
