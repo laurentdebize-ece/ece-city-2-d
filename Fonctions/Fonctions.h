@@ -9,6 +9,7 @@
 #include <allegro5/allegro_ttf.h>
 
 
+
 #define LARGEUR_FENETRE 1150
 #define HAUTEUR_FENETRE 780
 #define DECALAGE_GRILLE_X 125
