@@ -135,39 +135,39 @@ void dessinerCarte(Case** pMatriceCase){
 
     herbe = al_load_bitmap("../images/herbe.jpg");
     if(!herbe) {
-        printf("Erreur ouverture image herbe");
+        printf("Erreur ouverture image herbe\n");
     }
     route = al_load_bitmap("../images/route.jpg");
     if(!route) {
-        printf("Erreur ouverture image route");
+        printf("Erreur ouverture image route\n");
     }
     terrainVague = al_load_bitmap("../images/Carre.jpg");
     if(!terrainVague) {
-        printf("Erreur ouverture image terrainVague");
+        printf("Erreur ouverture image terrainVague\n");
     }
-    cabane = al_load_bitmap("../images/cabane.jpg");
-    /*if(!cabane) {
-        printf("Erreur ouverture image cabane");
-    }*/
+    cabane = al_load_bitmap("../images/Carre.jpg");
+    if(!cabane) {
+        printf("Erreur ouverture image cabane\n");
+    }
     maison = al_load_bitmap("../images/maison.jpg");
-    /*if(!maison) {
-        printf("Erreur ouverture image maison");
-    }*/
-    immeuble = al_load_bitmap("../images/immeuble.jpg");
-    /*if(!immeuble) {
-        printf("Erreur ouverture image immeuble");
-    }*/
+    if(!maison) {
+        printf("Erreur ouverture image maison\n");
+    }
+    immeuble = al_load_bitmap("../images/Carre.jpg");
+    if(!immeuble) {
+        printf("Erreur ouverture image immeuble\n");
+    }
     gratteCiel = al_load_bitmap("../images/gratteCiel.jpg");
-    /*if(!gratteCiel) {
-        printf("Erreur ouverture image gratteCiel");
-    }*/
+    if(!gratteCiel) {
+        printf("Erreur ouverture image gratteCiel\n");
+    }
     chateau = al_load_bitmap("../images/chateau.png");
     if(!chateau) {
-        printf("Erreur ouverture image chateau");
+        printf("Erreur ouverture image chateau\n");
     }
     centrale = al_load_bitmap("../images/Centrale.png");
     if(!centrale) {
-        printf("Erreur ouverture image centrale");
+        printf("Erreur ouverture image centrale\n");
     }
 
 

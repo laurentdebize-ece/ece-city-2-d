@@ -11,14 +11,12 @@
 
 #define LARGEUR_FENETRE 1150
 #define HAUTEUR_FENETRE 780
+#define DECALAGE_GRILLE_X 125
+#define DECALAGE_GRILLE_Y 40
 #define NB_COLONNES 45
 #define NB_LIGNES 35
 #define TAILLE_CASE 20
-#define DECALAGE_GRILLE_X 125
-#define DECALAGE_GRILLE_Y 40
 
-#define MARGE_EAU_POUR_EVOLUER 0.7 // Soit 70%
-#define MARGE_ELEC_POUR_EVOLUER 0.7 // Soit 70%
 
     //**********En nombre d'habitant**********//
 #define TERRAIN_VAGUE 0
@@ -34,7 +32,7 @@ typedef struct {
 
         niveau, nbHabitants, timerHabitation,
 
-        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation;
+        alimEau, alimElec, nbCaseEau, parcoureMatriceHabitation,
 
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
@@ -96,6 +94,6 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
 
 int payer(Global* structureglobale, int cout);
 int calculerNbHabitants(Case** matriceCase);
-void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer);
+void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer);
 
 #endif
