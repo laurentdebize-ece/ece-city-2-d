@@ -2,10 +2,39 @@
 #include "../Carte/Carte.h"
 #include "../Fonctions/Fonctions.h"
 #include "../Initialisation/Initialisation.h"
+#include "../Ecrans accueil/Ecrans accueil.h"
 
 
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
+int ecranQuitter(ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, Case** matriceCases, Global* structureGlobale) {
+    bool finQuitter = 0;
+    ALLEGRO_BITMAP* image;
+    image = al_load_bitmap("../Images/sauvegardePartie.jpg");
+    al_draw_bitmap(image, 0, 0, 0);
+    al_flip_display();
+    al_destroy_bitmap(image);
+    image = NULL;
+    while (!finQuitter) {
+        al_wait_for_event(queue, &event);
+        switch (event.type) {
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                if (event.mouse.x > 301 && event.mouse.x < 450 && event.mouse.y > 402 && event.mouse.y < 470) {
+                    //sauvegarde (matriceCases, structureGlobale);
+                    printf("on sauvegarde\n");
+                    ecranAccueil();
+                }
+                if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 && event.mouse.y < 470) {
+                    finQuitter = true;
+                    return 1;
+                }
+                break;
+        }
+    }
+}
+
+
+int leJeu (ALLEGRO_DISPLAY* fenetre) {
 
     // Déclarations
     ALLEGRO_TIMER *timer = NULL;
@@ -365,6 +394,19 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
 
                     //éléments à gauche
+
+                    /*if (event.mouse.x > 19 && event.mouse.x < 62 &&
+                        event.mouse.y > 102 && event.mouse.y < 139) {
+                        //changer niveau de visualisation
+                    }*/
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 359 && event.mouse.y < 403) {
+                        //PAUSE
+                    }
+
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 444 && event.mouse.y < 488) {
+                        printf("ok");
+                        fin = ecranQuitter(queue, event, matriceCase, structureGlobale);
+
                     //changer niveau de visualisation
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
                     }
@@ -385,6 +427,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         }
                         // faire une autre fonction pour ça???
                         // affichage de l'écran sauvegarder puis fermeture fenêtre
+
                     }
                 }
                 break;
@@ -492,5 +535,9 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale){
     al_destroy_bitmap(fond);
     fond = NULL;
     police = NULL;
+
 }
+
+}
+
 
