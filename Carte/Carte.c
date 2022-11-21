@@ -150,7 +150,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!herbe) {
         printf("Erreur ouverture image herbe\n");
     }
-    route = al_load_bitmap("../images/Route.png");
+    route = al_load_bitmap("../images/route.jpg");
     if(!route) {
         printf("Erreur ouverture image route\n");
     }
