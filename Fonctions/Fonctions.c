@@ -991,112 +991,117 @@ int bfsEvolutionVerification(Case** matriceCases,int tabChateauRelie[10],int x,i
     return nbChateau;
 }
 
-int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habitation){
+int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habitation) {
     int caseX1 = 0;
     int caseY1 = 0;
     int caseX2 = 0;
     int caseY2 = 0;
-    int nbChateauRelie=0;
-    int tabChateauRelie[10]={-1};
-    int quantiteRestante=0;
-
-    for (int i = 0; i < NB_LIGNES; i++) {
-        for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pHabitation != NULL &&
-                matriceCases[i][j].pHabitation == habitation && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 0 ) {
-                caseX1 = j;
-                caseY1 = i;
-                caseX2 = caseX1 + 3;
-                caseY2 = caseY1 + 3;
-                matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 1;
-            }
-        }
-    }
-    matriceCases[caseY1][caseX1].pHabitation->parcoureMatriceHabitation = 0;
-
-    for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_HABITATION + 1) {
-        for (int b = caseY1; b < caseY2 + 1; b++) {
-            if (a > 0 && b > 0) {
-                if (matriceCases[b][a].type == 1) {
-                    nbChateauRelie = bfsEvolutionVerification(matriceCases, tabChateauRelie,a,b,nbChateauRelie);
+    int nbChateauRelie = 0;
+    int tabChateauRelie[10] = {-1};
+    int quantiteRestante = 0;
+    if (habitation->alimEau == habitation->nbHabitants) {
+        for (int i = 0; i < NB_LIGNES; i++) {
+            for (int j = 0; j < NB_COLONNES; j++) {
+                if (matriceCases[i][j].pHabitation != NULL &&
+                    matriceCases[i][j].pHabitation == habitation &&
+                    matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 0) {
+                    caseX1 = j;
+                    caseY1 = i;
+                    caseX2 = caseX1 + 3;
+                    caseY2 = caseY1 + 3;
+                    matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 1;
                 }
             }
         }
-    }
-    for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_HABITATION + 1) {
-        for (int a = caseX1; a < caseX2 + 1; a++) {
-            if (a > 0 && b > 0) {
-                if (matriceCases[b][a].type == 1) {
-                    nbChateauRelie = bfsEvolutionVerification(matriceCases, tabChateauRelie,a,b,nbChateauRelie);
+        matriceCases[caseY1][caseX1].pHabitation->parcoureMatriceHabitation = 0;
+
+        for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_HABITATION + 1) {
+            for (int b = caseY1; b < caseY2 + 1; b++) {
+                if (a > 0 && b > 0) {
+                    if (matriceCases[b][a].type == 1) {
+                        nbChateauRelie = bfsEvolutionVerification(matriceCases, tabChateauRelie, a, b, nbChateauRelie);
+                    }
                 }
             }
         }
-    }
-    for (int i = 0; i < NB_LIGNES; i++) {
-        for (
-                int j = 0;
-                j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
-                && matriceCases[i][j].pChateau->distribution == 1) {
-
-                matriceCases[i][j].pChateau->
-                        distribution = 0;
-            }
-            if (matriceCases[i][j].pHabitation != NULL
-                && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
-
-                matriceCases[i][j].pHabitation->
-                        parcoureMatriceHabitation = 0;
+        for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_HABITATION + 1) {
+            for (int a = caseX1; a < caseX2 + 1; a++) {
+                if (a > 0 && b > 0) {
+                    if (matriceCases[b][a].type == 1) {
+                        nbChateauRelie = bfsEvolutionVerification(matriceCases, tabChateauRelie, a, b, nbChateauRelie);
+                    }
+                }
             }
         }
-    }
-    int habitationProche = 0;
-    for (int k = 0; k < NB_LIGNES; k++) {
-        for (int l = 0; l < NB_COLONNES; l++) {
-            if (matriceCases[k][l].pHabitation != NULL &&
-                matriceCases[k][l].pHabitation->parcoureMatriceHabitation == 1) {
-                matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
+        for (int i = 0; i < NB_LIGNES; i++) {
+            for (
+                    int j = 0;
+                    j < NB_COLONNES; j++) {
+                if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
+                    && matriceCases[i][j].pChateau->distribution == 1) {
+
+                    matriceCases[i][j].pChateau->
+                            distribution = 0;
+                }
+                if (matriceCases[i][j].pHabitation != NULL
+                    && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+
+                    matriceCases[i][j].pHabitation->
+                            parcoureMatriceHabitation = 0;
+                }
             }
         }
-    }
-    for(int i=0;i<nbChateauRelie;i++){
+        int habitationProche = 0;
         for (int k = 0; k < NB_LIGNES; k++) {
             for (int l = 0; l < NB_COLONNES; l++) {
-                if (matriceCases[k][l].pChateau != NULL &&
-                    matriceCases[k][l].pChateau->numero == tabChateauRelie[i]) {
-                    quantiteRestante+=matriceCases[k][l].pChateau->capacite-matriceCases[k][l].pChateau->quantiteDistribuee;
+                if (matriceCases[k][l].pHabitation != NULL &&
+                    matriceCases[k][l].pHabitation->parcoureMatriceHabitation == 1) {
+                    matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
                 }
             }
         }
-    }
-    int quantiteUtile=0;
-    int aEvoluer=habitation->niveau+1;
-    switch (aEvoluer)
-    {
+        for (int i = 0; i < nbChateauRelie; i++) {
+            for (int k = 0; k < NB_LIGNES; k++) {
+                for (int l = 0; l < NB_COLONNES; l++) {
+                    if (matriceCases[k][l].pChateau != NULL &&
+                        matriceCases[k][l].pChateau->numero == tabChateauRelie[i]) {
+                        quantiteRestante +=
+                                matriceCases[k][l].pChateau->capacite - matriceCases[k][l].pChateau->quantiteDistribuee;
+                    }
+                }
+            }
+        }
+        int quantiteUtile = 0;
+        int aEvoluer = habitation->niveau + 1;
+        switch (aEvoluer) {
 
-        case 1:
-            quantiteUtile=CABANE;
-            break;
-        case 2:
-            quantiteUtile=MAISON;
-            break;
-        case 3:
-            quantiteUtile=IMMEUBLE;
-            break;
-        case 4:
-            quantiteUtile=GRATTE_CIEL;
-            break;
-        default:
+            case 1:
+                quantiteUtile = CABANE;
+                break;
+            case 2:
+                quantiteUtile = MAISON;
+                break;
+            case 3:
+                quantiteUtile = IMMEUBLE;
+                break;
+            case 4:
+                quantiteUtile = GRATTE_CIEL;
+                break;
+            default:
 
-            break;
+                break;
+        }
+        if (quantiteRestante >= quantiteUtile) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    if(quantiteRestante>=quantiteUtile){
-        return 1;
-    }
-    else {
-        return 0;
+    else{
+        return -1;
     }
 }
+
 
 /*
 void distributionElec(Case** matriceCases,Global global){
