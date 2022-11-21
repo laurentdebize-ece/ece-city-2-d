@@ -73,7 +73,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             saveColonne, saveLigne;
 
     //************************ TEST EAU ******************************//
-
+/*
   /*  int habitant = 2000;
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
@@ -476,6 +476,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             }
         }
     }
+
 
     al_destroy_event_queue(queue);
     al_destroy_bitmap (sauvegarde);
