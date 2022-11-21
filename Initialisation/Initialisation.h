@@ -5,6 +5,6 @@
 
 void initCases(Case** matriceCases);
 void initGlobal(Global* structureGlobale);
-void sauvegarde(Case** matriceCases);
+void sauvegarde(Case** matriceCases, Global* structureGlobale);
 
 #endif

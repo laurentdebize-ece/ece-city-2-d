@@ -9,16 +9,15 @@
 #include <allegro5/allegro_ttf.h>
 
 
+
 #define LARGEUR_FENETRE 1150
 #define HAUTEUR_FENETRE 780
+#define DECALAGE_GRILLE_X 125
+#define DECALAGE_GRILLE_Y 40
 #define NB_COLONNES 45
 #define NB_LIGNES 35
 #define TAILLE_CASE 20
-#define DECALAGE_GRILLE_X 125
-#define DECALAGE_GRILLE_Y 40
 
-#define MARGE_EAU_POUR_EVOLUER 0.7 // Soit 70%
-#define MARGE_ELEC_POUR_EVOLUER 0.7 // Soit 70%
 
     //**********En nombre d'habitant**********//
 #define TERRAIN_VAGUE 0
@@ -29,6 +28,7 @@
 
 
     //**********Constructions**********//
+
 
 
 typedef struct{
@@ -127,7 +127,7 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
 
 int payer(Global* structureglobale, int cout);
 int calculerNbHabitants(Case** matriceCase);
-void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer);
+void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer);
 
 bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2);
 void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer);

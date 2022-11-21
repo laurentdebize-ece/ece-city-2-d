@@ -4,7 +4,6 @@
 
 #define TAILLE_X_CHATEAU 4
 #define TAILLE_Y_CHATEAU 6
-#define POURCENTAGE_EVOLUTION 0,7
 
 //boucle for nbchateau faire distribution
 
@@ -428,14 +427,18 @@ void distributionEau(Case** matriceCases,Global* global){
 
                 while(numHabitation<numHabitationBFS) {
                     comparateur = 5000;
+
                     for (int a = 0; a < numHabitationBFS; a++) {
                         if (habEau[a]->nbCasesParChateau[numeroChateau].nbCases < comparateur && habEau[a]->parcoureMatriceHabitation != 1) {
+
                             comparateur = habEau[a]->nbCaseEau;
                             habitationProche = a;
                         }
                     }
+
                     enfilerHabitation(&f,habEau[habitationProche]);
                     habEau[habitationProche]->parcoureMatriceHabitation = 1;
+
                     numHabitation++;
                 }
                 numHabitation=0;
@@ -845,13 +848,12 @@ int calculerNbHabitants(Case** matriceCase){
 
 
 
-void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer){
+void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer){
 
     //Mode communiste
     if (structureGlobale->modeDeJeu == 1) {
 
-        if (habitationAEvoluer->alimEau >= (habitationAEvoluer->nbHabitants * MARGE_EAU_POUR_EVOLUER) &&
-            habitationAEvoluer->alimElec >= (habitationAEvoluer->nbHabitants * MARGE_ELEC_POUR_EVOLUER)){ //Les flux sont-ils suffisants ?
+        if (onPeutEvoluer == 1){ //Les flux sont-ils suffisants ?
             //Evolution max
             if (habitationAEvoluer->niveau == 4) {}
             else if (habitationAEvoluer->niveau < 4) { //On evolue
@@ -889,7 +891,12 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
             }else{
                 printf("Erreur evolutionHabitation: niveau %d ne peut evoluer\n", habitationAEvoluer->niveau);
             }
-        }else if(habitationAEvoluer->alimEau < habitationAEvoluer->nbHabitants || habitationAEvoluer->alimElec < habitationAEvoluer->nbHabitants){ //On regresse
+        }
+
+        else if (onPeutEvoluer == 0){
+        }
+
+        else if(onPeutEvoluer == -1){ //On regresse
             if (habitationAEvoluer->niveau == 0) {}
             else if (habitationAEvoluer->niveau > 0) { //On regresse
 
