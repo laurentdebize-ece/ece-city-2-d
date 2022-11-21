@@ -31,7 +31,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         printf("Erreur ouverture image Le Jeu\n");
     }
 
-    timer = al_create_timer(1);
+    timer = al_create_timer(0.1);
 
 
     queue = al_create_event_queue();
@@ -195,8 +195,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         }else{printf("Pas assez d'argent\n");}
                     }
 
-                    // choix centrale électricité
-                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
+                    // choix route
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutCentrale);
                         if (paiementPossible == 0) {
                             bool finCentrale = 0;
@@ -304,8 +304,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         }else{printf("Pas assez d'argent\n");}
                     }
 
-                    // choix ROUTE
-                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
+                    // choix centrale électricité
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutRoute);
                         if (paiementPossible == 0) {
                             bool finRoute = 0;
@@ -362,38 +362,26 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                     }
 
 
-
-
                     //éléments à gauche
-                    /*if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
-                        //changer niveau de visualisation
-                    }*/
-                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 359 && event.mouse.y < 403) {
-                        //PAUSE
+                    //changer niveau de visualisation
+
+                    // Nvx -1
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 200 && event.mouse.y < 257) {
+                        fonctionPause(fenetre, queue, event, timer, matriceCase, 121, 174, 1);
+                    }
+                    // Nvx -2
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 280 && event.mouse.y < 328) {
+                        fonctionPause(fenetre, queue, event, timer, matriceCase, 121, 174, 2);
                     }
 
+                    //Quitter
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 444 && event.mouse.y < 488) {
                         printf("ok");
                         fin = ecranQuitter(fenetre, queue, event, matriceCase, structureGlobale);
                     }
-                        //changer niveau de visualisation
-                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
-                    }
-
-                    if (event.mouse.x > 19 && event.mouse.x < 62 &&
-                        event.mouse.y > 167 && event.mouse.y < 210) {
-                        fonctionPause(fenetre,queue,event,timer);
-
-                    }
-                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 238 && event.mouse.y < 272) {
-                        printf("%d, %d", event.mouse.x, event.mouse.y);
-                        al_draw_bitmap(sauvegarde, 0, 0, 0);
-                        al_flip_display();
-                        if (event.mouse.x > 301 && event.mouse.x < 450 && event.mouse.y > 402 && event.mouse.y < 470) {
-                            // fonction sauvegarder partie
-                        } else if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 && event.mouse.y < 470) {
-                            fin = true;
-                        }
+                    //Pause
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 359 && event.mouse.y < 403) {
+                        fonctionPause(fenetre, queue, event, timer, matriceCase, 359, 403, 3);
                     }
                 }
                 break;

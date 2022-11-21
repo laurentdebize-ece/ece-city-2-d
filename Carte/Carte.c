@@ -166,7 +166,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!maison) {
         printf("Erreur ouverture image maison\n");
     }
-    immeuble = al_load_bitmap("../images/Carre.jpg");
+    immeuble = al_load_bitmap("../images/Immeuble.png");
     if(!immeuble) {
         printf("Erreur ouverture image immeuble\n");
     }
@@ -238,7 +238,7 @@ void dessinerCarte(Case** pMatriceCase){
                     }
                     break;
                 default:
-                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
+                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d\n", i, j);
                     break;
             }
         }
@@ -293,7 +293,7 @@ void dessinerCarte(Case** pMatriceCase){
 //Pour chaque chateau leur qté distribuée vs leur capacité (4000/5000)
 
 
-void niveau1 (Case** pMatriceCase, Habitation* habitation) {
+void niveau1 (Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
     ALLEGRO_BITMAP *route;
@@ -313,131 +313,115 @@ void niveau1 (Case** pMatriceCase, Habitation* habitation) {
         printf("Erreur ouverture image route");
     }
     cabane = al_load_bitmap("../images/Cabane.png");
-    /*if(!cabane) {
+    if(!cabane) {
         printf("Erreur ouverture image cabane");
-    }*/
+    }
     maison = al_load_bitmap("../images/maison.jpg");
-    /*if(!maison) {
+    if(!maison) {
         printf("Erreur ouverture image maison");
-    }*/
-    immeuble = al_load_bitmap("../images/immeuble.jpg");
-    /*if(!immeuble) {
+    }
+    immeuble = al_load_bitmap("../images/immeuble.png");
+    if(!immeuble) {
         printf("Erreur ouverture image immeuble");
-    }*/
+    }
     gratteCiel = al_load_bitmap("../images/gratteCiel.jpg");
-    /*if(!gratteCiel) {
+    if(!gratteCiel) {
         printf("Erreur ouverture image gratteCiel");
-    }*/
+    }
     chateau = al_load_bitmap("../images/chateau.png");
     if (!chateau) {
         printf("Erreur ouverture image chateau");
     }
 
-    switch (event.type) {
-        case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
-            if (event.mouse.button & 1) {
-                if (event.mouse.x > 11 && event.mouse.x < 63 && event.mouse.y > 204 && event.mouse.y < 249) {
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
 
-                    for (int i = 0; i < NB_LIGNES; i++) {
-                        for (int j = 0; j < NB_COLONNES; j++) {
+            switch (pMatriceCase[i][j].type) {
+                case 0:
+                case 8:
+                    al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
+                    break;
+                case 1:
+                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
+                    break;
 
-                            switch (pMatriceCase[i][j].type) {
-                                case 0:
-                                    al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,
-                                                   0);
-                                    break;
-                                case 1:
-                                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,
-                                                   0);
-                                    break;
-                                case 2:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimEau) {
-                                            al_draw_bitmap(cabane, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                    }
-                                    break;
-                                case 3:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimEau) {
-                                            al_draw_bitmap(maison, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                    }
-                                    break;
-                                case 4:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimEau) {
-                                            al_draw_bitmap(immeuble, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                    }
-                                    break;
-                                case 5:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimEau) {
-                                            al_draw_bitmap(gratteCiel, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                    }
-                                    break;
-                                case 6:
-                                    if (pMatriceCase[i][j].pChateau->estDessine == 0) {
-                                        pMatriceCase[i][j].pChateau->estDessine = 1;
-                                        al_draw_bitmap(chateau, (float) pMatriceCase[i][j].x,
-                                                       (float) pMatriceCase[i][j].y, 0);
-                                    }
-                                    break;
-                                default:
-                                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
-                                    break;
-                            }
+                case 3:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimEau) {
+                            al_draw_bitmap(cabane, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
                         }
                     }
-                }
-            }
-
-
-            for (int i = 0; i < NB_LIGNES; i++) {
-                for (int j = 0; j < NB_COLONNES; j++) {
-                    switch (pMatriceCase[i][j].type) {
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                            pMatriceCase[i][j].pHabitation->estDessine = 0;
-                            break;
-                        case 6:
-                            pMatriceCase[i][j].pChateau->estDessine = 0;
-                            break;
-                        default:
-                            break;
+                    break;
+                case 4:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimEau) {
+                            al_draw_bitmap(maison, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
                     }
-                }
+                    break;
+                case 5:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimEau) {
+                            al_draw_bitmap(immeuble, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                    }
+                    break;
+                case 6:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimEau) {
+                            al_draw_bitmap(gratteCiel, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                    }
+                    break;
+                case 7:
+                    if (pMatriceCase[i][j].pChateau->estDessine == 0) {
+                        pMatriceCase[i][j].pChateau->estDessine = 1;
+                        al_draw_bitmap(chateau, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                    }
+                    break;
+                default:
+                    break;
             }
-
-            al_destroy_bitmap(herbe);
-            al_destroy_bitmap(route);
-            al_destroy_bitmap(cabane);
-            al_destroy_bitmap(maison);
-            al_destroy_bitmap(immeuble);
-            al_destroy_bitmap(gratteCiel);
-            al_destroy_bitmap(chateau);
-
-            herbe = NULL;
-            route = NULL;
-            cabane = NULL;
-            maison = NULL;
-            immeuble = NULL;
-            gratteCiel = NULL;
-            chateau = NULL;
         }
     }
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            switch (pMatriceCase[i][j].type) {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    pMatriceCase[i][j].pHabitation->estDessine = 0;
+                    break;
+                case 7:
+                    pMatriceCase[i][j].pChateau->estDessine = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    al_destroy_bitmap(herbe);
+    al_destroy_bitmap(route);
+    al_destroy_bitmap(cabane);
+    al_destroy_bitmap(maison);
+    al_destroy_bitmap(immeuble);
+    al_destroy_bitmap(gratteCiel);
+    al_destroy_bitmap(chateau);
+
+    herbe = NULL;
+    route = NULL;
+    cabane = NULL;
+    maison = NULL;
+    immeuble = NULL;
+    gratteCiel = NULL;
+    chateau = NULL;
 }
 
 
@@ -447,7 +431,7 @@ void niveau1 (Case** pMatriceCase, Habitation* habitation) {
 
 
 
-void niveau2(Case** pMatriceCase, Habitation* habitation) {
+void niveau2(Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
     ALLEGRO_BITMAP *route;
@@ -467,122 +451,107 @@ void niveau2(Case** pMatriceCase, Habitation* habitation) {
         printf("Erreur ouverture image route");
     }
     cabane = al_load_bitmap("../images/Cabane.png");
-    /*if(!cabane) {
+    if(!cabane) {
         printf("Erreur ouverture image cabane");
-    }*/
+    }
     maison = al_load_bitmap("../images/maison.jpg");
-    /*if(!maison) {
+    if(!maison) {
         printf("Erreur ouverture image maison");
-    }*/
-    immeuble = al_load_bitmap("../images/immeuble.jpg");
-    /*if(!immeuble) {
+    }
+    immeuble = al_load_bitmap("../images/immeuble.png");
+    if(!immeuble) {
         printf("Erreur ouverture image immeuble");
-    }*/
+    }
     gratteCiel = al_load_bitmap("../images/gratteCiel.jpg");
-    /*if(!gratteCiel) {
+    if(!gratteCiel) {
         printf("Erreur ouverture image gratteCiel");
-    }*/
+    }
     centrale = al_load_bitmap("../images/Centrale.png");
     if (!centrale) {
         printf("Erreur ouverture image centrale");
     }
 
-    switch (event.type) {
-        case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
-            if (event.mouse.button & 1) {
-                if (event.mouse.x > 11 && event.mouse.x < 63 && event.mouse.y > 281 && event.mouse.y < 330) {
-                    for (int i = 0; i < NB_LIGNES; i++) {
-                        for (int j = 0; j < NB_COLONNES; j++) {
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
 
-                            switch (pMatriceCase[i][j].type) {
-                                case 0:
-                                    al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,
-                                                   0);
-                                    break;
-                                case 1:
-                                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,
-                                                   0);
-                                    break;
-                                case 2:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimElec) {
-                                            al_draw_bitmap(cabane, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                        else if (habitation->nbHabitants > habitation->alimElec){
-                                            printf("carence");
-                                        }
-                                    }
-                                    break;
-                                case 3:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimElec) {
-                                            al_draw_bitmap(maison, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                        else if (habitation->nbHabitants > habitation->alimElec){
-                                            printf("carence");
-                                        }
-                                    }
-                                    break;
-                                case 4:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimElec) {
-                                            al_draw_bitmap(immeuble, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                        else if (habitation->nbHabitants > habitation->alimElec){
-                                            printf("carence");
-                                        }
-                                    }
-                                    break;
-                                case 5:
-                                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
-                                        pMatriceCase[i][j].pHabitation->estDessine = 1;
-                                        if (habitation->nbHabitants == habitation->alimElec) {
-                                            al_draw_bitmap(gratteCiel, (float) pMatriceCase[i][j].x,
-                                                           (float) pMatriceCase[i][j].y, 0);
-                                        }
-                                        else if (habitation->nbHabitants > habitation->alimElec){
-                                            printf("carence");
-                                        }
-                                    }
-                                    break;
-                                case 6:
-                                    if (pMatriceCase[i][j].pCentrale->estDessine == 0) {
-                                        pMatriceCase[i][j].pCentrale->estDessine = 1;
-                                        al_draw_bitmap(centrale, (float) pMatriceCase[i][j].x,
-                                                       (float) pMatriceCase[i][j].y, 0);
-                                    }
-                                    break;
-                                default:
-                                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
-                                    break;
-                            }
+            switch (pMatriceCase[i][j].type) {
+                case 0:
+                case 7:
+                    al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
+                    break;
+                case 1:
+                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
+                    break;
+                case 3:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimElec) {
+                            al_draw_bitmap(cabane, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                        else if (pMatriceCase[i][j].pHabitation->nbHabitants > pMatriceCase[i][j].pHabitation->alimElec){
+                            printf("carence");
                         }
                     }
-                }
-
-                for (int i = 0; i < NB_LIGNES; i++) {
-                    for (int j = 0; j < NB_COLONNES; j++) {
-                        switch (pMatriceCase[i][j].type) {
-                            case 2:
-                            case 3:
-                            case 4:
-                            case 5:
-                                pMatriceCase[i][j].pHabitation->estDessine = 0;
-                                break;
-                            case 6:
-                                pMatriceCase[i][j].pCentrale->estDessine = 0;
-                                break;
-                            default:
-                                break;
+                    break;
+                case 4:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimElec) {
+                            al_draw_bitmap(maison, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                        else if (pMatriceCase[i][j].pHabitation->nbHabitants > pMatriceCase[i][j].pHabitation->alimElec){
+                            printf("carence");
                         }
                     }
-                }
+                    break;
+                case 5:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimElec) {
+                            al_draw_bitmap(immeuble, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                        else if (pMatriceCase[i][j].pHabitation->nbHabitants > pMatriceCase[i][j].pHabitation->alimElec){
+                            printf("carence");
+                        }
+                    }
+                    break;
+                case 6:
+                    if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
+                        pMatriceCase[i][j].pHabitation->estDessine = 1;
+                        if (pMatriceCase[i][j].pHabitation->nbHabitants == pMatriceCase[i][j].pHabitation->alimElec) {
+                            al_draw_bitmap(gratteCiel, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                        }
+                        else if (pMatriceCase[i][j].pHabitation->nbHabitants > pMatriceCase[i][j].pHabitation->alimElec){
+                            printf("carence");
+                        }
+                    }
+                    break;
+                case 8:
+                    if (pMatriceCase[i][j].pCentrale->estDessine == 0) {
+                        pMatriceCase[i][j].pCentrale->estDessine = 1;
+                        al_draw_bitmap(centrale, (float) pMatriceCase[i][j].x,(float) pMatriceCase[i][j].y, 0);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            switch (pMatriceCase[i][j].type) {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    pMatriceCase[i][j].pHabitation->estDessine = 0;
+                    break;
+                case 8:
+                    pMatriceCase[i][j].pCentrale->estDessine = 0;
+                    break;
+                default:
+                    break;
             }
         }
     }
