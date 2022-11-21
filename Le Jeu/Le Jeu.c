@@ -73,8 +73,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             saveColonne, saveLigne;
 
     //************************ TEST EAU ******************************//
-/*
-  /*  int habitant = 2000;
+
+   int habitant = 2000;
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCase[i][j].pHabitation != NULL &&
@@ -116,7 +116,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                 matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 0;
             }
         }
-    }*/
+    }
 
 
     while (!fin) {
