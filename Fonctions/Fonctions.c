@@ -1556,19 +1556,27 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
     al_flip_display();
 }
 
-void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer){
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas){
+
     bool finPause = false;
     ALLEGRO_FONT *police = NULL;
     police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
+
     al_stop_timer(timer);
     al_draw_text(police, al_map_rgb(255,255,255),135, 15, ALLEGRO_ALIGN_CENTER, "PAUSE");
+
+    if (cas == 1){
+        niveau1(matriceCase);
+    }else if(cas == 2){
+        niveau2(matriceCase);
+    }
     al_flip_display();
+
     while (!finPause) {
         al_wait_for_event(queue, &event);
         switch (event.type) {
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-                if (event.mouse.x > 19 && event.mouse.x < 62 &&
-                    event.mouse.y > 167 && event.mouse.y < 210) {
+                if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > y1 && event.mouse.y < y2) {
                     finPause = true;
                     al_start_timer(timer);
                     al_draw_filled_rectangle(98,5,171,40, al_map_rgb(60,149,253));
@@ -1576,8 +1584,6 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
 
                 }
                 break;
-
         }
     }
-
 }
