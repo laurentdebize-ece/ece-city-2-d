@@ -154,11 +154,11 @@ void dessinerCarte(Case** pMatriceCase){
     if(!route) {
         printf("Erreur ouverture image route\n");
     }
-    terrainVague = al_load_bitmap("../images/Carre.jpg");
+    terrainVague = al_load_bitmap("../images/Terre.png");
     if(!terrainVague) {
         printf("Erreur ouverture image terrainVague\n");
     }
-    cabane = al_load_bitmap("../images/Carre.jpg");
+    cabane = al_load_bitmap("../images/Cabane.png");
     if(!cabane) {
         printf("Erreur ouverture image cabane\n");
     }
@@ -312,7 +312,7 @@ void niveau1 (Case** pMatriceCase, Habitation* habitation) {
     if (!route) {
         printf("Erreur ouverture image route");
     }
-    cabane = al_load_bitmap("../images/cabane.jpg");
+    cabane = al_load_bitmap("../images/Cabane.png");
     /*if(!cabane) {
         printf("Erreur ouverture image cabane");
     }*/
@@ -466,7 +466,7 @@ void niveau2(Case** pMatriceCase, Habitation* habitation) {
     if (!route) {
         printf("Erreur ouverture image route");
     }
-    cabane = al_load_bitmap("../images/cabane.jpg");
+    cabane = al_load_bitmap("../images/Cabane.png");
     /*if(!cabane) {
         printf("Erreur ouverture image cabane");
     }*/
