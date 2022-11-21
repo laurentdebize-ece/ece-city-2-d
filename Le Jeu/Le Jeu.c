@@ -2,10 +2,10 @@
 #include "../Carte/Carte.h"
 #include "../Fonctions/Fonctions.h"
 #include "../Initialisation/Initialisation.h"
+#include "../Ecrans accueil/Ecrans accueil.h"
 
 
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
-
 
     // Déclarations
     ALLEGRO_TIMER *timer = NULL;
@@ -13,14 +13,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     ALLEGRO_FONT *police = NULL;
 
 
-
     bool fin = false;
     bool pause = false;
-    int chrono = 0;
-    int mois = 1;
-    int annee = 2022;
-    int capaciteEau, capaciteElec = 0;
-    int nbHabitant = 0;
+    int chrono = 0, mois = 1, annee = 2022;
+    int capaciteEau, capaciteElec, nbHabitant;
 
 
     al_init_font_addon();
@@ -28,15 +24,14 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
 
-    //Création
     sauvegarde = al_load_bitmap("../Images/sauvegardePartie.jpg");
     police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
 
-    if (!sauvegarde){
-        printf("Erreur ouverture image sauvegarde\n");
+    if (!sauvegarde || !police) {
+        printf("Erreur ouverture image Le Jeu\n");
     }
 
-    timer = al_create_timer(0.2);
+    timer = al_create_timer(1);
 
 
     queue = al_create_event_queue();
@@ -48,15 +43,15 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //***************Initialisation du lancement du jeu***************//
 
-    Case** matriceCase = (Case**) calloc(NB_LIGNES, sizeof(Case));
-    for(int i = 0; i < NB_COLONNES; i++) {
-        matriceCase[i] = (Case*) calloc(NB_COLONNES, sizeof(Case));
+    Case **matriceCase = (Case **) calloc(NB_LIGNES, sizeof(Case));
+    for (int i = 0; i < NB_COLONNES; i++) {
+        matriceCase[i] = (Case *) calloc(NB_COLONNES, sizeof(Case));
     }
     initCases(matriceCase);
     lireFichierCarte(matriceCase);
 
 
-    Global* structureGlobale = calloc(1, sizeof (Global));;
+    Global *structureGlobale = calloc(1, sizeof(Global));;
     initGlobal(structureGlobale);
     structureGlobale->modeDeJeu = modeDeJeu;
 
@@ -65,7 +60,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     //*************************Premier affichage*************************//
 
-    afficherInterface(fenetre,structureGlobale);
+    afficherInterface(fenetre, structureGlobale);
     dessinerCarte(matriceCase);
     al_flip_display();
 
@@ -76,6 +71,53 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
     int ligne = -1, colonne = -1, constructionPossible = -1,
             saveColonne, saveLigne;
+
+    //************************ TEST EAU ******************************//
+
+  /*  int habitant = 2000;
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL &&
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation != 1) {
+                matriceCase[i][j].pHabitation->nbHabitants = habitant;
+                habitant += 1000;
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 1;
+            }
+        }
+    }
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL &&
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation != 0) {
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 0;
+            }
+        }
+    }
+
+    distributionEau(matriceCase, structureGlobale);
+
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL &&
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation != 1) {
+                printf("(%d numero maison)=>  ", matriceCase[i][j].pHabitation->numero);
+                printf("(%d nb habitant)=>   ", matriceCase[i][j].pHabitation->nbHabitants);
+                printf("(%d alim eau via %d cases du %d chateau)\n\n", matriceCase[i][j].pHabitation->alimEau,
+                       matriceCase[i][j].pHabitation->nbCaseEau, matriceCase[i][j].pHabitation->numChateauAlim);
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 1;
+            }
+        }
+    }
+    printf("\nfin\n");
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL &&
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation != 0) {
+                matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 0;
+            }
+        }
+    }*/
+
 
     while (!fin) {
         al_wait_for_event(queue, &event);
@@ -99,7 +141,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                     // choix terrain vague
                     if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 362 && event.mouse.y < 440) {
-                    
+
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutTerrainVague);
                         if (paiementPossible == 0) {
                             bool finTerrainVague = 0;
@@ -124,7 +166,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                         }else {printf("Souris en dehors du jeu\n");}
                                     }
 
-                              
+
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
 
@@ -220,8 +262,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 switch (event.type) {
                                     case ALLEGRO_EVENT_MOUSE_AXES: {
                                         int sourisSurLeJeu;
-                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                         &colonne);
+                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
 
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
                                             //détection du changement de case
@@ -321,8 +362,21 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                     }
 
 
+
+
                     //éléments à gauche
-                    //changer niveau de visualisation
+                    /*if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
+                        //changer niveau de visualisation
+                    }*/
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 359 && event.mouse.y < 403) {
+                        //PAUSE
+                    }
+
+                    if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 444 && event.mouse.y < 488) {
+                        printf("ok");
+                        fin = ecranQuitter(fenetre, queue, event, matriceCase, structureGlobale);
+                    }
+                        //changer niveau de visualisation
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 102 && event.mouse.y < 139) {
                     }
 
@@ -335,35 +389,45 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         printf("%d, %d", event.mouse.x, event.mouse.y);
                         al_draw_bitmap(sauvegarde, 0, 0, 0);
                         al_flip_display();
-                        if (event.mouse.x > 301 && event.mouse.x < 450 &&
-                            event.mouse.y > 402 && event.mouse.y < 470) {
+                        if (event.mouse.x > 301 && event.mouse.x < 450 && event.mouse.y > 402 && event.mouse.y < 470) {
                             // fonction sauvegarder partie
-                        } else if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 &&
-                                   event.mouse.y < 470) {
+                        } else if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 && event.mouse.y < 470) {
                             fin = true;
                         }
-                        // faire une autre fonction pour ça???
-                        // affichage de l'écran sauvegarder puis fermeture fenêtre
                     }
                 }
                 break;
             }
+
+
             case ALLEGRO_EVENT_TIMER:{
                 if(event.timer.source == timer) {
 
-                    if (chrono == 14) {
+
+                    afficherInterface(fenetre, structureGlobale);
+                    dessinerCarte(matriceCase);
+
+                    //****************Pause****************//
+                    if (chrono == 14 && !pause) {
                         chrono = 1;
                         mois ++;
                     }
                     else {
                         chrono +=1;
-                        printf("%d\n", chrono);
+                        //printf("%d\n", chrono);
                     }
                     if (mois == 13) {
                         mois = 1;
                         annee++;
                     }
+                    if (!pause) {
+                        al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
+                        al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
+                        al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",annee);
+                        al_flip_display();
+                    }
 
+                    //****************Evolution timer maison****************//
                     for (int i = 0; i < NB_LIGNES; i++) {
                         for (int j = 0; j < NB_COLONNES; j++) {
                             if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->parcoureMatriceHabitation == 0) {
@@ -371,14 +435,13 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                                 if (matriceCase[i][j].pHabitation->timerHabitation == 14) {
 
-                                    evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j);
+                                    //ATTENTION ****** ON PEUT EVOLUER A MODIFIER ******
+                                    evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, 1);
 
                                     matriceCase[i][j].pHabitation->timerHabitation = 0;
                                 } else {
                                     matriceCase[i][j].pHabitation->timerHabitation += 1;
-                                    //printf("%d\n a", matriceCase[i][j].pHabitation->timerHabitation);
                                 }
-
                             }
                         }
                     }
@@ -394,14 +457,13 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                     al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
                     al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
                     al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",annee);
-                    al_flip_display();
 
                     capaciteEau = structureGlobale->nbChateau * 5000;
                     capaciteElec = structureGlobale->nbCentrale * 5000;
                     nbHabitant = structureGlobale->nbHabitants;
-                    //habitants
-                    al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
 
+                    al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
+                    //habitants
                     al_draw_textf(police, al_map_rgb(255, 255, 255),276, 18,ALLEGRO_ALIGN_CENTER, "%d", nbHabitant);
                     //argent
                     al_draw_textf(police, al_map_rgb(255, 255, 255),471, 18,ALLEGRO_ALIGN_CENTER, "%d",structureGlobale->argentBanque);
@@ -409,6 +471,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                     al_draw_textf(police, al_map_rgb(255, 255, 255), 661, 18, ALLEGRO_ALIGN_CENTER, "%d", capaciteEau);
                     //électricité
                     al_draw_textf(police, al_map_rgb(255, 255, 255),861, 18,ALLEGRO_ALIGN_CENTER, "%d", capaciteElec);
+                    al_flip_display();
                 }
             }
         }
@@ -437,13 +500,31 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale){
     al_draw_filled_circle(48, 42, 40, al_map_rgb(249, 158, 25));
 
     al_destroy_bitmap(fond);
-
     fond = NULL;
 }
 
-/*
-void ecranQuitter(ALLEGRO_EVENT_QUEUE *queue){
-    al_draw_bitmap(sauvegarde, 0, 0, 0);
-    fin = true;
-}*/
-
+int ecranQuitter(ALLEGRO_DISPLAY* fenetre, ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, Case** matriceCases, Global* structureGlobale) {
+    bool finQuitter = 0;
+    ALLEGRO_BITMAP* image;
+    image = al_load_bitmap("../Images/sauvegardePartie.jpg");
+    al_draw_bitmap(image, 0, 0, 0);
+    al_flip_display();
+    al_destroy_bitmap(image);
+    image = NULL;
+    while (!finQuitter) {
+        al_wait_for_event(queue, &event);
+        switch (event.type) {
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                if (event.mouse.x > 301 && event.mouse.x < 450 && event.mouse.y > 402 && event.mouse.y < 470) {
+                    //sauvegarde (matriceCases, structureGlobale);
+                    printf("on sauvegarde\n");
+                    ecranAccueil(fenetre);
+                }
+                if (event.mouse.x > 715 && event.mouse.x < 867 && event.mouse.y > 402 && event.mouse.y < 470) {
+                    finQuitter = true;
+                    return 1;
+                }
+                break;
+        }
+    }
+}
