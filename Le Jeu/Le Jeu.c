@@ -94,7 +94,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         }
     }
 
-    distributionEau(matriceCase, structureGlobale);
+    distributionElec(matriceCase, structureGlobale);
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
@@ -102,8 +102,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                 matriceCase[i][j].pHabitation->parcoureMatriceHabitation != 1) {
                 printf("(%d numero maison)=>  ", matriceCase[i][j].pHabitation->numero);
                 printf("(%d nb habitant)=>   ", matriceCase[i][j].pHabitation->nbHabitants);
-                printf("(%d alim eau via %d cases du %d chateau)\n\n", matriceCase[i][j].pHabitation->alimEau,
-                       matriceCase[i][j].pHabitation->nbCaseEau, matriceCase[i][j].pHabitation->numChateauAlim);
+                printf("(%d alim elec)\n\n", matriceCase[i][j].pHabitation->alimElec);
                 matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 1;
             }
         }
@@ -250,6 +249,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                         distributionEau(matriceCase, structureGlobale);
+                        distributionElec(matriceCase, structureGlobale);
                     }
 
                     // choix chateau d'eau
@@ -304,6 +304,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                         distributionEau(matriceCase, structureGlobale);
+                        distributionElec(matriceCase, structureGlobale);
                     }
 
                     // choix centrale électricité
@@ -360,7 +361,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 }
                             }
                         }else{printf("Pas assez d'argent\n");}
-                        //distributionElec(matriceCase, structureGlobale);
+                        distributionElec(matriceCase, structureGlobale);
                     }
 
 
@@ -429,6 +430,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     int onPeutEvoluer = distributionEvolutionEAU(matriceCase, structureGlobale, matriceCase[i][j].pHabitation);
                                     evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, onPeutEvoluer);
                                     distributionEau(matriceCase, structureGlobale);
+                                    distributionElec(matriceCase, structureGlobale);
 
                                     matriceCase[i][j].pHabitation->timerHabitation = 0;
                                 } else {

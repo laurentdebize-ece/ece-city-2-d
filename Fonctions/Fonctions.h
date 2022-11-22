@@ -117,6 +117,7 @@ typedef struct file{
 
 void distributionEau(Case** matriceCases,Global* global);
 int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habitation);
+void distributionElec(Case** matriceCases,Global* global);
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
