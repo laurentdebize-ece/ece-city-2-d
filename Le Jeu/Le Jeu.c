@@ -249,6 +249,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 }
                             }
                         }else{printf("Pas assez d'argent\n");}
+                        distributionEau(matriceCase, structureGlobale);
                     }
 
                     // choix chateau d'eau
@@ -302,6 +303,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 }
                             }
                         }else{printf("Pas assez d'argent\n");}
+                        distributionEau(matriceCase, structureGlobale);
                     }
 
                     // choix centrale électricité
@@ -358,7 +360,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 }
                             }
                         }else{printf("Pas assez d'argent\n");}
-
+                        //distributionElec(matriceCase, structureGlobale);
                     }
 
 
@@ -424,7 +426,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 if (matriceCase[i][j].pHabitation->timerHabitation == 14) {
 
                                     //ATTENTION ****** ON PEUT EVOLUER A MODIFIER ******
-                                    evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, 1);
+                                    int onPeutEvoluer = distributionEvolutionEAU(matriceCase, structureGlobale, matriceCase[i][j].pHabitation);
+                                    evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, onPeutEvoluer);
+                                    distributionEau(matriceCase, structureGlobale);
 
                                     matriceCase[i][j].pHabitation->timerHabitation = 0;
                                 } else {
