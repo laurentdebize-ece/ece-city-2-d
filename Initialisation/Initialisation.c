@@ -56,7 +56,7 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
     FILE* fichier = fopen("../Données du jeu.txt", "w");
     if(fichier != NULL) {
 
-        fprintf(fichier, "%d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartie, structureGlobale->modeDeJeu);
+        fprintf(fichier, "%d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, structureGlobale->modeDeJeu);
 
         fclose(fichier);
         fichier = NULL;
@@ -76,5 +76,5 @@ void chargement(Case** matriceCases, Global* structureGlobale){
         exit(-1);
     }
 
-    fscanf(fichier,"%d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartie, &structureGlobale->modeDeJeu);
+    fscanf(fichier,"%d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, &structureGlobale->modeDeJeu);
 }
