@@ -1,6 +1,5 @@
 #include "Carte.h"
 
-
 void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
