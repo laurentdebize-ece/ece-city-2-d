@@ -48,13 +48,13 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         matriceCase[i] = (Case *) calloc(NB_COLONNES, sizeof(Case));
     }
     initCases(matriceCase);
-    lireFichierCarte(matriceCase);
+
 
 
     Global *structureGlobale = calloc(1, sizeof(Global));;
     initGlobal(structureGlobale);
     structureGlobale->modeDeJeu = modeDeJeu;
-
+    lireFichierCarte(matriceCase,structureGlobale);
 
 
 
@@ -73,7 +73,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             saveColonne, saveLigne;
 
     //************************ TEST EAU ******************************//
-
+/*
    int habitant = 2000;
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
@@ -116,7 +116,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             }
         }
     }
-
+*/
 
     while (!fin) {
         al_wait_for_event(queue, &event);
@@ -362,6 +362,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                             }
                         }else{printf("Pas assez d'argent\n");}
                         distributionElec(matriceCase, structureGlobale);
+                        distributionEau(matriceCase, structureGlobale);
                     }
 
 
@@ -427,7 +428,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 if (matriceCase[i][j].pHabitation->timerHabitation == 14) {
 
                                     //ATTENTION ****** ON PEUT EVOLUER A MODIFIER ******
-                                    int onPeutEvoluer = distributionEvolutionEAU(matriceCase, structureGlobale, matriceCase[i][j].pHabitation);
+                                    int onPeutEvoluer= ouiNonEvolution(matriceCase,structureGlobale,matriceCase[i][j].pHabitation);
+
                                     evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, onPeutEvoluer);
                                     distributionEau(matriceCase, structureGlobale);
                                     distributionElec(matriceCase, structureGlobale);
