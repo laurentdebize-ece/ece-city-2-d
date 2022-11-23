@@ -29,17 +29,12 @@
 
     //**********Constructions**********//
 
-
-
 typedef struct{
     int numChateau;
     int dejaAlim;
     int nbCases;
 
 }AlimEau;
-
-
-
 
 typedef struct Habitation {
     int coordXHG, coordYHG,
@@ -50,16 +45,13 @@ typedef struct Habitation {
         numChateauAlim,
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
-        AlimEau nbCasesParChateau[10];
+
+    AlimEau nbCasesParChateau[10];
     bool estDessine;
-
     bool marquage;
-
     struct Habitation*suiv;
 
 }Habitation;
-
-
 
 typedef struct {
     int coordXHG, coordYHG,
@@ -74,15 +66,16 @@ typedef struct {
 
 typedef struct {
     int coordXHG, coordYHG,
-        niveau, capacite, quantiteDistribuee;
+        niveau, capacite, quantiteDistribuee,numero,
+        parcoursMatriceChateau;
     int distribution;
     bool estDessine;
+    Habitation* tab[40];
 }Centrale;
 
 
-
 typedef struct {
-    int argentBanque, nbHabitants, timerPartie, modeDeJeu, //1=communiste, 2=capitaliste
+    int argentBanque, nbHabitants, timerPartieSec, timerPartieMin, modeDeJeu, //1=communiste, 2=capitaliste
             coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation, nbCentrale, nbChateau;
 }Global;
 
@@ -95,7 +88,6 @@ typedef struct {
     Centrale* pCentrale;
 }Case;
 
-// 0 herbe
 
 typedef struct maillon{
     int num;
@@ -115,6 +107,9 @@ typedef struct file{
 
 
 void distributionEau(Case** matriceCases,Global* global);
+int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habitation);
+void distributionElec(Case** matriceCases,Global* global);
+int ouiNonEvolution(Case** matriceCases,Global* global,Habitation* habitation);
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
@@ -130,8 +125,6 @@ int calculerNbHabitants(Case** matriceCase);
 void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer);
 
 bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2);
-void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer);
-
-
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas);
 
 #endif

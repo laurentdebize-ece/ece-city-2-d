@@ -3,8 +3,8 @@
 
 #include "../Fonctions/Fonctions.h"
 
-void niveau1 (Case** pMatriceCase, Habitation* habitation);
-void niveau2 (Case** pMatriceCase, Habitation* habitation);
-void lireFichierCarte(Case** matriceCases);
+void niveau1 (Case** pMatriceCase);
+void niveau2(Case** pMatriceCase);
+void lireFichierCarte(Case** matriceCases,Global* structGlobal);
 void dessinerCarte(Case** matriceCases);
 #endif

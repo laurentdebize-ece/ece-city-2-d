@@ -2,11 +2,6 @@
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
 #include "Le Jeu/Le Jeu.h"
-#include "Carte/Carte.h"
-#include "Initialisation/Initialisation.h"
-
-#include "Carte/Carte.h"
-#include "Initialisation/Initialisation.h"
 
 
 
@@ -33,9 +28,8 @@ int main() {
 
 
 
-
-    ecranAccueil(fenetre);
-    //leJeu(fenetre, 1);
+    //ecranAccueil(fenetre);
+    leJeu(fenetre, 1);
 
 
 

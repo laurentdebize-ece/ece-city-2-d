@@ -1,6 +1,7 @@
 #include "Initialisation.h"
 #include "../Carte/Carte.h"
 
+
 void initCases(Case** matriceCases){
 
     for (int i = 0; i < NB_LIGNES; i++) {
@@ -27,10 +28,8 @@ void initGlobal(Global* structureGlobale){
     structureGlobale->coutChateau = 100000;
     structureGlobale->coutCentrale = 100000;
     structureGlobale->coutTerrainVague = 1000;
-
     structureGlobale->nbCentrale = 0;
     structureGlobale->nbChateau = 0;
-
     structureGlobale->nbHabitation=0;
 
 }
@@ -58,7 +57,7 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
     FILE* fichier = fopen("../Données du jeu.txt", "w");
     if(fichier != NULL) {
 
-        fprintf(fichier, "%d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartie, structureGlobale->modeDeJeu);
+        fprintf(fichier, "%d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, structureGlobale->modeDeJeu);
 
         fclose(fichier);
         fichier = NULL;
@@ -69,7 +68,7 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
 }
 
 void chargement(Case** matriceCases, Global* structureGlobale){
-    lireFichierCarte(matriceCases);
+    lireFichierCarte(matriceCases,structureGlobale);
 
     FILE * fichier = fopen("../Données du jeu.txt","r");
     if (!fichier)
@@ -78,5 +77,5 @@ void chargement(Case** matriceCases, Global* structureGlobale){
         exit(-1);
     }
 
-    fscanf(fichier,"%d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartie, &structureGlobale->modeDeJeu);
+    fscanf(fichier,"%d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartieSec, &structureGlobale->timerPartieMin, &structureGlobale->modeDeJeu);
 }
