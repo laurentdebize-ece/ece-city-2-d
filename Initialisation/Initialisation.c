@@ -1,6 +1,7 @@
 #include "Initialisation.h"
 #include "../Carte/Carte.h"
 
+
 void initCases(Case** matriceCases){
 
     for (int i = 0; i < NB_LIGNES; i++) {
