@@ -448,7 +448,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                             }
                         }
                     }
-                    structureGlobale->timerPartie += 1;
+                    structureGlobale->timerPartieSec += 1;
 
                     al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
                     al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
