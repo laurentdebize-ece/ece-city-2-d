@@ -67,7 +67,7 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
 }
 
 void chargement(Case** matriceCases, Global* structureGlobale){
-    lireFichierCarte(matriceCases);
+    lireFichierCarte(matriceCases,structureGlobale);
 
     FILE * fichier = fopen("../Données du jeu.txt","r");
     if (!fichier)

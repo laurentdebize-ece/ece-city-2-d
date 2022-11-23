@@ -1,7 +1,7 @@
 #include "Carte.h"
 
 
-void lireFichierCarte(Case** pMatriceCase){
+void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
     if (!ifs)
@@ -133,7 +133,9 @@ void lireFichierCarte(Case** pMatriceCase){
 
         }
     }
-
+    structGlobal->nbChateau=numeroChateau;
+    structGlobal->nbHabitation=numeroHabitation;
+    structGlobal->nbCentrale=numeroCentrale;
     fclose(ifs);
     ifs = NULL;
 }
@@ -300,7 +302,7 @@ void dessinerCarte(Case** pMatriceCase){
 void niveau1 (Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
-    ALLEGRO_BITMAP *route;
+    ALLEGRO_BITMAP *eau;
     ALLEGRO_BITMAP *cabane;
     ALLEGRO_BITMAP *maison;
     ALLEGRO_BITMAP *immeuble;
@@ -311,9 +313,9 @@ void niveau1 (Case** pMatriceCase) {
     if (!herbe) {
         printf("Erreur ouverture image herbe");
     }
-    route = al_load_bitmap("../images/Route.jpg");
-    if (!route) {
-        printf("Erreur ouverture image route");
+    eau = al_load_bitmap("../images/eau.png");
+    if (!eau) {
+        printf("Erreur ouverture image eau");
     }
     cabane = al_load_bitmap("../images/Cabane.png");
     if(!cabane) {
@@ -345,7 +347,7 @@ void niveau1 (Case** pMatriceCase) {
                     al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
                     break;
                 case 1:
-                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
+                    al_draw_bitmap(eau, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y, 0);
                     break;
 
                 case 3:
@@ -439,7 +441,7 @@ void niveau1 (Case** pMatriceCase) {
     }
 
     al_destroy_bitmap(herbe);
-    al_destroy_bitmap(route);
+    al_destroy_bitmap(eau);
     al_destroy_bitmap(cabane);
     al_destroy_bitmap(maison);
     al_destroy_bitmap(immeuble);
@@ -447,7 +449,7 @@ void niveau1 (Case** pMatriceCase) {
     al_destroy_bitmap(chateau);
 
     herbe = NULL;
-    route = NULL;
+    eau = NULL;
     cabane = NULL;
     maison = NULL;
     immeuble = NULL;
