@@ -50,11 +50,10 @@ typedef struct Habitation {
         numChateauAlim,
         alimEauOuiNon,// 0 non, 1 partielement, 2 completement
         alimElecOuiNon; // 0 non, 1 oui
-        AlimEau nbCasesParChateau[10];
+
+    AlimEau nbCasesParChateau[10];
     bool estDessine;
-
     bool marquage;
-
     struct Habitation*suiv;
 
 }Habitation;
@@ -74,9 +73,11 @@ typedef struct {
 
 typedef struct {
     int coordXHG, coordYHG,
-        niveau, capacite, quantiteDistribuee;
+        niveau, capacite, quantiteDistribuee,numero,
+        parcoursMatriceChateau;
     int distribution;
     bool estDessine;
+    Habitation* tab[40];
 }Centrale;
 
 
@@ -115,6 +116,7 @@ typedef struct file{
 
 
 void distributionEau(Case** matriceCases,Global* global);
+int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habitation);
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne);
@@ -130,7 +132,7 @@ int calculerNbHabitants(Case** matriceCase);
 void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer);
 
 bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2);
-void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer);
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas);
 
 
 
