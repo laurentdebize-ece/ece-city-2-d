@@ -12,12 +12,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     ALLEGRO_BITMAP *sauvegarde = NULL;
     ALLEGRO_FONT *police = NULL;
 
-
     bool fin = false;
     bool pause = false;
     int chrono = 0, mois = 1, annee = 2022;
     int capaciteEau, capaciteElec, nbHabitant;
-
 
     al_init_font_addon();
     al_init_ttf_addon();
@@ -31,8 +29,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
         printf("Erreur ouverture image Le Jeu\n");
     }
 
-    timer = al_create_timer(0.1);
-
+    timer = al_create_timer(0.2);
 
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_display_event_source(fenetre));
@@ -449,6 +446,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         }
                     }
                     structureGlobale->timerPartieSec += 1;
+
+                    if(structureGlobale->timerPartieSec == 60){
+                        structureGlobale->timerPartieSec = 0;
+                        structureGlobale->timerPartieMin += 1;
+                    }
+                    al_draw_textf(police, al_map_rgb(255, 255, 255),1100, 20,ALLEGRO_ALIGN_CENTER, "%d : %d",structureGlobale->timerPartieMin, structureGlobale->timerPartieSec);
 
                     al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
                     al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
