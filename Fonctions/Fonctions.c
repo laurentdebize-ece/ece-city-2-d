@@ -1421,9 +1421,17 @@ int calculerNbHabitants(Case** matriceCase){
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCase[i][j].pHabitation != NULL) {
+            if (matriceCase[i][j].pHabitation != NULL && matriceCase[i][j].pHabitation->estDessine == 0) {
 
                 nbHabitants += matriceCase[i][j].pHabitation->nbHabitants;
+                matriceCase[i][j].pHabitation->estDessine = 1;
+            }
+        }
+    }
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCase[i][j].pHabitation != NULL) {
+                matriceCase[i][j].pHabitation->estDessine = 0;
             }
         }
     }
