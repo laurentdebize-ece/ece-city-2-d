@@ -1,7 +1,7 @@
 #include "Carte.h"
 
 
-void lireFichierCarte(Case** pMatriceCase){
+void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
     if (!ifs)
@@ -133,7 +133,9 @@ void lireFichierCarte(Case** pMatriceCase){
 
         }
     }
-
+    structGlobal->nbChateau=numeroChateau;
+    structGlobal->nbHabitation=numeroHabitation;
+    structGlobal->nbCentrale=numeroCentrale;
     fclose(ifs);
     ifs = NULL;
 }
