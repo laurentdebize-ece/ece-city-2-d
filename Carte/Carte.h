@@ -3,7 +3,8 @@
 
 #include "../Fonctions/Fonctions.h"
 
-
-void lireFichierCarte(Case** matriceCases);
+void niveau1 (Case** pMatriceCase);
+void niveau2(Case** pMatriceCase);
+void lireFichierCarte(Case** matriceCases,Global* structGlobal);
 void dessinerCarte(Case** matriceCases);
 #endif

@@ -1,21 +1,15 @@
 #include "Ecrans accueil.h"
+#include "../Le Jeu/Le Jeu.h"
 
 
-bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2){
-    if (clic_mouse == true && x_mouse < x2 && x_mouse > x1 && y_mouse < y2 && y_mouse > y1) {
-        al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgba(0, 0, 0, 120));
-        return true;
-    }
-    else{return false;}
-}
 
-void ecranAccueil(){
+
+void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
     //Affichage de l'ecran d'accueil
     srand(time(NULL));
     bool end = false;
     bool end_menu = false;
     bool end_ecran_choix = true;
-    bool end_map = true;
 
     int x_mouse = 0;
     int y_mouse = 0;
@@ -30,7 +24,6 @@ void ecranAccueil(){
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     //BITMAP
     ALLEGRO_BITMAP* menu;
-    ALLEGRO_BITMAP* map;
     ALLEGRO_BITMAP* choix;
 
 
@@ -39,7 +32,7 @@ void ecranAccueil(){
     queue = al_create_event_queue();
     assert(queue!=NULL);
 
-    al_register_event_source(queue, al_get_display_event_source(display));
+    al_register_event_source(queue, al_get_display_event_source(fenetre));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
     al_register_event_source(queue, al_get_keyboard_event_source());
@@ -49,7 +42,6 @@ void ecranAccueil(){
     //FONDS
     menu = al_load_bitmap("../Images/Menu_jouer.png");
     choix = al_load_bitmap("../Images/Menu_choix.png");
-    //map = al_load_bitmap("../Images/Fond_menu.jpg"); //là il faut mettre la map du jeu à la place
 
     // Boucle d'événements
     while (!end) {
@@ -60,7 +52,7 @@ void ecranAccueil(){
 
         while (end_menu == false) {
             al_draw_bitmap(menu, 0, 0, 0);
-            printf("a");
+
 
 
 
@@ -101,10 +93,9 @@ void ecranAccueil(){
                         end = true;
                     }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 650, 1000, 437, 687)) { //charger partie co ok
-                        //al_draw_bitmap(map, 0, 0, 0);
+                        leJeu(fenetre, 1);
                         al_flip_display();
                         end_menu = true;
-                        end_map = false;
 
                     }
                     break;
@@ -151,15 +142,15 @@ void ecranAccueil(){
                     } else { clic_mouse = false; }
 
                     if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
-                        al_draw_bitmap(map, 0, 0, 0);
+                        leJeu(fenetre, 1);
                         al_flip_display();
                         end_ecran_choix = false;
-                        end_map = true; }
+                    }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
-                        al_draw_bitmap(map, 0, 0, 0);
+                        leJeu(fenetre, 1);
                         al_flip_display();
                         end_ecran_choix = false;
-                        end_map = true; }
+                    }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter
                         end_menu = true;
                         end = true;
@@ -179,12 +170,13 @@ void ecranAccueil(){
 
 
     // Libérations (al_destroy...)
-    al_destroy_display(display);
     al_destroy_event_queue(queue);
     al_destroy_timer(timer);
 
+    timer = NULL;
+    queue = NULL;
+
     al_destroy_bitmap(menu);
-    al_destroy_bitmap(map);
     al_destroy_bitmap(choix);
 }
 
