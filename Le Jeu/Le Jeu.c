@@ -54,7 +54,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
     lireFichierCarte(matriceCase,structureGlobale);
 
 
-
     //*************************Premier affichage*************************//
 
     afficherInterface(fenetre, structureGlobale);
@@ -149,19 +148,16 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                         int sourisSurLeJeu;
                                         sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
 
-
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
                                             //détection du changement de case
                                             if (saveColonne != colonne || saveLigne != ligne) {
 
-                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],
-                                                                              &constructionPossible, 2);
+                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],&constructionPossible, 2);
                                                 saveLigne = ligne;
                                                 saveColonne = colonne;
                                             }
-                                        }else {printf("Souris en dehors du jeu\n");}
+                                        }
                                     }
-
 
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
@@ -180,15 +176,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                                 } else if (retour == 1) {
                                                     printf("Construction impossible\n");
                                                 }
-
-                                            } else {
-                                                printf("Click en dehors du jeu\n");
                                             }
                                         }
                                     }
                                 }
                             }
-                        }else{printf("Pas assez d'argent\n");}
+                        }
                     }
 
                     // choix route
@@ -202,29 +195,23 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 switch (event.type) {
                                     case ALLEGRO_EVENT_MOUSE_AXES: {
                                         int sourisSurLeJeu;
-                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                         &colonne);
+                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
 
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
                                             //détection du changement de case
                                             if (saveColonne != colonne || saveLigne != ligne) {
 
-                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],
-                                                                              &constructionPossible, 8);
+                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],&constructionPossible, 8);
                                                 saveLigne = ligne;
                                                 saveColonne = colonne;
                                             }
-                                        } else {
-                                            printf("Souris en dehors du jeu\n");
                                         }
                                     }
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
 
                                             int sourisSurLeJeu;
-                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                             &colonne);
-                                            printf("Clique ligne %d, colonne %d\n", ligne, colonne);
+                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
 
                                             if (sourisSurLeJeu == 0) {
 
@@ -237,14 +224,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                                     printf("Construction impossible\n");
                                                 }
 
-                                            } else {
-                                                printf("Click en dehors du jeu\n");
                                             }
                                         }
                                     }
                                 }
                             }
-                        }else{printf("Pas assez d'argent\n");}
+                        }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
                     }
@@ -266,13 +251,10 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                             //détection du changement de case
                                             if (saveColonne != colonne || saveLigne != ligne) {
 
-                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],
-                                                                              &constructionPossible, 7);
+                                                afficherPlacerUneConstruction(matriceCase, matriceCase[ligne][colonne],&constructionPossible, 7);
                                                 saveLigne = ligne;
                                                 saveColonne = colonne;
                                             }
-                                        } else {
-                                            printf("Souris en dehors du jeu\n");
                                         }
                                     }
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
@@ -280,7 +262,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                                             int sourisSurLeJeu;
                                             sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
-                                            printf("Clique ligne %d, colonne %d\n", ligne, colonne);
 
                                             if (sourisSurLeJeu == 0) {
 
@@ -292,14 +273,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                                 } else if (retour == 1) {
                                                     printf("Construction impossible\n");
                                                 }
-                                            } else {
-                                                printf("Click en dehors du jeu\n");
                                             }
                                         }
                                     }
                                 }
                             }
-                        }else{printf("Pas assez d'argent\n");}
+                        }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
                     }
@@ -315,30 +294,23 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                 switch (event.type) {
                                     case ALLEGRO_EVENT_MOUSE_AXES: {
                                         int sourisSurLeJeu;
-                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,
-                                                                         &colonne);
+                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
 
                                         if (sourisSurLeJeu == 0) { // La souris est sur la carte
                                             //détection du changement de case
                                             if (saveColonne != colonne || saveLigne != ligne) {
 
-                                                afficherPlacerUneRoute(matriceCase, matriceCase[ligne][colonne],
-                                                                       &constructionPossible);
+                                                afficherPlacerUneRoute(matriceCase, matriceCase[ligne][colonne],&constructionPossible);
                                                 saveLigne = ligne;
                                                 saveColonne = colonne;
                                             }
-                                        } else {
-                                            printf("Souris en dehors du jeu\n");
                                         }
                                     }
                                     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                                         if ((event.mouse.button & 1) == 1) {
 
-
-
                                             int sourisSurLeJeu;
                                             sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
-                                            printf("Clique ligne %d, colonne %d\n", ligne, colonne);
 
                                             if (sourisSurLeJeu == 0) {
 
@@ -350,14 +322,12 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                                 } else if (retour == 1) {
                                                     printf("Construction impossible\n");
                                                 }
-                                            } else {
-                                                printf("Click en dehors du jeu\n");
                                             }
                                         }
                                     }
                                 }
                             }
-                        }else{printf("Pas assez d'argent\n");}
+                        }
                         distributionElec(matriceCase, structureGlobale);
                         distributionEau(matriceCase, structureGlobale);
                     }
@@ -377,7 +347,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                     //Quitter
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 444 && event.mouse.y < 488) {
-                        printf("ok");
                         fin = ecranQuitter(fenetre, queue, event, matriceCase, structureGlobale);
                     }
                     //Pause
@@ -387,7 +356,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                 }
                 break;
             }
-
 
             case ALLEGRO_EVENT_TIMER:{
                 if(event.timer.source == timer) {
