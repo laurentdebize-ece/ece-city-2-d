@@ -181,6 +181,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                     }
 
@@ -229,6 +232,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
@@ -278,6 +284,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
@@ -327,6 +336,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                         distributionElec(matriceCase, structureGlobale);
                         distributionEau(matriceCase, structureGlobale);
