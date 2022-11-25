@@ -1862,12 +1862,13 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
     } else if (cas == 2) {
         niveau2(matriceCase);
     }
+    al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
     al_flip_display();
 
     while (!finPause) {
         al_wait_for_event(queue, &event);
         switch (event.type) {
-            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                 if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > y1 && event.mouse.y < y2) {
                     finPause = true;
                     al_start_timer(timer);
@@ -1878,20 +1879,50 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                 xsouris = event.mouse.x;
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
-                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900-DECALAGE_GRILLE_X && event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700-DECALAGE_GRILLE_Y) {
+                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900 - DECALAGE_GRILLE_X &&
+                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700 - DECALAGE_GRILLE_Y) {
+                    //Chateau
                     if (matriceCase[i][j].type == 7) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
                         al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
                         al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
-                                      matriceCase[i][j].pChateau->capacite);
+                                      matriceCase[i][j].pChateau->capacite -
+                                      matriceCase[i][j].pChateau->quantiteDistribuee);
                         al_flip_display();
+                        break;
                     }
+                    //Centrale
                     if (matriceCase[i][j].type == 8) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
                         al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
-                                      matriceCase[i][j].pCentrale->capacite);
+                                      matriceCase[i][j].pCentrale->capacite -
+                                      matriceCase[i][j].pCentrale->quantiteDistribuee);
                         al_flip_display();
+                        break;
                     }
-                    break;
+                    //Maison eau
+                    if (matriceCase[i][j].type >= 2 && matriceCase[i][j].type <= 6 && cas == 1) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Alim eau:");
+                        al_draw_textf(police, al_map_rgb(255, 0, 0), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/%d",
+                                      matriceCase[i][j].pHabitation->alimEau,
+                                      matriceCase[i][j].pHabitation->nbHabitants);
+                        al_flip_display();
+                        break;
+                    }
+                    //Maison elec
+                    if (matriceCase[i][j].type >= 2 && matriceCase[i][j].type <= 6 && cas == 2) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Alim elec:");
+                        al_draw_textf(police, al_map_rgb(255, 0, 0), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/%d",
+                                      matriceCase[i][j].pHabitation->alimElec,
+                                      matriceCase[i][j].pHabitation->nbHabitants);
+                        al_flip_display();
+                        break;
+                    }
                 }
+            }
         }
     }
 }
