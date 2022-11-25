@@ -466,7 +466,7 @@ void niveau1 (Case** pMatriceCase) {
 void niveau2(Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
-    ALLEGRO_BITMAP *route;
+    ALLEGRO_BITMAP *elec;
     ALLEGRO_BITMAP *cabane;
     ALLEGRO_BITMAP *maison;
     ALLEGRO_BITMAP *immeuble;
@@ -477,9 +477,9 @@ void niveau2(Case** pMatriceCase) {
     if (!herbe) {
         printf("Erreur ouverture image herbe");
     }
-    route = al_load_bitmap("../images/Route.jpg");
-    if (!route) {
-        printf("Erreur ouverture image route");
+    elec = al_load_bitmap("../images/Elec.jpg");
+    if (!elec) {
+        printf("Erreur ouverture image elec");
     }
     cabane = al_load_bitmap("../images/Cabane.png");
     if(!cabane) {
@@ -511,7 +511,7 @@ void niveau2(Case** pMatriceCase) {
                     al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
                     break;
                 case 1:
-                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
+                    al_draw_bitmap(elec, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
                     break;
                 case 3:
                     if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
@@ -604,7 +604,7 @@ void niveau2(Case** pMatriceCase) {
     }
 
     al_destroy_bitmap(herbe);
-    al_destroy_bitmap(route);
+    al_destroy_bitmap(elec);
     al_destroy_bitmap(cabane);
     al_destroy_bitmap(maison);
     al_destroy_bitmap(immeuble);
@@ -612,7 +612,7 @@ void niveau2(Case** pMatriceCase) {
     al_destroy_bitmap(centrale);
 
     herbe = NULL;
-    route = NULL;
+    elec = NULL;
     cabane = NULL;
     maison = NULL;
     immeuble = NULL;
