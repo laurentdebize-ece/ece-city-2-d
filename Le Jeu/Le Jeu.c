@@ -182,11 +182,66 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                     }
 
-                    // choix centrale électricité
+                    // choix route
                     if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
+                        int paiementPossible = payer(structureGlobale, structureGlobale->coutRoute);
+                        if (paiementPossible == 0) {
+                            bool finRoute = 0;
+                            while (!finRoute) {
+
+                                al_wait_for_event(queue, &event);
+                                switch (event.type) {
+                                    case ALLEGRO_EVENT_MOUSE_AXES: {
+                                        int sourisSurLeJeu;
+                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
+
+                                        if (sourisSurLeJeu == 0) { // La souris est sur la carte
+                                            //détection du changement de case
+                                            if (saveColonne != colonne || saveLigne != ligne) {
+
+                                                afficherPlacerUneRoute(matriceCase, matriceCase[ligne][colonne],&constructionPossible);
+                                                saveLigne = ligne;
+                                                saveColonne = colonne;
+                                            }
+                                        }
+                                    }
+                                    case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
+                                        if ((event.mouse.button & 1) == 1) {
+
+                                            int sourisSurLeJeu;
+                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
+
+                                            if (sourisSurLeJeu == 0) {
+
+                                                int retour = placerUneRoute(matriceCase, matriceCase[ligne][colonne], constructionPossible);
+                                                if (retour == 0) {
+                                                    finRoute = 1;
+                                                } else if (retour == -1) {
+                                                    printf("Type inconnu\n");
+                                                } else if (retour == 1) {
+                                                    printf("Construction impossible\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
+                        }
+                        distributionElec(matriceCase, structureGlobale);
+                        distributionEau(matriceCase, structureGlobale);
+                    }
+
+                    // choix centrale électricité
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutCentrale);
                         if (paiementPossible == 0) {
                             bool finCentrale = 0;
@@ -230,6 +285,9 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
@@ -279,59 +337,14 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                                     }
                                 }
                             }
+                        }else{
+                            al_draw_textf(police, al_map_rgb(255, 0, 0),20, 750,ALLEGRO_ALIGN_LEFT, "Pas assez d'argent");
+                            al_flip_display();
                         }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
                     }
 
-                    // choix ROUTE
-                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
-                        int paiementPossible = payer(structureGlobale, structureGlobale->coutRoute);
-                        if (paiementPossible == 0) {
-                            bool finRoute = 0;
-                            while (!finRoute) {
-
-                                al_wait_for_event(queue, &event);
-                                switch (event.type) {
-                                    case ALLEGRO_EVENT_MOUSE_AXES: {
-                                        int sourisSurLeJeu;
-                                        sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne,&colonne);
-
-                                        if (sourisSurLeJeu == 0) { // La souris est sur la carte
-                                            //détection du changement de case
-                                            if (saveColonne != colonne || saveLigne != ligne) {
-
-                                                afficherPlacerUneRoute(matriceCase, matriceCase[ligne][colonne],&constructionPossible);
-                                                saveLigne = ligne;
-                                                saveColonne = colonne;
-                                            }
-                                        }
-                                    }
-                                    case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
-                                        if ((event.mouse.button & 1) == 1) {
-
-                                            int sourisSurLeJeu;
-                                            sourisSurLeJeu = convertirEnCase(event.mouse.x, event.mouse.y, &ligne, &colonne);
-
-                                            if (sourisSurLeJeu == 0) {
-
-                                                int retour = placerUneRoute(matriceCase, matriceCase[ligne][colonne], constructionPossible);
-                                                if (retour == 0) {
-                                                    finRoute = 1;
-                                                } else if (retour == -1) {
-                                                    printf("Type inconnu\n");
-                                                } else if (retour == 1) {
-                                                    printf("Construction impossible\n");
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        distributionElec(matriceCase, structureGlobale);
-                        distributionEau(matriceCase, structureGlobale);
-                    }
 
 
 
