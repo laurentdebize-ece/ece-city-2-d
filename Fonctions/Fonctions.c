@@ -1847,18 +1847,24 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
     al_flip_display();
 }
 
-void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas){
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas) {
+
+    int xsouris = 0;
+    int ysouris = 0;
+
+    int i,j = 0;
 
     bool finPause = false;
     ALLEGRO_FONT *police = NULL;
     police = al_load_font("../Images/adLib.ttf", 20, ALLEGRO_ALIGN_CENTER);
 
     al_stop_timer(timer);
-    al_draw_text(police, al_map_rgb(255,255,255),135, 15, ALLEGRO_ALIGN_CENTER, "PAUSE");
+    al_draw_text(police, al_map_rgb(255, 255, 255), 135, 15, ALLEGRO_ALIGN_CENTER, "PAUSE");
 
-    if (cas == 1){
+    if (cas == 1) {
         niveau1(matriceCase);
-    }else if(cas == 2){
+
+    } else if (cas == 2) {
         niveau2(matriceCase);
     }
     al_flip_display();
@@ -1870,9 +1876,21 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                 if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > y1 && event.mouse.y < y2) {
                     finPause = true;
                     al_start_timer(timer);
-                    al_draw_filled_rectangle(98,5,171,40, al_map_rgb(60,149,253));
+                    al_draw_filled_rectangle(98, 5, 171, 40, al_map_rgb(60, 149, 253));
                     al_flip_display();
 
+                }
+                xsouris = event.mouse.x;
+                ysouris = event.mouse.y;
+                convertirEnCase(xsouris, ysouris, &i, &j);
+                if (matriceCase[i][j].type == 7) {
+                    al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
+                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pChateau->capacite);
+                    al_flip_display();
+                }
+                if (matriceCase[i][j].type == 8){
+                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pCentrale->capacite);
+                    al_flip_display();
                 }
                 break;
         }
