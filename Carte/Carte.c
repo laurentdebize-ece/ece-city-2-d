@@ -619,35 +619,3 @@ void niveau2(Case** pMatriceCase) {
     gratteCiel = NULL;
     centrale = NULL;
 }
-
-//au survol de la souris capacité chateau et centrale
-
-void capaciteChateau(ALLEGRO_DISPLAY* fenetre){
-    ALLEGRO_TIMER *timer = NULL;
-    bool fin = false;
-
-    al_init_font_addon();
-    al_init_ttf_addon();
-    ALLEGRO_EVENT_QUEUE *queue = NULL;
-    ALLEGRO_EVENT event;
-
-    timer = al_create_timer(0.5);
-
-
-    queue = al_create_event_queue();
-    al_register_event_source(queue, al_get_display_event_source(fenetre));
-    al_register_event_source(queue, al_get_mouse_event_source());
-    al_register_event_source(queue, al_get_timer_event_source(timer));
-
-    al_start_timer(timer);
-
-    while (!fin){
-        al_wait_for_event(queue, &event);
-        switch (event.type){
-            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:{
-                if (event.mouse.button & 1) {
-                }
-            }
-        }
-    }
-}
