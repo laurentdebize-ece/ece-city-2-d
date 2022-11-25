@@ -1561,7 +1561,7 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
     al_flip_display();
 }
 
-void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas, Chateau* chateau, Centrale* centrale) {
+void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas) {
 
     int xsouris = 0;
     int ysouris = 0;
@@ -1598,11 +1598,12 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
                 if (matriceCase[i][j].type == 7) {
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d", matriceCase[i][j].pChateau->capacite);
+                    al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
+                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pChateau->capacite);
                     al_flip_display();
                 }
                 if (matriceCase[i][j].type == 8){
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d", matriceCase[i][j].pCentrale->capacite);
+                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pCentrale->capacite);
                     al_flip_display();
                 }
                 break;

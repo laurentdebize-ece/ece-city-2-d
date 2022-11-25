@@ -369,7 +369,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
 
                     // Nvx -1
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 200 && event.mouse.y < 257) {
-                        fonctionPause(fenetre, queue, event, timer, matriceCase, 121, 174, 1)
+                        fonctionPause(fenetre, queue, event, timer, matriceCase, 121, 174, 1);
                     }
                     // Nvx -2
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 280 && event.mouse.y < 328) {
