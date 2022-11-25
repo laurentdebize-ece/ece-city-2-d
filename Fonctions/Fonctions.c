@@ -1450,12 +1450,12 @@ int distributionEvolutionELEC(Case** matriceCases,Global* global,Habitation* hab
 }
 
 int ouiNonEvolution(Case** matriceCases,Global* global,Habitation* habitation){
-    int eau=0;
-    int elec=0;
-    eau= distributionEvolutionEAU(matriceCases,global,habitation);
-    elec= distributionEvolutionELEC(matriceCases,global,habitation);
+    int eau = 0;
+    int elec = 0;
+    eau = distributionEvolutionEAU(matriceCases,global,habitation);
+    elec = distributionEvolutionELEC(matriceCases,global,habitation);
 
-    if(eau ==1 && elec==1){
+    if(eau == 1 && elec== 1){
         return 1;
     }
     else{
@@ -1878,21 +1878,25 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                     al_start_timer(timer);
                     al_draw_filled_rectangle(98, 5, 171, 40, al_map_rgb(60, 149, 253));
                     al_flip_display();
-
+                    break;
                 }
                 xsouris = event.mouse.x;
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
-                if (matriceCase[i][j].type == 7) {
-                    al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pChateau->capacite);
-                    al_flip_display();
+                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900-DECALAGE_GRILLE_X && event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700-DECALAGE_GRILLE_Y) {
+                    if (matriceCase[i][j].type == 7) {
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
+                        al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
+                                      matriceCase[i][j].pChateau->capacite);
+                        al_flip_display();
+                    }
+                    if (matriceCase[i][j].type == 8) {
+                        al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
+                                      matriceCase[i][j].pCentrale->capacite);
+                        al_flip_display();
+                    }
+                    break;
                 }
-                if (matriceCase[i][j].type == 8){
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pCentrale->capacite);
-                    al_flip_display();
-                }
-                break;
         }
     }
 }
