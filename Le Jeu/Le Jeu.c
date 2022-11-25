@@ -69,6 +69,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             saveColonne, saveLigne;
 
     //************************ TEST EAU ******************************//
+
 /*
    int habitant = 2000;
     for (int i = 0; i < NB_LIGNES; i++) {
@@ -111,8 +112,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                 matriceCase[i][j].pHabitation->parcoureMatriceHabitation = 0;
             }
         }
-    }
-*/
+    }*/
+
 
     while (!fin) {
         al_wait_for_event(queue, &event);
@@ -187,8 +188,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         }
                     }
 
-                    // choix route
-                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
+                    // choix centrale électricité
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutCentrale);
                         if (paiementPossible == 0) {
                             bool finCentrale = 0;
@@ -292,8 +293,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         distributionElec(matriceCase, structureGlobale);
                     }
 
-                    // choix centrale électricité
-                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 472 && event.mouse.y < 540) {
+                    // choix ROUTE
+                    if (event.mouse.x > 1042 && event.mouse.x < 1126 && event.mouse.y > 692 && event.mouse.y < 757) {
                         int paiementPossible = payer(structureGlobale, structureGlobale->coutRoute);
                         if (paiementPossible == 0) {
                             bool finRoute = 0;
@@ -343,6 +344,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
                         distributionElec(matriceCase, structureGlobale);
                         distributionEau(matriceCase, structureGlobale);
                     }
+
+
 
 
                     //éléments à gauche
@@ -455,7 +458,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu) {
             }
         }
     }
-
 
     al_destroy_event_queue(queue);
     al_destroy_bitmap (sauvegarde);
