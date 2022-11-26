@@ -1872,3 +1872,21 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
         }
     }
 }
+
+void fonctionNouvellePartie () {
+    FILE* carte = fopen("../Carte.txt", "w");
+    if(carte != NULL) {
+        for (int i = 0; i < NB_LIGNES; i++) {
+            for (int j = 0; j  < NB_COLONNES; j++) {
+                fprintf(carte,"%d ",0);
+            }
+            fprintf(carte,"\n");
+        }
+        fclose(carte);
+        carte = NULL;
+    }
+    else {
+        printf("Erreur lecture fichier sauvegarde carte\n");
+    }
+
+}

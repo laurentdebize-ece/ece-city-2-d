@@ -28,8 +28,8 @@ int main() {
 
 
 
-    //ecranAccueil(fenetre);
-    leJeu(fenetre, 1);
+    ecranAccueil(fenetre);
+    //leJeu(fenetre, 1);
 
 
 
