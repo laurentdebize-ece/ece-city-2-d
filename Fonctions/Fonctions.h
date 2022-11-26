@@ -126,5 +126,7 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
 
 bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2);
 void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas);
+void fonctionNouvellePartie ();
+
 
 #endif
