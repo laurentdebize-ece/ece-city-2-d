@@ -1,6 +1,7 @@
 #include "Carte.h"
 
-void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
+
+void lireFichierCarte(Case** pMatriceCase, Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
     if (!ifs)
@@ -10,7 +11,7 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
     }
 
     int chiffreEnCours,
-        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0,numeroCentrale=0;
+        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0;
 
 
     for (int ligne = 0; ligne < NB_LIGNES; ligne++) {
@@ -112,10 +113,6 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
                 pMatriceCase[ligne][colonne].pChateau = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = calloc(1, sizeof (Centrale));
                 pMatriceCase[ligne][colonne].pCentrale->estDessine = 0;
-                pMatriceCase[ligne][colonne].pCentrale->capacite = 5000;
-                pMatriceCase[ligne][colonne].pCentrale->numero = numeroCentrale;
-                pMatriceCase[ligne][colonne].pCentrale->parcoursMatriceChateau = 0;
-                numeroCentrale++;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
@@ -132,9 +129,7 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
 
         }
     }
-    structGlobal->nbChateau=numeroChateau;
-    structGlobal->nbHabitation=numeroHabitation;
-    structGlobal->nbCentrale=numeroCentrale;
+
     fclose(ifs);
     ifs = NULL;
 }
@@ -171,7 +166,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!maison) {
         printf("Erreur ouverture image maison\n");
     }
-    immeuble = al_load_bitmap("../images/Immeuble.png");
+    immeuble = al_load_bitmap("../images/Carre.jpg");
     if(!immeuble) {
         printf("Erreur ouverture image immeuble\n");
     }
@@ -243,7 +238,7 @@ void dessinerCarte(Case** pMatriceCase){
                     }
                     break;
                 default:
-                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d\n", i, j);
+                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
                     break;
             }
         }
@@ -460,6 +455,7 @@ void niveau1 (Case** pMatriceCase) {
 // niveau -2 -> réseau élec, routes, centrales, constructions alimentées
 // ??highlight les constructions en carence??
 //Pour chaque centrale on affiche 2000/5000
+
 
 
 
