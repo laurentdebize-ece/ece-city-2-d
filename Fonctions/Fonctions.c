@@ -1937,8 +1937,8 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                 xsouris = event.mouse.x;
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
-                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900 - DECALAGE_GRILLE_X &&
-                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700 - DECALAGE_GRILLE_Y) {
+                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < LARGEUR_FENETRE - DECALAGE_GRILLE_X &&
+                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < HAUTEUR_FENETRE - DECALAGE_GRILLE_Y) {
                     //Chateau
                     if (matriceCase[i][j].type == 7) {
                         al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
