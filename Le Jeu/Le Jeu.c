@@ -1,8 +1,6 @@
 #include "Le Jeu.h"
 #include "../Carte/Carte.h"
-#include "../Fonctions/Fonctions.h"
 #include "../Initialisation/Initialisation.h"
-#include "../Ecrans accueil/Ecrans accueil.h"
 
 
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
@@ -392,7 +390,6 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
                     }
                     else {
                         chrono +=1;
-                        //printf("%d\n", chrono);
                     }
                     if (mois == 13) {
                         mois = 1;
@@ -413,9 +410,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
 
                                 if (matriceCase[i][j].pHabitation->timerHabitation == 14) {
 
-                                    //ATTENTION ****** ON PEUT EVOLUER A MODIFIER ******
                                     int onPeutEvoluer= ouiNonEvolution(matriceCase,structureGlobale,matriceCase[i][j].pHabitation);
-
                                     evolutionHabitation(matriceCase, structureGlobale, matriceCase[i][j].pHabitation, i, j, onPeutEvoluer);
                                     distributionEau(matriceCase, structureGlobale);
                                     distributionElec(matriceCase, structureGlobale);

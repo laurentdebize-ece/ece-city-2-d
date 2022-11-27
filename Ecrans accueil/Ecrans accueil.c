@@ -1,9 +1,6 @@
 #include "Ecrans accueil.h"
 #include "../Le Jeu/Le Jeu.h"
 
-
-
-
 void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
     //Affichage de l'ecran d'accueill
     srand(time(NULL));
@@ -146,14 +143,12 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
 
                     if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
                         leJeu(fenetre, 1, nouvellePartie);
-                        al_flip_display();
-                        end_ecran_choix = false;
+                        end_ecran_choix = true;
                         end=true;
                     }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
                         leJeu(fenetre, 2, nouvellePartie);
-                        al_flip_display();
-                        end_ecran_choix = false;
+                        end_ecran_choix = true;
                         end=true;
 
                     }
