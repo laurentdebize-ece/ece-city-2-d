@@ -27,7 +27,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
         printf("Erreur ouverture image Le Jeu\n");
     }
 
-    timer = al_create_timer(0.2);
+    timer = al_create_timer(1);
 
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_display_event_source(fenetre));
