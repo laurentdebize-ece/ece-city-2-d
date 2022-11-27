@@ -384,21 +384,21 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
                     dessinerCarte(matriceCase);
 
                     //****************Pause****************//
-                    if (chrono == 14 && !pause) {
+                    if (chrono == 14) {
                         chrono = 1;
-                        mois ++;
+                        structureGlobale->timerPartieMois ++;
                     }
                     else {
                         chrono +=1;
                     }
-                    if (mois == 13) {
-                        mois = 1;
-                        annee++;
+                    if (structureGlobale->timerPartieMois == 13) {
+                        structureGlobale->timerPartieMois = 1;
+                        structureGlobale->timerPartieAnnee++;
                     }
                     if (!pause) {
                         al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
-                        al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
-                        al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",annee);
+                        al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",structureGlobale->timerPartieMois);
+                        al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",structureGlobale->timerPartieAnnee);
                         al_flip_display();
                     }
 
@@ -438,8 +438,8 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
                     al_draw_textf(police, al_map_rgb(255, 255, 255),1100, 20,ALLEGRO_ALIGN_CENTER, "%d : %d",structureGlobale->timerPartieMin, structureGlobale->timerPartieSec);
 
                     al_draw_filled_circle(48, 42, 45, al_map_rgb(249, 158, 25));
-                    al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",mois);
-                    al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",annee);
+                    al_draw_textf(police, al_map_rgb(255, 255, 255),25, 33,ALLEGRO_ALIGN_CENTER, "%d/",structureGlobale->timerPartieMois);
+                    al_draw_textf(police, al_map_rgb(255, 255, 255),65, 33,ALLEGRO_ALIGN_CENTER, "%d",structureGlobale->timerPartieAnnee);
 
                     capaciteEau = structureGlobale->nbChateau * 5000;
                     capaciteElec = structureGlobale->nbCentrale * 5000;
