@@ -1,6 +1,6 @@
 #include "Carte.h"
 
-void lireFichierCarte(Case** pMatriceCase, Global* structGlobal){
+void lireFichierCarte(Case** pMatriceCase){
 
     FILE * ifs = fopen("../Carte.txt","r");
     if (!ifs)
