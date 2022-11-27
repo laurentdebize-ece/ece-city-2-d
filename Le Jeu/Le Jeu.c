@@ -5,8 +5,7 @@
 
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
 
-
-    // Déclarationss
+    // Déclarations
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
     ALLEGRO_FONT *police = NULL;
@@ -52,7 +51,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
     if(nouvellePartie) {
         fonctionNouvellePartie();
         structureGlobale->modeDeJeu = modeDeJeu;
-        lireFichierCarte(matriceCase,structureGlobale);
+        lireFichierCarte(matriceCase);
     }
     else {
         chargement(matriceCase, structureGlobale);
@@ -61,7 +60,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
 
     //*************************Premier affichage*************************//
 
-    afficherInterface(fenetre, structureGlobale);
+    afficherInterface();
     dessinerCarte(matriceCase);
     al_flip_display();
 
@@ -318,7 +317,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
 
                     //Quitter
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 444 && event.mouse.y < 488) {
-                        fin = ecranQuitter(fenetre, queue, event,timer, matriceCase, structureGlobale);
+                        fin = ecranQuitter(queue, event, matriceCase, structureGlobale);
                     }
                     //Pause
                     if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > 359 && event.mouse.y < 403) {
@@ -332,7 +331,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
                 if(event.timer.source == timer) {
 
 
-                    afficherInterface(fenetre, structureGlobale);
+                    afficherInterface();
                     dessinerCarte(matriceCase);
 
                     //****************Pause****************//
@@ -422,7 +421,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
     return 0;
 }
 
-void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale){
+void afficherInterface(){
     ALLEGRO_BITMAP *fond = NULL;
 
     fond = al_load_bitmap("../Images/eceCity2.jpg");
@@ -438,7 +437,7 @@ void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale){
     fond = NULL;
 }
 
-int ecranQuitter(ALLEGRO_DISPLAY* fenetre, ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, ALLEGRO_TIMER *timer, Case** matriceCase, Global* structureGlobale) {
+int ecranQuitter(ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, Case** matriceCase, Global* structureGlobale) {
     bool finQuitter = 0;
     ALLEGRO_BITMAP* image;
     image = al_load_bitmap("../Images/sauvegardePartie.jpg");

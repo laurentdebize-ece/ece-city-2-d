@@ -3,8 +3,8 @@
 
 #include "../Fonctions/Fonctions.h"
 
-int ecranQuitter(ALLEGRO_DISPLAY* fenetre, ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, ALLEGRO_TIMER  *timer, Case** matriceCase, Global* structureGlobale);
+int ecranQuitter(ALLEGRO_EVENT_QUEUE *queue, ALLEGRO_EVENT event, Case** matriceCase, Global* structureGlobale);
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie);
-void afficherInterface(ALLEGRO_DISPLAY* fenetre, Global* structureGlobale);
+void afficherInterface();
 
 #endif
