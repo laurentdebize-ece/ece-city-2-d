@@ -39,7 +39,7 @@ void initGlobal(Global* structureGlobale, bool nouvellePartie){
 
 }
 
-//Sauvgarder le timer Habitation
+//Sauvgarder le timer Habitationn
 void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
 
     //Sauvegarde de la carte
