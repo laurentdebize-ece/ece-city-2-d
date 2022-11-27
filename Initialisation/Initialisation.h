@@ -3,8 +3,11 @@
 
 #include "../Fonctions/Fonctions.h"
 
-void initCases(Case** matriceCases);
-void initGlobal(Global* structureGlobale);
-void sauvegarde(Case** matriceCases, Global* structureGlobale);
+void initCases(Case** matriceCases, bool nouvellePartie);
+void initGlobal(Global* structureGlobale,bool nouvellePartie);
+void sauvegardeJeu(Case** matriceCases, Global* structureGlobale);
+void chargement(Case** matriceCases, Global* structureGlobale);
+void FonctionNouvellePartie();
+
 
 #endif

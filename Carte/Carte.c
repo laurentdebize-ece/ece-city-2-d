@@ -1,6 +1,6 @@
 #include "Carte.h"
 
-void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
+void lireFichierCarte(Case** pMatriceCase, Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
     if (!ifs)
@@ -10,7 +10,7 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
     }
 
     int chiffreEnCours,
-        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0,numeroCentrale=0;
+        xPremiereCase, yPremiereCase,numeroHabitation=0,numeroChateau=0;
 
 
     for (int ligne = 0; ligne < NB_LIGNES; ligne++) {
@@ -112,10 +112,6 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
                 pMatriceCase[ligne][colonne].pChateau = NULL;
                 pMatriceCase[ligne][colonne].pCentrale = calloc(1, sizeof (Centrale));
                 pMatriceCase[ligne][colonne].pCentrale->estDessine = 0;
-                pMatriceCase[ligne][colonne].pCentrale->capacite = 5000;
-                pMatriceCase[ligne][colonne].pCentrale->numero = numeroCentrale;
-                pMatriceCase[ligne][colonne].pCentrale->parcoursMatriceChateau = 0;
-                numeroCentrale++;
 
                 xPremiereCase = pMatriceCase[ligne][colonne].x;
                 yPremiereCase = pMatriceCase[ligne][colonne].y;
@@ -132,9 +128,7 @@ void lireFichierCarte(Case** pMatriceCase,Global* structGlobal){
 
         }
     }
-    structGlobal->nbChateau=numeroChateau;
-    structGlobal->nbHabitation=numeroHabitation;
-    structGlobal->nbCentrale=numeroCentrale;
+
     fclose(ifs);
     ifs = NULL;
 }
@@ -171,7 +165,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!maison) {
         printf("Erreur ouverture image maison\n");
     }
-    immeuble = al_load_bitmap("../images/Immeuble.png");
+    immeuble = al_load_bitmap("../images/immeuble.png");
     if(!immeuble) {
         printf("Erreur ouverture image immeuble\n");
     }
@@ -243,7 +237,7 @@ void dessinerCarte(Case** pMatriceCase){
                     }
                     break;
                 default:
-                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d\n", i, j);
+                    printf("Erreur dessinerCarte : Chiffre invalide ligne %d, colone %d", i, j);
                     break;
             }
         }
@@ -291,12 +285,6 @@ void dessinerCarte(Case** pMatriceCase){
     chateau = NULL;
     centrale = NULL;
 }
-
-
-// niveau -1 -> canalisations d'eau, routes + affichage chateaux et maisons alimentées avec taux d'approvisionnement
-//Pour chaque construction: quel château l'approvisionne et à quel taux
-//Pour chaque chateau leur qté distribuée vs leur capacité (4000/5000)
-
 
 void niveau1 (Case** pMatriceCase) {
 
@@ -456,17 +444,10 @@ void niveau1 (Case** pMatriceCase) {
     chateau = NULL;
 }
 
-
-// niveau -2 -> réseau élec, routes, centrales, constructions alimentées
-// ??highlight les constructions en carence??
-//Pour chaque centrale on affiche 2000/5000
-
-
-
 void niveau2(Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
-    ALLEGRO_BITMAP *route;
+    ALLEGRO_BITMAP *elec;
     ALLEGRO_BITMAP *cabane;
     ALLEGRO_BITMAP *maison;
     ALLEGRO_BITMAP *immeuble;
@@ -477,9 +458,9 @@ void niveau2(Case** pMatriceCase) {
     if (!herbe) {
         printf("Erreur ouverture image herbe");
     }
-    route = al_load_bitmap("../images/Route.jpg");
-    if (!route) {
-        printf("Erreur ouverture image route");
+    elec = al_load_bitmap("../images/Elec.jpg");
+    if (!elec) {
+        printf("Erreur ouverture image elec");
     }
     cabane = al_load_bitmap("../images/Cabane.png");
     if(!cabane) {
@@ -511,7 +492,7 @@ void niveau2(Case** pMatriceCase) {
                     al_draw_bitmap(herbe, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
                     break;
                 case 1:
-                    al_draw_bitmap(route, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
+                    al_draw_bitmap(elec, (float) pMatriceCase[i][j].x, (float) pMatriceCase[i][j].y,0);
                     break;
                 case 3:
                     if (pMatriceCase[i][j].pHabitation->estDessine == 0) {
@@ -604,7 +585,7 @@ void niveau2(Case** pMatriceCase) {
     }
 
     al_destroy_bitmap(herbe);
-    al_destroy_bitmap(route);
+    al_destroy_bitmap(elec);
     al_destroy_bitmap(cabane);
     al_destroy_bitmap(maison);
     al_destroy_bitmap(immeuble);
@@ -612,42 +593,10 @@ void niveau2(Case** pMatriceCase) {
     al_destroy_bitmap(centrale);
 
     herbe = NULL;
-    route = NULL;
+    elec = NULL;
     cabane = NULL;
     maison = NULL;
     immeuble = NULL;
     gratteCiel = NULL;
     centrale = NULL;
-}
-
-//au survol de la souris capacité chateau et centrale
-
-void capaciteChateau(ALLEGRO_DISPLAY* fenetre){
-    ALLEGRO_TIMER *timer = NULL;
-    bool fin = false;
-
-    al_init_font_addon();
-    al_init_ttf_addon();
-    ALLEGRO_EVENT_QUEUE *queue = NULL;
-    ALLEGRO_EVENT event;
-
-    timer = al_create_timer(0.5);
-
-
-    queue = al_create_event_queue();
-    al_register_event_source(queue, al_get_display_event_source(fenetre));
-    al_register_event_source(queue, al_get_mouse_event_source());
-    al_register_event_source(queue, al_get_timer_event_source(timer));
-
-    al_start_timer(timer);
-
-    while (!fin){
-        al_wait_for_event(queue, &event);
-        switch (event.type){
-            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:{
-                if (event.mouse.button & 1) {
-                }
-            }
-        }
-    }
 }

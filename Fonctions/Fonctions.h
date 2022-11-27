@@ -76,7 +76,7 @@ typedef struct {
 
 typedef struct {
     int argentBanque, nbHabitants, timerPartieSec, timerPartieMin, modeDeJeu, //1=communiste, 2=capitaliste
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation, nbCentrale, nbChateau;
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation, nbCentrale, nbChateau, timerPartieMois, timerPartieAnnee;
 }Global;
 
 typedef struct {
@@ -99,7 +99,7 @@ typedef struct maillon{
 
 typedef struct file{
     t_maillon*tete; //pointeur sur le premier maillon
-    t_maillon*fin;//pointeur sur le dernier maillon
+    t_maillon*fin;//pointeur sur le dernier maillonn
     Habitation*avant;
     Habitation*apres;
 }t_file;
@@ -126,5 +126,6 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
 
 bool func_bouton(bool clic_mouse, int x_mouse, int y_mouse, int x1, int x2, int y1, int y2);
 void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMER* timer, Case** matriceCase, int y1, int y2, int cas);
+void fonctionNouvellePartie ();
 
 #endif

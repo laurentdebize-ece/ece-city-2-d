@@ -1,15 +1,13 @@
 #include "Ecrans accueil.h"
 #include "../Le Jeu/Le Jeu.h"
 
-
-
-
 void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
-    //Affichage de l'ecran d'accueil
+    //Affichage de l'ecran d'accueill
     srand(time(NULL));
     bool end = false;
     bool end_menu = false;
     bool end_ecran_choix = true;
+    bool nouvellePartie = false;
 
     int x_mouse = 0;
     int y_mouse = 0;
@@ -54,8 +52,6 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
             al_draw_bitmap(menu, 0, 0, 0);
 
 
-
-
             al_flip_display();
             al_wait_for_event(queue, &event);
             switch (event.type) {
@@ -82,19 +78,21 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
                         clic_mouse = true;
                     } else { clic_mouse = false; }
 
-                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 112, 452, 432, 682)) { //nouvelle partie co ok
+                    if (func_bouton(clic_mouse, x_mouse, y_mouse, 112, 452, 432, 682)) {
+                        nouvellePartie = true;
                         al_draw_bitmap(choix, 0, 0, 0);
                         al_flip_display();
                         end_menu = true;
                         end_ecran_choix = false;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter co ok
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {
                         end_menu = true;
                         end = true;
                     }
-                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 650, 1000, 437, 687)) { //charger partie co ok
-                        leJeu(fenetre, 1);
-                        al_flip_display();
+                    else if (func_bouton(clic_mouse, x_mouse, y_mouse, 650, 1000, 437, 687)) {
+                        nouvellePartie = false;
+                        leJeu(fenetre, 2, nouvellePartie);
+                        end=true;
                         end_menu = true;
 
                     }
@@ -142,14 +140,15 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
                     } else { clic_mouse = false; }
 
                     if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
-                        leJeu(fenetre, 1);
-                        al_flip_display();
-                        end_ecran_choix = false;
+                        leJeu(fenetre, 2, nouvellePartie);
+                        end_ecran_choix = true;
+                        end=true;
                     }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
-                        leJeu(fenetre, 1);
-                        al_flip_display();
-                        end_ecran_choix = false;
+                        leJeu(fenetre, 1, nouvellePartie);
+                        end_ecran_choix = true;
+                        end=true;
+
                     }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 13, 51, 16, 63)) {   //bouton quitter
                         end_menu = true;

@@ -1,8 +1,7 @@
 #include "Initialisation.h"
 #include "../Carte/Carte.h"
 
-
-void initCases(Case** matriceCases){
+void initCases(Case** matriceCases, bool nouvellePartie){
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j  < NB_COLONNES; j++) {
@@ -14,35 +13,43 @@ void initCases(Case** matriceCases){
             matriceCases[i][j].pHabitation = NULL;
             matriceCases[i][j].pChateau = NULL;
             matriceCases[i][j].pCentrale = NULL;
-            matriceCases[i][j].type = -1;
             matriceCases[i][j].ligne = i;
             matriceCases[i][j].colonne = j;
+
+            if(nouvellePartie) {
+                matriceCases[i][j].type = -1;
+            }
         }
     }
 }
 
-void initGlobal(Global* structureGlobale){
+void initGlobal(Global* structureGlobale, bool nouvellePartie){
 
-    structureGlobale->argentBanque = 500000;
     structureGlobale->coutRoute = 10;
     structureGlobale->coutChateau = 100000;
     structureGlobale->coutCentrale = 100000;
     structureGlobale->coutTerrainVague = 1000;
-    structureGlobale->nbCentrale = 0;
-    structureGlobale->nbChateau = 0;
-    structureGlobale->nbHabitation=0;
+
+
+    if(nouvellePartie) {
+        structureGlobale->timerPartieAnnee = 2022;
+        structureGlobale->timerPartieMois = 1;
+        structureGlobale->nbCentrale = 0;
+        structureGlobale->nbChateau = 0;
+        structureGlobale->argentBanque = 500000;
+        structureGlobale->nbHabitation=0;
+    }
 
 }
 
-//Sauvgarder le timer Habitation
-void sauvegarde(Case** matriceCases, Global* structureGlobale){
+void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
 
     //Sauvegarde de la carte
     FILE* carte = fopen("../Carte.txt", "w");
     if(carte != NULL) {
         for (int i = 0; i < NB_LIGNES; i++) {
             for (int j = 0; j  < NB_COLONNES; j++) {
-                fprintf(carte,"%d",matriceCases[i][j].type);
+                fprintf(carte,"%d ",matriceCases[i][j].type);
             }
             fprintf(carte,"\n");
         }
@@ -54,10 +61,11 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
     }
 
     //Sauvegarde du jeu
-    FILE* fichier = fopen("../Données du jeu.txt", "w");
+    FILE* fichier = fopen("../Donnees du jeu.txt", "w");
     if(fichier != NULL) {
 
-        fprintf(fichier, "%d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, structureGlobale->modeDeJeu);
+        fprintf(fichier, "%d %d %d %d %d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec,
+                structureGlobale->timerPartieMin, structureGlobale->timerPartieMois, structureGlobale->timerPartieAnnee, structureGlobale->modeDeJeu, structureGlobale->nbCentrale,structureGlobale->nbChateau);
 
         fclose(fichier);
         fichier = NULL;
@@ -68,14 +76,16 @@ void sauvegarde(Case** matriceCases, Global* structureGlobale){
 }
 
 void chargement(Case** matriceCases, Global* structureGlobale){
-    lireFichierCarte(matriceCases,structureGlobale);
+    lireFichierCarte(matriceCases, structureGlobale);
 
-    FILE * fichier = fopen("../Données du jeu.txt","r");
+    FILE * fichier = fopen("../Donnees du jeu.txt","r");
     if (!fichier)
     {
         printf("Erreur de lecture fichier Données du jeu.txt\n");
         exit(-1);
     }
 
-    fscanf(fichier,"%d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartieSec, &structureGlobale->timerPartieMin, &structureGlobale->modeDeJeu);
+    fscanf(fichier,"%d %d %d %d %d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants,
+           &structureGlobale->timerPartieSec, &structureGlobale->timerPartieMin,&structureGlobale->timerPartieMois, &structureGlobale->timerPartieAnnee,
+           &structureGlobale->modeDeJeu, &structureGlobale->nbCentrale, &structureGlobale->nbChateau);
 }
