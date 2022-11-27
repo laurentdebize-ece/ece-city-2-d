@@ -76,7 +76,7 @@ typedef struct {
 
 typedef struct {
     int argentBanque, nbHabitants, timerPartieSec, timerPartieMin, modeDeJeu, //1=communiste, 2=capitaliste
-            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation, nbCentrale, nbChateau;
+            coutCentrale, coutChateau, coutRoute, coutTerrainVague, nbHabitation, nbCentrale, nbChateau, timerPartieMois, timerPartieAnnee;
 }Global;
 
 typedef struct {

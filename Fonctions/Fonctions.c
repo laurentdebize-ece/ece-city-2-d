@@ -322,14 +322,26 @@ void distributionEau(Case** matriceCases,Global* global){
     int comparateur = 50000;
     int numHabitationBFS = 0;
     int nbHabitation = 0;
+    int numChateau=0;
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            if (matriceCases[i][j].pChateau != NULL ) {
+                matriceCases[i][j].pChateau->parcoursMatriceChateau=0;
+            }
+        }
+    }
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pHabitation != NULL &&
-                matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 0) {
+            if (matriceCases[i][j].pHabitation != NULL && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 0) {
                 matriceCases[i][j].pHabitation->numero = nbHabitation;
                 nbHabitation += 1;
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 1;
+            }
+            else if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].pChateau->parcoursMatriceChateau == 0) {
+                matriceCases[i][j].pChateau->numero=numChateau;
+                matriceCases[i][j].pChateau->parcoursMatriceChateau=1;
+                numChateau++;
             }
         }
     }
@@ -339,6 +351,15 @@ void distributionEau(Case** matriceCases,Global* global){
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
                 matriceCases[i][j].pHabitation->alimEau=0;
                 matriceCases[i][j].pHabitation->alimEauOuiNon=0;
+                for (int k=0;k<10;k++){
+                    matriceCases[i][j].pHabitation->nbCasesParChateau->nbCases=0;
+                    matriceCases[i][j].pHabitation->nbCasesParChateau->dejaAlim=0;
+                    matriceCases[i][j].pHabitation->nbCasesParChateau->numChateau=-1;
+                }
+            }
+            if(matriceCases[i][j].pChateau != NULL){
+                matriceCases[i][j].pChateau->quantiteDistribuee=0;
+                matriceCases[i][j].pChateau->parcoursMatriceChateau=0;
             }
         }
     }
@@ -385,12 +406,11 @@ void distributionEau(Case** matriceCases,Global* global){
             }
         }
     }
+
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0;j < NB_COLONNES; j++) {
             if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7 && matriceCases[i][j].pChateau->distribution == 1) {
-
                 matriceCases[i][j].pChateau->distribution = 0;
-                matriceCases[i][j].pChateau->quantiteDistribuee = 0;
             }
             if (matriceCases[i][j].pHabitation != NULL) {
 
@@ -513,11 +533,12 @@ void distributionEau(Case** matriceCases,Global* global){
             }
         }
     }
+
 }
 
 /************************************** DISTRIBUTION DE L'ELEC *************************************************/
 
-int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitation,int nbHabitation,int numeroCentrale,int xRoute, int yRoute){
+int bfsElec(Case** matriceCases, Habitation* habElec[], int x, int y, int numHabitationBFS, int nbHabitation, int numeroCentrale, int xRoute, int yRoute){
     t_file f;
     f.tete = f.fin = NULL;
     int XY[2];
@@ -525,6 +546,10 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
     int numeroRouteEnCours=0;
     int totalRoute=0;
     int nbRouteAutour=0;
+
+    if (numHabitationBFS>0){
+        numHabitationBFS=0;
+    }
 
 
     enfiler(&f,xRoute,yRoute,numeroRouteEnCours);
@@ -547,20 +572,20 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
                 matriceCases[XY[1] - 1][XY[0]].type == 5 ||
                 matriceCases[XY[1] - 1][XY[0]].type == 6) {
                 // checker si l'habitation est deja dans le tableau
-                if (numHabitation != 0) {
-                    for (int i = 0; i < numHabitation; i++) {
+                if (numHabitationBFS != 0) {
+                    for (int i = 0; i < numHabitationBFS; i++) {
                         if (matriceCases[y][x].pCentrale->tab[i] == matriceCases[XY[1] - 1][XY[0]].pHabitation) {
                             dejaDansTab = 1;
                         }
                     }
                     if (dejaDansTab != 1) {
-                        matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
-                        numHabitation++;
+                        matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
+                        numHabitationBFS++;
                     }
                     dejaDansTab = 0;
                 } else {
-                    matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
-                    numHabitation++;
+                    matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1] - 1][XY[0]].pHabitation;
+                    numHabitationBFS++;
                 }
 
             }
@@ -573,20 +598,20 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
                 matriceCases[XY[1] + 1][XY[0]].type == 5 ||
                 matriceCases[XY[1] + 1][XY[0]].type == 6) {
 
-                if (numHabitation != 0) {
-                    for (int i = 0; i < numHabitation; i++) {
+                if (numHabitationBFS != 0) {
+                    for (int i = 0; i < numHabitationBFS; i++) {
                         if (matriceCases[y][x].pCentrale->tab[i] == matriceCases[XY[1] + 1][XY[0]].pHabitation) {
                             dejaDansTab = 1;
                         }
                     }
                     if (dejaDansTab != 1) {
-                        matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
-                        numHabitation++;
+                        matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
+                        numHabitationBFS++;
                     }
                     dejaDansTab = 0;
                 } else {
-                    matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
-                    numHabitation++;
+                    matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1] + 1][XY[0]].pHabitation;
+                    numHabitationBFS++;
                 }
             }
         }
@@ -598,20 +623,20 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
                 || matriceCases[XY[1]][XY[0] - 1].type == 5
                 || matriceCases[XY[1]][XY[0] - 1].type == 6) {
 
-                if (numHabitation != 0) {
-                    for (int i = 0; i < numHabitation; i++) {
+                if (numHabitationBFS != 0) {
+                    for (int i = 0; i < numHabitationBFS; i++) {
                         if (matriceCases[y][x].pCentrale->tab[i] == matriceCases[XY[1]][XY[0] - 1].pHabitation) {
                             dejaDansTab = 1;
                         }
                     }
                     if (dejaDansTab != 1) {
-                        matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
-                        numHabitation++;
+                        matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
+                        numHabitationBFS++;
                     }
                     dejaDansTab = 0;
                 } else {
-                    matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
-                    numHabitation++;
+                    matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1]][XY[0] - 1].pHabitation;
+                    numHabitationBFS++;
                 }
             }
         }
@@ -623,20 +648,20 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
                 || matriceCases[XY[1]][XY[0] + 1].type == 5
                 || matriceCases[XY[1]][XY[0] + 1].type == 6) {
 
-                if (numHabitation != 0) {
-                    for (int i = 0; i < numHabitation; i++) {
+                if (numHabitationBFS != 0) {
+                    for (int i = 0; i < numHabitationBFS; i++) {
                         if (matriceCases[y][x].pCentrale->tab[i] == matriceCases[XY[1]][XY[0] + 1].pHabitation) {
                             dejaDansTab = 1;
                         }
                     }
                     if (dejaDansTab != 1) {
-                        matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
-                        numHabitation++;
+                        matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
+                        numHabitationBFS++;
                     }
                     dejaDansTab = 0;
                 } else {
-                    matriceCases[y][x].pCentrale->tab[numHabitation] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
-                    numHabitation++;
+                    matriceCases[y][x].pCentrale->tab[numHabitationBFS] = matriceCases[XY[1]][XY[0] + 1].pHabitation;
+                    numHabitationBFS++;
                 }
             }
         }
@@ -723,7 +748,7 @@ int bfsElec(Case** matriceCases,Habitation* habElec[],int x,int y,int numHabitat
             matriceCases[i][j].distribEau=0;
         }
     }
-    return numHabitation;
+    return numHabitationBFS;
 }
 
 void distributionElec(Case** matriceCases,Global* global){
@@ -737,6 +762,8 @@ void distributionElec(Case** matriceCases,Global* global){
     int numHabitationBFS = 0;
     int nbHabitation = 0;
 
+    int numCentral=0;
+
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCases[i][j].pHabitation != NULL &&
@@ -745,6 +772,14 @@ void distributionElec(Case** matriceCases,Global* global){
                 nbHabitation += 1;
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 1;
             }
+            /*
+            else if (matriceCases[i][j].pCentrale != NULL &&
+                        matriceCases[i][j].pCentrale->parcoursMatriceChateau == 0) {
+                matriceCases[i][j].pCentrale->numero=numCentral;
+                matriceCases[i][j].pCentrale->parcoursMatriceChateau=1;
+                numCentral++;
+            }
+             */
         }
     }
     for (int i = 0; i < NB_LIGNES; i++) {
@@ -754,11 +789,22 @@ void distributionElec(Case** matriceCases,Global* global){
                 matriceCases[i][j].pHabitation->alimElec=0;
                 matriceCases[i][j].pHabitation->alimElecOuiNon=0;
             }
+            if(matriceCases[i][j].pCentrale != NULL){
+                matriceCases[i][j].pCentrale->quantiteDistribuee=0;
+                matriceCases[i][j].pCentrale->distribution=0;
+                matriceCases[i][j].pCentrale->parcoursMatriceChateau=0;
+                for (int k=0;k<40;k++){
+                    matriceCases[i][j].pCentrale->tab[k]=NULL;
+                }
+            }
         }
     }
 
     global->nbHabitation = nbHabitation;
     Habitation *habElec[nbHabitation];
+    for(int i=0; i<nbHabitation;i++){
+        habElec[i]=NULL;
+    }
     //Habitation *habEauOrdre[nbHabitation];
 
     //récupération de la coordoonée X et Y du chateau
@@ -798,14 +844,11 @@ void distributionElec(Case** matriceCases,Global* global){
     }
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0;j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pCentrale!= NULL && matriceCases[i][j].type == 8
-                && matriceCases[i][j].pCentrale->distribution == 1) {
+            if (matriceCases[i][j].pCentrale!= NULL ) {
 
                 matriceCases[i][j].pCentrale->distribution = 0;
-                matriceCases[i][j].pCentrale->quantiteDistribuee=0;
             }
-            if (matriceCases[i][j].pHabitation != NULL
-                && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+            if (matriceCases[i][j].pHabitation != NULL) {
 
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
 
@@ -813,15 +856,6 @@ void distributionElec(Case** matriceCases,Global* global){
         }
     }
     int habitationProche = 0;
-    for (int k = 0; k < NB_LIGNES; k++) {
-        for (int l = 0; l < NB_COLONNES; l++) {
-            if (matriceCases[k][l].pHabitation != NULL &&
-                matriceCases[k][l].pHabitation->parcoureMatriceHabitation == 1) {
-                matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
-            }
-        }
-    }
-
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
@@ -833,15 +867,14 @@ void distributionElec(Case** matriceCases,Global* global){
 
                 Centrale* centrale= matriceCases[i][j].pCentrale;
 
-                for(int k=0;k<numHabitationBFS;k++){
+                for(int k=0;k<global->nbHabitation;k++){
                     if (centrale->tab[k] !=NULL ){
-                        if(centrale->tab[k]->nbHabitants <= (centrale->capacite - centrale->quantiteDistribuee)){
+                        if(centrale->tab[k]->nbHabitants <= (centrale->capacite - centrale->quantiteDistribuee) && centrale->tab[k]->alimElec ==0 ){
                             centrale->tab[k]->alimElec=centrale->tab[k]->nbHabitants;
                             centrale->quantiteDistribuee+=centrale->tab[k]->nbHabitants;
                         }
                     }
                 }
-
             }
         }
     }
@@ -1073,39 +1106,28 @@ int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habi
             }
         }
         for (int i = 0; i < NB_LIGNES; i++) {
-            for (
-                    int j = 0;
-                    j < NB_COLONNES; j++) {
+            for (int j = 0;j < NB_COLONNES; j++) {
                 if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
                     && matriceCases[i][j].pChateau->distribution == 1) {
 
-                    matriceCases[i][j].pChateau->
-                            distribution = 0;
+                    matriceCases[i][j].pChateau->distribution = 0;
                 }
                 if (matriceCases[i][j].pHabitation != NULL
                     && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
 
-                    matriceCases[i][j].pHabitation->
-                            parcoureMatriceHabitation = 0;
+                    matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
                 }
             }
         }
         int habitationProche = 0;
-        for (int k = 0; k < NB_LIGNES; k++) {
-            for (int l = 0; l < NB_COLONNES; l++) {
-                if (matriceCases[k][l].pHabitation != NULL &&
-                    matriceCases[k][l].pHabitation->parcoureMatriceHabitation == 1) {
-                    matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
-                }
-            }
-        }
+
         for (int i = 0; i < nbChateauRelie; i++) {
             for (int k = 0; k < NB_LIGNES; k++) {
                 for (int l = 0; l < NB_COLONNES; l++) {
                     if (matriceCases[k][l].pChateau != NULL &&
                         matriceCases[k][l].pChateau->numero == tabChateauRelie[i] && matriceCases[k][l].pChateau->parcoursMatriceChateau ==0 ) {
                         matriceCases[k][l].pChateau->parcoursMatriceChateau =1;
-                        quantiteRestante +=matriceCases[k][l].pChateau->capacite - matriceCases[k][l].pChateau->quantiteDistribuee;
+                        quantiteRestante += (matriceCases[k][l].pChateau->capacite - matriceCases[k][l].pChateau->quantiteDistribuee);
                     }
                 }
             }
@@ -1139,7 +1161,7 @@ int distributionEvolutionEAU(Case** matriceCases,Global* global,Habitation* habi
 
                 break;
         }
-        if (quantiteRestante >= quantiteUtile) {
+        if (quantiteRestante+habitation->alimEau >= quantiteUtile) {
             return 1;
         } else {
             return 0;
@@ -1426,7 +1448,7 @@ int distributionEvolutionELEC(Case** matriceCases,Global* global,Habitation* hab
 
                 break;
         }
-        if (quantiteRestante >= quantiteUtile) {
+        if (quantiteRestante+habitation->alimElec >= quantiteUtile) {
             return 1;
         } else {
             return 0;
@@ -1604,6 +1626,7 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->coordXHG = caseAConstruire.x;
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->coordYHG = caseAConstruire.y;
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->capacite = 5000;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pChateau->numero=structureGlobale->nbChateau;
 
 
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
@@ -1631,6 +1654,7 @@ int placerUneConstruction(Case** matriceCase, Case caseAConstruire, int construc
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->coordXHG = caseAConstruire.x;
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->coordYHG = caseAConstruire.y;
                 matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->capacite=5000;
+                matriceCase[caseAConstruire.ligne][caseAConstruire.colonne].pCentrale->numero=structureGlobale->nbCentrale;
                 for (int i = caseAConstruire.ligne; i < caseAConstruire.ligne + 6; i++) {
                     for (int j = caseAConstruire.colonne; j < caseAConstruire.colonne + 4; j++) {
 
