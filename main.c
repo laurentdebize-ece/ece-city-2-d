@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
-#include "Le Jeu/Le Jeu.h"
-
-
 
 int main() {
 
@@ -21,17 +18,11 @@ int main() {
 
     ALLEGRO_DISPLAY *fenetre = NULL;
 
-
     fenetre = al_create_display(LARGEUR_FENETRE, HAUTEUR_FENETRE);
     al_set_window_position(fenetre, 20, 20);
     al_set_window_title(fenetre, "ECE City");
 
-
-
     ecranAccueil(fenetre);
-    //leJeu(fenetre, 1);
-
-
 
     al_destroy_display(fenetre);
     fenetre = NULL;
