@@ -459,6 +459,7 @@ void niveau1 (Case** pMatriceCase) {
 
 
 
+
 void niveau2(Case** pMatriceCase) {
 
     ALLEGRO_BITMAP *herbe;
