@@ -1,15 +1,11 @@
 #include "Fonctions.h"
 #include "../Carte/Carte.h"
 
-
-
 #define TAILLE_X_CHATEAU 4
 #define TAILLE_Y_CHATEAU 6
 #define TAILLE_X_HABITATION 3
 #define TAILLE_Y_HABITATION 3
 
-
-//boucle for nbchateau faire distribution
 
 /************************************** DISTRIBUTION DE L'EAU *************************************************/
 
@@ -1481,13 +1477,6 @@ int ouiNonEvolution(Case** matriceCases,Global* global,Habitation* habitation){
 }
 
 
-
-
-
-// à la fin mettre distribution à 0 pour tous
-
-
-
 int convertirEnCase(int x, int y,  int* ligne, int* colonne) {
 
     int colonneTemporaire = (int)((x-DECALAGE_GRILLE_X)/TAILLE_CASE);
@@ -1736,7 +1725,6 @@ int calculerNbHabitants(Case** matriceCase){
     al_flip_display();
     return nbHabitants;
 }
-
 
 
 void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer){

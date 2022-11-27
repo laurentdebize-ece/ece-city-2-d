@@ -39,7 +39,6 @@ void initGlobal(Global* structureGlobale, bool nouvellePartie){
 
 }
 
-//Sauvgarder le timer Habitation
 void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
 
     //Sauvegarde de la carte
@@ -59,7 +58,7 @@ void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
     }
 
     //Sauvegarde du jeu
-    FILE* fichier = fopen("../Données du jeu.txt", "w");
+    FILE* fichier = fopen("../Donnees du jeu.txt", "w");
     if(fichier != NULL) {
 
         fprintf(fichier, "%d %d %d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, structureGlobale->modeDeJeu, structureGlobale->nbCentrale, structureGlobale->nbChateau);
@@ -75,7 +74,7 @@ void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
 void chargement(Case** matriceCases, Global* structureGlobale){
     lireFichierCarte(matriceCases, structureGlobale);
 
-    FILE * fichier = fopen("../Données du jeu.txt","r");
+    FILE * fichier = fopen("../Donnees du jeu.txt","r");
     if (!fichier)
     {
         printf("Erreur de lecture fichier Données du jeu.txt\n");

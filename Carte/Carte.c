@@ -1,6 +1,5 @@
 #include "Carte.h"
 
-
 void lireFichierCarte(Case** pMatriceCase, Global* structGlobal){
 
     FILE * ifs = fopen("../Carte.txt","r");
@@ -166,7 +165,7 @@ void dessinerCarte(Case** pMatriceCase){
     if(!maison) {
         printf("Erreur ouverture image maison\n");
     }
-    immeuble = al_load_bitmap("../images/Carre.jpg");
+    immeuble = al_load_bitmap("../images/immeuble.png");
     if(!immeuble) {
         printf("Erreur ouverture image immeuble\n");
     }
@@ -286,12 +285,6 @@ void dessinerCarte(Case** pMatriceCase){
     chateau = NULL;
     centrale = NULL;
 }
-
-
-// niveau -1 -> canalisations d'eau, routes + affichage chateaux et maisons alimentées avec taux d'approvisionnement
-//Pour chaque construction: quel château l'approvisionne et à quel taux
-//Pour chaque chateau leur qté distribuée vs leur capacité (4000/5000)
-
 
 void niveau1 (Case** pMatriceCase) {
 
@@ -450,14 +443,6 @@ void niveau1 (Case** pMatriceCase) {
     gratteCiel = NULL;
     chateau = NULL;
 }
-
-
-// niveau -2 -> réseau élec, routes, centrales, constructions alimentées
-// ??highlight les constructions en carence??
-//Pour chaque centrale on affiche 2000/5000
-
-
-
 
 void niveau2(Case** pMatriceCase) {
 
