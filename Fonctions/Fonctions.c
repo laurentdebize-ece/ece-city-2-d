@@ -328,6 +328,9 @@ void distributionEau(Case** matriceCases,Global* global){
             if (matriceCases[i][j].pChateau != NULL ) {
                 matriceCases[i][j].pChateau->parcoursMatriceChateau=0;
             }
+            if (matriceCases[i][j].pHabitation != NULL ) {
+                matriceCases[i][j].pHabitation->parcoureMatriceHabitation=0;
+            }
         }
     }
 
@@ -387,23 +390,26 @@ void distributionEau(Case** matriceCases,Global* global){
                 //vérification des routes autour pour début BFS
                 for (int a = caseX1 - 1; a < caseX2 + 2; a += TAILLE_X_CHATEAU + 1) {
                     for (int b = caseY1; b < caseY2 + 1; b++) {
+
                         if (a > 0 && b > 0) {
+
                             if (matriceCases[b][a].type == 1) {
                                 numHabitationBFS = bfsEau(matriceCases, habEau, a, b, numHabitationBFS, nbHabitation,numeroChateau);
                             }
+
                         }
+
                     }
                 }
                 for (int b = caseY1 - 1; b < caseY2 + 2; b += TAILLE_Y_CHATEAU + 1) {
                     for (int a = caseX1; a < caseX2 + 1; a++) {
-                        if (a > 0 && b > 0) {
+                        if (a > 0 && b > 0 ) {
                             if (matriceCases[b][a].type == 1) {
                                 numHabitationBFS = bfsEau(matriceCases, habEau, a, b, numHabitationBFS, nbHabitation,numeroChateau);
                             }
                         }
                     }
                 }
-
             }
         }
     }

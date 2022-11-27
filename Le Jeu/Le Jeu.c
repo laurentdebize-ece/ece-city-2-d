@@ -300,6 +300,7 @@ int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
                         }
                         distributionEau(matriceCase, structureGlobale);
                         distributionElec(matriceCase, structureGlobale);
+
                     }
 
 
