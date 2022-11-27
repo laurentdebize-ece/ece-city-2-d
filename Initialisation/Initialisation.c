@@ -30,7 +30,10 @@ void initGlobal(Global* structureGlobale, bool nouvellePartie){
     structureGlobale->coutCentrale = 100000;
     structureGlobale->coutTerrainVague = 1000;
 
+
     if(nouvellePartie) {
+        structureGlobale->timerPartieAnnee = 2022;
+        structureGlobale->timerPartieMois = 1;
         structureGlobale->nbCentrale = 0;
         structureGlobale->nbChateau = 0;
         structureGlobale->argentBanque = 500000;
@@ -61,7 +64,8 @@ void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
     FILE* fichier = fopen("../Donnees du jeu.txt", "w");
     if(fichier != NULL) {
 
-        fprintf(fichier, "%d %d %d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec, structureGlobale->timerPartieMin, structureGlobale->modeDeJeu, structureGlobale->nbCentrale, structureGlobale->nbChateau);
+        fprintf(fichier, "%d %d %d %d %d %d %d %d %d", structureGlobale->argentBanque, structureGlobale->nbHabitants, structureGlobale->timerPartieSec,
+                structureGlobale->timerPartieMin, structureGlobale->timerPartieMois, structureGlobale->timerPartieAnnee, structureGlobale->modeDeJeu, structureGlobale->nbCentrale,structureGlobale->nbChateau);
 
         fclose(fichier);
         fichier = NULL;
@@ -72,7 +76,7 @@ void sauvegardeJeu(Case** matriceCases, Global* structureGlobale){
 }
 
 void chargement(Case** matriceCases, Global* structureGlobale){
-    lireFichierCarte(matriceCases, structureGlobale);
+    lireFichierCarte(matriceCases);
 
     FILE * fichier = fopen("../Donnees du jeu.txt","r");
     if (!fichier)
@@ -81,5 +85,7 @@ void chargement(Case** matriceCases, Global* structureGlobale){
         exit(-1);
     }
 
-    fscanf(fichier,"%d %d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants, &structureGlobale->timerPartieSec, &structureGlobale->modeDeJeu, &structureGlobale->nbCentrale, &structureGlobale->nbChateau);
+    fscanf(fichier,"%d %d %d %d %d %d %d %d %d",&structureGlobale->argentBanque, &structureGlobale->nbHabitants,
+           &structureGlobale->timerPartieSec, &structureGlobale->timerPartieMin,&structureGlobale->timerPartieMois, &structureGlobale->timerPartieAnnee,
+           &structureGlobale->modeDeJeu, &structureGlobale->nbCentrale, &structureGlobale->nbChateau);
 }

@@ -883,6 +883,7 @@ void distributionElec(Case** matriceCases,Global* global){
                         if(centrale->tab[k]->nbHabitants <= (centrale->capacite - centrale->quantiteDistribuee) && centrale->tab[k]->alimElec ==0 ){
                             centrale->tab[k]->alimElec=centrale->tab[k]->nbHabitants;
                             centrale->quantiteDistribuee+=centrale->tab[k]->nbHabitants;
+                            centrale->tab[k]->alimElecOuiNon = 1;
                         }
                     }
                 }
@@ -1471,10 +1472,23 @@ int distributionEvolutionELEC(Case** matriceCases,Global* global,Habitation* hab
 }
 
 int ouiNonEvolution(Case** matriceCases,Global* global,Habitation* habitation){
+
     int eau = 0;
     int elec = 0;
-    eau = distributionEvolutionEAU(matriceCases,global,habitation);
-    elec = distributionEvolutionELEC(matriceCases,global,habitation);
+
+    if(global->modeDeJeu == 1){//Communiste
+        eau = distributionEvolutionEAU(matriceCases,global,habitation);
+        elec = distributionEvolutionELEC(matriceCases,global,habitation);
+
+    }else if (global->modeDeJeu == 2){//Capitaliste
+        if (habitation->alimElec == habitation->nbHabitants && habitation->alimEau == habitation->nbHabitants && habitation->alimEauOuiNon == 2 && habitation->alimElecOuiNon == 1){
+            eau = 1;
+            elec = 1;
+        }else{
+            eau = -1;
+            elec = -1;
+        }
+    }
 
     if(eau == 1 && elec== 1){
         return 1;
@@ -1821,45 +1835,77 @@ void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitatio
     //Mode capitaliste
     else if (structureGlobale->modeDeJeu == 2){
 
-        //Evolution max
-        if (habitationAEvoluer->niveau == 4){
+        if (onPeutEvoluer == 1) {
+            //Evolution max
+            if (habitationAEvoluer->niveau == 4) {
 
-        }else if (habitationAEvoluer->niveau < 4 ){ //On evolue
+            } else if (habitationAEvoluer->niveau < 4) { //On evolue
 
-            habitationAEvoluer->niveau += 1;
+                habitationAEvoluer->niveau += 1;
 
-            switch (habitationAEvoluer->niveau) {
-                case 0://TERRAIN_VAGUE
-                    matriceCase[ligneAEvoluer][colonneAEvoluer].type = 2;
+                switch (habitationAEvoluer->niveau) {
+                    case 0://TERRAIN_VAGUE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 2;
 
-                    habitationAEvoluer->nbHabitants = TERRAIN_VAGUE;
-                    break;
-                case 1://CABANE
-                    matriceCase[ligneAEvoluer][colonneAEvoluer].type = 3;
+                        habitationAEvoluer->nbHabitants = TERRAIN_VAGUE;
+                        break;
+                    case 1://CABANE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 3;
 
-                    habitationAEvoluer->nbHabitants = CABANE;
-                    break;
-                case 2://MAISON
-                    matriceCase[ligneAEvoluer][colonneAEvoluer].type = 4;
+                        habitationAEvoluer->nbHabitants = CABANE;
+                        break;
+                    case 2://MAISON
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 4;
 
-                    habitationAEvoluer->nbHabitants = MAISON;
-                    break;
-                case 3://IMMEUBLE
-                    matriceCase[ligneAEvoluer][colonneAEvoluer].type = 5;
-                    habitationAEvoluer->nbHabitants = IMMEUBLE;
-                    break;
-                case 4://GRATTE_CIEL
-                    matriceCase[ligneAEvoluer][colonneAEvoluer].type = 6;
+                        habitationAEvoluer->nbHabitants = MAISON;
+                        break;
+                    case 3://IMMEUBLE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 5;
+                        habitationAEvoluer->nbHabitants = IMMEUBLE;
+                        break;
+                    case 4://GRATTE_CIEL
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 6;
 
-                    habitationAEvoluer->nbHabitants = GRATTE_CIEL;
-                    break;
+                        habitationAEvoluer->nbHabitants = GRATTE_CIEL;
+                        break;
+                }
+                structureGlobale->nbHabitants = calculerNbHabitants(matriceCase);
+
+            } else {
+                printf("Erreur evolutionHabitation: niveau %d ne peut evoluer\n", habitationAEvoluer->niveau);
             }
-            structureGlobale->nbHabitants = calculerNbHabitants(matriceCase);
+        }else if(onPeutEvoluer == -1){ //On regresse
+            if (habitationAEvoluer->niveau == 0) {}
+            else if (habitationAEvoluer->niveau > 0) { //On regresse
 
-        }else{
-            printf("Erreur evolutionHabitation: niveau %d ne peut evoluer\n", habitationAEvoluer->niveau);
+                habitationAEvoluer->niveau -= 1;
+                switch (habitationAEvoluer->niveau) {
+                    case 0://TERRAIN_VAGUE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 2;
+                        habitationAEvoluer->nbHabitants = TERRAIN_VAGUE;
+                        break;
+                    case 1://CABANE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 3;
+                        habitationAEvoluer->nbHabitants = CABANE;
+                        break;
+                    case 2://MAISON
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 4;
+                        habitationAEvoluer->nbHabitants = MAISON;
+                        break;
+                    case 3://IMMEUBLE
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 5;
+                        habitationAEvoluer->nbHabitants = IMMEUBLE;
+                        break;
+                    case 4://GRATTE_CIEL
+                        matriceCase[ligneAEvoluer][colonneAEvoluer].type = 6;
+                        habitationAEvoluer->nbHabitants = GRATTE_CIEL;
+                        break;
+                }
+                structureGlobale->nbHabitants = calculerNbHabitants(matriceCase);
+            }
         }
     }
+
     al_draw_filled_rectangle(417, 10, 535, 35, al_map_rgb(37,92,149));
     structureGlobale->argentBanque += 10;
     al_flip_display();
@@ -1902,8 +1948,8 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
                 xsouris = event.mouse.x;
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
-                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900 - DECALAGE_GRILLE_X &&
-                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700 - DECALAGE_GRILLE_Y) {
+                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < LARGEUR_FENETRE - DECALAGE_GRILLE_X &&
+                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < HAUTEUR_FENETRE - DECALAGE_GRILLE_Y) {
                     //Chateau
                     if (matriceCase[i][j].type == 7) {
                         al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));

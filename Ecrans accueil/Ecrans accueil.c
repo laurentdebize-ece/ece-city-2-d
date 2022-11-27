@@ -20,7 +20,6 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
-    //BITMAP
     ALLEGRO_BITMAP* menu;
     ALLEGRO_BITMAP* choix;
 
@@ -36,8 +35,6 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_get_keyboard_state(&keyboard_state);
 
-    //BITMAP
-    //FONDS
     menu = al_load_bitmap("../Images/Menu_jouer.png");
     choix = al_load_bitmap("../Images/Menu_choix.png");
 
@@ -50,8 +47,6 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
 
         while (end_menu == false) {
             al_draw_bitmap(menu, 0, 0, 0);
-
-
 
 
             al_flip_display();
