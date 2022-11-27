@@ -1,15 +1,11 @@
 #include "Fonctions.h"
 #include "../Carte/Carte.h"
 
-
-
 #define TAILLE_X_CHATEAU 4
 #define TAILLE_Y_CHATEAU 6
 #define TAILLE_X_HABITATION 3
 #define TAILLE_Y_HABITATION 3
 
-
-//boucle for nbchateau faire distribution
 
 /************************************** DISTRIBUTION DE L'EAU *************************************************/
 
@@ -339,9 +335,10 @@ void distributionEau(Case** matriceCases,Global* global){
     }
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pHabitation != NULL &&
-                matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+            if (matriceCases[i][j].pHabitation != NULL ) {
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
+                matriceCases[i][j].pHabitation->alimEau=0;
+                matriceCases[i][j].pHabitation->alimEauOuiNon=0;
             }
         }
     }
@@ -349,6 +346,8 @@ void distributionEau(Case** matriceCases,Global* global){
     global->nbHabitation = nbHabitation;
     Habitation *habEau[nbHabitation];
     //Habitation *habEauOrdre[nbHabitation];
+
+
 
     //récupération de la coordoonée X et Y du chateau
     for (int i = 0; i < NB_LIGNES; i++) {
@@ -388,35 +387,19 @@ void distributionEau(Case** matriceCases,Global* global){
     }
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0;j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
-                && matriceCases[i][j].pChateau->distribution == 1) {
+            if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7 && matriceCases[i][j].pChateau->distribution == 1) {
 
                 matriceCases[i][j].pChateau->distribution = 0;
                 matriceCases[i][j].pChateau->quantiteDistribuee = 0;
             }
-            if (matriceCases[i][j].pHabitation != NULL
-                && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+            if (matriceCases[i][j].pHabitation != NULL) {
 
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
-                matriceCases[i][j].pHabitation->alimEau=0;
             }
         }
     }
+
     int habitationProche = 0;
-    for (int k = 0; k < NB_LIGNES; k++) {
-        for (int l = 0; l < NB_COLONNES; l++) {
-            if (matriceCases[k][l].pHabitation != NULL){
-                matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
-            }
-        }
-    }
-    for (int k = 0; k < NB_LIGNES; k++) {
-        for (int l = 0; l < NB_COLONNES; l++) {
-            if(matriceCases[k][l].pHabitation != NULL ){
-                matriceCases[k][l].pHabitation->alimEauOuiNon=0;
-            }
-        }
-    }
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
@@ -451,11 +434,14 @@ void distributionEau(Case** matriceCases,Global* global){
                 }
                 numHabitation = 0;
                 Habitation *habitationEnCours = NULL;
+                int eauEnCours=0;
                 while (matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee <
                        matriceCases[caseY1][caseX1].pChateau->capacite
                        && numHabitation < numHabitationBFS) {
 
                     habitationEnCours = defilerHabitation(&f);
+                    eauEnCours=0;
+
                     if (habitationEnCours != NULL) {
                         if (habitationEnCours->nbHabitants <=
                             matriceCases[caseY1][caseX1].pChateau->capacite -
@@ -482,6 +468,7 @@ void distributionEau(Case** matriceCases,Global* global){
                                    matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee &&
                                    habitationEnCours->alimEauOuiNon ==
                                    1) { //habitation partielement alimentée et quantité d'eau dispo
+
 
                             matriceCases[caseY1][caseX1].pChateau->quantiteDistribuee +=
                                     habitationEnCours->nbHabitants - habitationEnCours->alimEau;
@@ -762,9 +749,10 @@ void distributionElec(Case** matriceCases,Global* global){
     }
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0; j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pHabitation != NULL &&
-                matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
+            if (matriceCases[i][j].pHabitation != NULL) {
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
+                matriceCases[i][j].pHabitation->alimElec=0;
+                matriceCases[i][j].pHabitation->alimElecOuiNon=0;
             }
         }
     }
@@ -820,7 +808,7 @@ void distributionElec(Case** matriceCases,Global* global){
                 && matriceCases[i][j].pHabitation->parcoureMatriceHabitation == 1) {
 
                 matriceCases[i][j].pHabitation->parcoureMatriceHabitation = 0;
-                matriceCases[i][j].pHabitation->alimElec=0;
+
             }
         }
     }
@@ -1450,25 +1438,21 @@ int distributionEvolutionELEC(Case** matriceCases,Global* global,Habitation* hab
 }
 
 int ouiNonEvolution(Case** matriceCases,Global* global,Habitation* habitation){
-    int eau=0;
-    int elec=0;
-    eau= distributionEvolutionEAU(matriceCases,global,habitation);
-    elec= distributionEvolutionELEC(matriceCases,global,habitation);
+    int eau = 0;
+    int elec = 0;
+    eau = distributionEvolutionEAU(matriceCases,global,habitation);
+    elec = distributionEvolutionELEC(matriceCases,global,habitation);
 
-    if(eau ==1 && elec==1){
+    if(eau == 1 && elec== 1){
         return 1;
+    }
+    else if (eau == -1 || elec== -1){
+        return -1;
     }
     else{
         return 0;
     }
 }
-
-
-
-
-
-// à la fin mettre distribution à 0 pour tous
-
 
 
 int convertirEnCase(int x, int y,  int* ligne, int* colonne) {
@@ -1719,7 +1703,6 @@ int calculerNbHabitants(Case** matriceCase){
 }
 
 
-
 void evolutionHabitation(Case** matriceCase, Global* structureGlobale, Habitation* habitationAEvoluer, int ligneAEvoluer, int colonneAEvoluer, int onPeutEvoluer){
 
     //Mode communiste
@@ -1867,32 +1850,85 @@ void fonctionPause(ALLEGRO_DISPLAY* fenetre,  ALLEGRO_EVENT_QUEUE* queue, ALLEGR
     } else if (cas == 2) {
         niveau2(matriceCase);
     }
+    al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
     al_flip_display();
 
     while (!finPause) {
         al_wait_for_event(queue, &event);
         switch (event.type) {
-            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN: {
                 if (event.mouse.x > 19 && event.mouse.x < 62 && event.mouse.y > y1 && event.mouse.y < y2) {
                     finPause = true;
                     al_start_timer(timer);
                     al_draw_filled_rectangle(98, 5, 171, 40, al_map_rgb(60, 149, 253));
                     al_flip_display();
-
+                    break;
                 }
                 xsouris = event.mouse.x;
                 ysouris = event.mouse.y;
                 convertirEnCase(xsouris, ysouris, &i, &j);
-                if (matriceCase[i][j].type == 7) {
-                    al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pChateau->capacite);
-                    al_flip_display();
+                if (event.mouse.x > DECALAGE_GRILLE_X && event.mouse.x < 900 - DECALAGE_GRILLE_X &&
+                    event.mouse.y > DECALAGE_GRILLE_Y && event.mouse.y < 700 - DECALAGE_GRILLE_Y) {
+                    //Chateau
+                    if (matriceCase[i][j].type == 7) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
+                        al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
+                                      matriceCase[i][j].pChateau->capacite -
+                                      matriceCase[i][j].pChateau->quantiteDistribuee);
+                        al_flip_display();
+                        break;
+                    }
+                    //Centrale
+                    if (matriceCase[i][j].type == 8) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Capacité:");
+                        al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000",
+                                      matriceCase[i][j].pCentrale->capacite -
+                                      matriceCase[i][j].pCentrale->quantiteDistribuee);
+                        al_flip_display();
+                        break;
+                    }
+                    //Maison eau
+                    if (matriceCase[i][j].type >= 2 && matriceCase[i][j].type <= 6 && cas == 1) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Alim eau:");
+                        al_draw_textf(police, al_map_rgb(255, 0, 0), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/%d",
+                                      matriceCase[i][j].pHabitation->alimEau,
+                                      matriceCase[i][j].pHabitation->nbHabitants);
+                        al_flip_display();
+                        break;
+                    }
+                    //Maison elec
+                    if (matriceCase[i][j].type >= 2 && matriceCase[i][j].type <= 6 && cas == 2) {
+                        al_draw_filled_rectangle(1025, 130, 1150, 200, al_map_rgb(90, 185, 255));
+                        al_draw_text(police, al_map_rgb(255, 255, 255), 1091, 140, ALLEGRO_ALIGN_CENTER, "Alim elec:");
+                        al_draw_textf(police, al_map_rgb(255, 0, 0), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/%d",
+                                      matriceCase[i][j].pHabitation->alimElec,
+                                      matriceCase[i][j].pHabitation->nbHabitants);
+                        al_flip_display();
+                        break;
+                    }
                 }
-                if (matriceCase[i][j].type == 8){
-                    al_draw_textf(police, al_map_rgb(255, 255, 255), 1091, 169, ALLEGRO_ALIGN_CENTER, "%d/5000", matriceCase[i][j].pCentrale->capacite);
-                    al_flip_display();
-                }
-                break;
+            }
         }
     }
+}
+
+void fonctionNouvellePartie () {
+    FILE* carte = fopen("../Carte.txt", "w");
+    if(carte != NULL) {
+        for (int i = 0; i < NB_LIGNES; i++) {
+            for (int j = 0; j  < NB_COLONNES; j++) {
+                fprintf(carte,"%d ",0);
+            }
+            fprintf(carte,"\n");
+        }
+        fclose(carte);
+        carte = NULL;
+    }
+    else {
+        printf("Erreur lecture fichier sauvegarde carte\n");
+    }
+
 }

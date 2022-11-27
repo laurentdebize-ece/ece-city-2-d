@@ -10,10 +10,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include "allegro5/allegro_primitives.h"
+#include "../Initialisation/Initialisation.h"
 
-
-#define LARGEUR 930
-#define HAUTEUR 524
 
 void ecranAccueil(ALLEGRO_DISPLAY* fenetre);
 
