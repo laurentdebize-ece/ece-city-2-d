@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "Fonctions/Fonctions.h"
 #include "Ecrans accueil/Ecrans accueil.h"
 
