@@ -7,7 +7,8 @@
 
 int leJeu (ALLEGRO_DISPLAY* fenetre, int modeDeJeu, bool nouvellePartie) {
 
-    // Déclarations
+
+    // Déclarationss
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *sauvegarde = NULL;
     ALLEGRO_FONT *police = NULL;

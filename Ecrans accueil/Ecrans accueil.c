@@ -5,7 +5,7 @@
 
 
 void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
-    //Affichage de l'ecran d'accueil
+    //Affichage de l'ecran d'accueill
     srand(time(NULL));
     bool end = false;
     bool end_menu = false;

@@ -99,7 +99,7 @@ typedef struct maillon{
 
 typedef struct file{
     t_maillon*tete; //pointeur sur le premier maillon
-    t_maillon*fin;//pointeur sur le dernier maillon
+    t_maillon*fin;//pointeur sur le dernier maillonn
     Habitation*avant;
     Habitation*apres;
 }t_file;

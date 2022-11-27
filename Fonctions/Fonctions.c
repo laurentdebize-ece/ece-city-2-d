@@ -9,7 +9,7 @@
 #define TAILLE_Y_HABITATION 3
 
 
-//boucle for nbchateau faire distribution
+//boucle for nbchateau faire distributionn
 
 /************************************** DISTRIBUTION DE L'EAU *************************************************/
 
