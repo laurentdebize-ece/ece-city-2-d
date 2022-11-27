@@ -356,6 +356,7 @@ void distributionEau(Case** matriceCases,Global* global){
                     matriceCases[i][j].pHabitation->nbCasesParChateau->dejaAlim=0;
                     matriceCases[i][j].pHabitation->nbCasesParChateau->numChateau=-1;
                 }
+                matriceCases[i][j].pHabitation->suiv=NULL;
             }
             if(matriceCases[i][j].pChateau != NULL){
                 matriceCases[i][j].pChateau->quantiteDistribuee=0;
@@ -409,8 +410,9 @@ void distributionEau(Case** matriceCases,Global* global){
 
     for (int i = 0; i < NB_LIGNES; i++) {
         for (int j = 0;j < NB_COLONNES; j++) {
-            if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7 && matriceCases[i][j].pChateau->distribution == 1) {
+            if (matriceCases[i][j].pChateau != NULL ) {
                 matriceCases[i][j].pChateau->distribution = 0;
+                matriceCases[i][j].pChateau->parcoursMatriceChateau=0;
             }
             if (matriceCases[i][j].pHabitation != NULL) {
 
@@ -425,6 +427,14 @@ void distributionEau(Case** matriceCases,Global* global){
         for (int j = 0; j < NB_COLONNES; j++) {
             if (matriceCases[i][j].pChateau != NULL && matriceCases[i][j].type == 7
                 && matriceCases[i][j].pChateau->distribution == 0) {
+                for (int k = 0; k < NB_LIGNES; k++) {
+                    for (int l = 0;l < NB_COLONNES; l++) {
+                        if (matriceCases[k][l].pHabitation != NULL) {
+                            matriceCases[k][l].pHabitation->suiv=NULL;
+                            matriceCases[k][l].pHabitation->parcoureMatriceHabitation = 0;
+                        }
+                    }
+                }
                 caseX1 = j;
                 caseY1 = i;
                 caseX2 = caseX1 + 3;
@@ -452,6 +462,7 @@ void distributionEau(Case** matriceCases,Global* global){
 
                     numHabitation++;
                 }
+
                 numHabitation = 0;
                 Habitation *habitationEnCours = NULL;
                 int eauEnCours=0;

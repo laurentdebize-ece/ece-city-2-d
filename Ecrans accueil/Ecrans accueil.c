@@ -142,12 +142,12 @@ void ecranAccueil(ALLEGRO_DISPLAY* fenetre){
                     } else { clic_mouse = false; }
 
                     if (func_bouton(clic_mouse, x_mouse, y_mouse, 105, 375, 448, 666)) { //mode capitaliste (rajouter une variable qui permet d'enregistrer le choix)
-                        leJeu(fenetre, 1, nouvellePartie);
+                        leJeu(fenetre, 2, nouvellePartie);
                         end_ecran_choix = true;
                         end=true;
                     }
                     else if (func_bouton(clic_mouse, x_mouse, y_mouse, 743, 1018, 450, 680)) { //mode communiste (rajouter une variable qui permet d'enregistrer le choix)
-                        leJeu(fenetre, 2, nouvellePartie);
+                        leJeu(fenetre, 1, nouvellePartie);
                         end_ecran_choix = true;
                         end=true;
 
